@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>AGVDispatcher</RootNamespace>
     <AssemblyName>AGVDispatcher</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -21,6 +22,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Preview</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,10 +34,27 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Preview</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IndexRange, Version=1.0.2.0, Culture=neutral, PublicKeyToken=35e6a3c4212514c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\IndexRange.1.0.2\lib\net45\IndexRange.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\netstandard1.1\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\netstandard1.1\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +66,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AGVStateIndicator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AGVStateIndicator.Designer.cs">
+      <DependentUpon>AGVStateIndicator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="App\WareHouseMapv2.cs" />
+    <Compile Include="BLL\Action_Custom.cs" />
+    <Compile Include="BLL\v2\Action_BackwardAfterPick.cs" />
+    <Compile Include="BLL\v2\Action_BackwardAfterPut.cs" />
+    <Compile Include="BLL\v2\Action_BreakTo150.cs" />
+    <Compile Include="BLL\v2\Action_Pick.cs" />
+    <Compile Include="BLL\v2\Action_PickBackDelCache.cs" />
+    <Compile Include="BLL\v2\Action_Put.cs" />
+    <Compile Include="BLL\v2\Action_RunTo1stPLC.cs" />
+    <Compile Include="BLL\v2\Action_RunTo200.cs" />
+    <Compile Include="BLL\v2\Action_RunTo251.cs" />
+    <Compile Include="BLL\v2\Action_RunToEnd.cs" />
+    <Compile Include="BLL\v2\Action_WaitForBreak.cs" />
+    <Compile Include="BLL\v2\Action_WaitForPick.cs" />
+    <Compile Include="BLL\v2\Action_WaitForPut.cs" />
+    <Compile Include="BLL\v2\ZhangZongSeqActionsV2.cs" />
+    <Compile Include="Com\AGVServer.cs" />
+    <Compile Include="App\Config.cs" />
+    <Compile Include="App\FakeTestInit.cs" />
+    <Compile Include="App\WareHouse.cs" />
+    <Compile Include="App\WareHouseMap.cs" />
+    <Compile Include="BLL\Action_CallPLCWork.cs" />
+    <Compile Include="BLL\Action_ClearCache.cs" />
+    <Compile Include="BLL\Action_BreakeZoneTo1stPLC.cs" />
+    <Compile Include="BLL\Action_RunTo2ndPLC.cs" />
+    <Compile Include="BLL\Action_RunToEnd.cs" />
+    <Compile Include="App\AGVDispatcher.cs" />
+    <Compile Include="BLL\IAGVAction.cs" />
+    <Compile Include="BLL\IMission.cs" />
+    <Compile Include="BLL\RestInBreakMission.cs" />
+    <Compile Include="BLL\QueuedMission.cs" />
+    <Compile Include="BLL\ZhangZongSeqActions.cs" />
+    <Compile Include="Com\IComClient.cs" />
+    <Compile Include="Com\IComDriver.cs" />
+    <Compile Include="Com\TCPDriver.cs" />
+    <Compile Include="Entity\AGV.cs" />
+    <Compile Include="Entity\AGVBehavior.cs" />
+    <Compile Include="Entity\AllEnums.cs" />
+    <Compile Include="Entity\BreakZonePoint.cs" />
+    <Compile Include="Entity\DataTypes.cs" />
+    <Compile Include="Entity\IAGVDevice.cs" />
+    <Compile Include="Entity\IComData.cs" />
+    <Compile Include="Entity\IPoint.cs" />
+    <Compile Include="Entity\NormalPoint.cs" />
+    <Compile Include="Entity\PLC.cs" />
+    <Compile Include="Entity\ProductPoint.cs" />
+    <Compile Include="Entity\TurnPoint.cs" />
+    <Compile Include="Entity\WorkPoint.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +128,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\MyExtentions.cs" />
+    <Compile Include="Util\OrderedDictionary.cs" />
+    <EmbeddedResource Include="AGVStateIndicator.resx">
+      <DependentUpon>AGVStateIndicator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -61,7 +144,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -74,6 +159,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SampleAGV.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sample_AGV.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sample_AGV1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
