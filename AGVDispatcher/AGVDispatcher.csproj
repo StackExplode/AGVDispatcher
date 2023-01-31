@@ -161,6 +161,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="Resources\SampleAGV.jpg" />
   </ItemGroup>
   <ItemGroup>

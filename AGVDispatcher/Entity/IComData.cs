@@ -12,7 +12,9 @@ namespace AGVDispatcher.Entity
     public interface IComDataField
     {
         public ComDataType DataType { get; }
+
     }
+
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct DataField<T> where T : IComDataField
@@ -25,6 +27,8 @@ namespace AGVDispatcher.Entity
         public byte CheckCode;
         public byte EndFlag;
     }
+
+
 
 #if DEBUG
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -46,6 +50,8 @@ namespace AGVDispatcher.Entity
         public byte CheckCode { get; }
         public byte AGVID { get; }
         public ushort SerialCode { get; }
+        public AGVComData<UnknownData> AsUnkownData();
+        public AGVComData<T> UnsafeAs<T>() where T : IComDataField;
     }
 
     public class AGVComData<TData> : IComData where TData : IComDataField
@@ -78,7 +84,11 @@ namespace AGVDispatcher.Entity
             AGVID = id;
             SerialCode = serialcode;
         }
-        
+
+        public void SetBufferPtr(byte[] buff)
+        {
+            this.buffer = buff;
+        }
 
         public ref DataField<TData> RawData
         {
@@ -87,6 +97,12 @@ namespace AGVDispatcher.Entity
                 ref DataField<TData> data = ref Unsafe.As<byte, DataField<TData>>(ref buffer[0]);
                 return ref data;
             }
+        }
+
+        public ref DataField<TTT> GetRawData<TTT>() where TTT : IComDataField
+        {
+            ref DataField<TTT> data = ref Unsafe.As<byte, DataField<TTT>>(ref buffer[0]);
+            return ref data;
         }
 
         public ref TData PayLoad
@@ -126,6 +142,21 @@ namespace AGVDispatcher.Entity
             byte mod = (byte)(sum % 256);
             //return mod;
             return (byte)(-mod);
+        }
+
+        public AGVComData<UnknownData> AsUnkownData()
+        {
+            return (AGVComData<UnknownData>)(IComData)this;
+        }
+
+        public AGVComData<T> UnsafeAs<T>() where T : IComDataField
+        {
+            return Unsafe.As<AGVComData<T>>(this);
+        }
+
+        public static explicit operator AGVComData<TData>(AGVComData<UnknownData> v)
+        {
+            return Unsafe.As<AGVComData<TData>>(v);
         }
 
     }

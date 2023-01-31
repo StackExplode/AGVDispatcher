@@ -10,6 +10,13 @@ using System.Threading.Tasks;
 namespace AGVDispatcher.Entity
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public unsafe struct UnknownData : IComDataField
+    {
+        public fixed byte NoUse[19];
+        public ComDataType DataType => ComDataType.GenralResponse;
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public unsafe struct GeneralResponseData : IComDataField
     {
         public ComDataType RequestCode;

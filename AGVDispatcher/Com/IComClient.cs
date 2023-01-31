@@ -28,9 +28,9 @@ namespace AGVDispatcher.Com
 
     public class AGVTCPClient : IComClient, IBlockedCom
     {
-        Mutex mutex = new Mutex();
-        public void Lock() => mutex.WaitOne(GlobalConfig.Config.SystemConfig.AGVComTimeout);
-        public void UnLock() => mutex.ReleaseMutex();
+        SemaphoreSlim mutex = new SemaphoreSlim(1);
+        public void Lock() => mutex.Wait(GlobalConfig.Config.SystemConfig.AGVComTimeout);
+        public void UnLock() => mutex.Release();
 
         public AGVTCPClient(TcpClient cl)
         {

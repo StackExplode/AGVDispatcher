@@ -172,9 +172,9 @@ namespace AGVDispatcher.Com
                 state.Client.Disconnected();
                 return;
             } 
-            if(client.Available == 0)
+            else if(client.Available == 0 && !ns.DataAvailable)
             {
-                Debug.WriteLine($"Available={client.Available}, so I enter!");
+                Debug.WriteLine($"TCP pack rec! Available={client.Available}, DataAvailable={ns.DataAvailable}");
                 state.Client.IsAlive = true;
                 if (AsyncRecBuffer)
                 {
@@ -187,6 +187,8 @@ namespace AGVDispatcher.Com
                 if (_running && (client?.Connected ?? false))
                     state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, HandleClientAsyncRec, state);
             }
+            else
+                Debug.WriteLine($"TCP pack half! Available={client.Available}, DataAvailable={ns.DataAvailable}");
         }
 
         public void Stop(bool abort = false)

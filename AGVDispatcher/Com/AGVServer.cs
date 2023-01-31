@@ -73,7 +73,7 @@ namespace AGVDispatcher.Com
 
         private void Server_OnComDataReceived(IComClient client, byte[] data)
         {
-            IComData fdata = new AGVComData<IComDataField>();
+            var fdata = new AGVComData<UnknownData>();
             fdata.SetBuffer(data);
             ((AGVTCPClient)client).UnLock();
 
