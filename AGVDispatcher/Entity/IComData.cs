@@ -120,10 +120,12 @@ namespace AGVDispatcher.Entity
         public byte CheckSum()
         {
             uint sum = 0;
-            for (int i = 1; i < 23; i++)
+            for (int i = 1; i <= 23; i++)
                 sum += buffer[i];
+            //sum += 0xFF;
             byte mod = (byte)(sum % 256);
-            return (byte)(0xFF - mod);
+            //return mod;
+            return (byte)(-mod);
         }
 
     }

@@ -149,7 +149,7 @@ namespace AGVDispatcher.App
             {
                 case 1: return (WorkPoint)this[50001];
                 case 2: return (WorkPoint)this[50002];
-                case 3: return (WorkPoint)this[50006];
+                case 5: return (WorkPoint)this[50006];
             }
 
             return null;

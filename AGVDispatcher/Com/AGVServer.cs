@@ -12,14 +12,18 @@ using AGVDispatcher.Util;
 namespace AGVDispatcher.Com
 {
     public delegate void OnAGVAuthResponseDlg(AGVTCPClient client, AGVComData<AuthResponseData> data);
-    public delegate void OnAGVValidatedDlg(byte agvid, bool success);
+    public delegate void OnAGVValidatResponseDlg(byte agvid, bool success);
     public delegate void OnAGVStateResponseDlg(byte agvid, AGVComData<StateResponseData> data);
+    public delegate void OnAGVClientConnectedDlg(AGVTCPClient client);
+    public delegate void OnAGVClientDisconnectedDlg(AGVTCPClient client);
     public class AGVServer
     {
         private TCPDriver server;
         public event OnAGVAuthResponseDlg OnAGVAuthResponse;
-        public event OnAGVValidatedDlg OnAGVValidated;
+        public event OnAGVValidatResponseDlg OnAGVValidatResponseDlg;
         public event OnAGVStateResponseDlg OnAGVStateResponse;
+        public event OnAGVClientConnectedDlg OnAGVClientConnected;
+        public event OnAGVClientDisconnectedDlg OnAGVClientDisconnected;
 
         public AGVServer()
         {           
@@ -58,11 +62,13 @@ namespace AGVDispatcher.Com
         private void Server_OnComClientDisconneted(IComClient client)
         {
             client.Disconnect();
+            this.OnAGVClientDisconnected?.Invoke((AGVTCPClient)client);
         }
 
         private void Server_OnComClientConnected(IComClient client)
         {
             this.RequestAuth((AGVTCPClient)client);
+            this.OnAGVClientConnected?.Invoke((AGVTCPClient)client);
         }
 
         private void Server_OnComDataReceived(IComClient client, byte[] data)
@@ -84,7 +90,7 @@ namespace AGVDispatcher.Com
                 if(rdata.PayLoad.RequestCode == ComDataType.Validation)
                 {
                     bool succ = (rdata.PayLoad.ErrorCode == ComErrorCode.Success ? true : false);
-                    OnAGVValidated?.Invoke(rdata.AGVID, succ);
+                    OnAGVValidatResponseDlg?.Invoke(rdata.AGVID, succ);
                 }
             }
             else if(fdata.DataType == ComDataType.StateResponse)

@@ -105,7 +105,7 @@ namespace AGVDispatcher.App
         }
 
 #if !DEBUG
-#error 你不能在非调试版本下调用用户调度方法！
+//#error 你不能在非调试版本下调用用户调度方法！
 #else
         public void RunCustomQueue(AGV agv,IQueuedActions acts, OnMissionFinishedDlg callback = null, params object[] param)
         {

@@ -31,7 +31,10 @@ namespace AGVDispatcher.BLL
 
         public bool CheckActionEnd()
         {
-            return (plcs[PLCNum].CheckInputState(FINISH_IO) == FINISH_LEVEL);
+            if (FINISH_IO != 5)
+                return (plcs[PLCNum].CheckInputState(FINISH_IO) == FINISH_LEVEL);
+            else
+                return (plcs[PLCNum].HookState);
         }
 
         public void Init(AGV agv, Dictionary<int, PLC> plcs, WareHouseMap map, params object[] param)
@@ -42,7 +45,8 @@ namespace AGVDispatcher.BLL
 
         public bool Run()
         {
-            plcs[PLCNum].SetOutputState(WORK_IO, WORK_LEVEL);
+            if(WORK_IO != 5)
+                plcs[PLCNum].SetOutputState(WORK_IO, WORK_LEVEL);
             return true;
         }
     }

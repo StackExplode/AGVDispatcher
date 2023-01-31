@@ -35,6 +35,7 @@ namespace AGVDispatcher.Entity
 
         public IOState InputState { get; private set; }
         public IOState OutputState { get; private set; }
+        public bool HookState { get; private set; }
 
         public AGVType @AGVType => AGVType.PLCSimu;
         protected System.Timers.Timer timer;
@@ -50,6 +51,7 @@ namespace AGVDispatcher.Entity
 
         public event OnAGVStateUpdateDlg OnAGVStateUpdate;
         public event OnAGVComStateUpdateDlg OnAGVComStateUpdate;
+        public event OnAGVDisconnectedDlg OnAGVDisconnected;
 
         public bool CheckInputState(int index)
         {
@@ -65,15 +67,16 @@ namespace AGVDispatcher.Entity
         }
         public void SetOutputState(int index, bool state)
         {
-            Contract.Assert(index >= 1 && index <= 4);
+            Contract.Assert(index >= 1 && index <= 5);
             IOSetMode io = (state ? IOSetMode.Trigger : IOSetMode.Release);
-            AGVComData<SetIOData> data = new AGVComData<SetIOData>();
+            AGVComData<SetIOData> data = new AGVComData<SetIOData>(this.AGVID,this.LatestSerialCode);
             switch(index)
             {
                 case 1: data.PayLoad.ExtIO1 = io; break;
                 case 2: data.PayLoad.ExtIO2 = io; break;
                 case 3: data.PayLoad.ExtIO3 = io; break;
                 case 4: data.PayLoad.ExtIO4 = io; break;
+                case 5: data.PayLoad.Hook = io; break;
             }
             this.server.SendData(this, data);
 
@@ -91,6 +94,7 @@ namespace AGVDispatcher.Entity
 
             InputState = data.InputState;
             OutputState = data.OutputState;
+            HookState = data.Hooked;
             if (PollInfoEnabled && PollInfoWaitResponse)
                 this.timer.Enabled = true;
             this.OnAGVStateUpdate?.Invoke(this);
@@ -129,6 +133,7 @@ namespace AGVDispatcher.Entity
             this.client.OnDisconnected += () =>
             {
                 this.SetComStateFlag(0, AGVComState.OnLine);
+                OnAGVDisconnected?.Invoke(this);
             };
         }
 

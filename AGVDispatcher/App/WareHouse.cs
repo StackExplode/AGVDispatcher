@@ -13,6 +13,9 @@ using System.Threading;
 
 namespace AGVDispatcher.App
 {
+    public delegate void OnAGVConnectedDlg(IAGVDevice iagv, AGVTCPClient client, bool inconfig, bool isneedauth, bool? ipexpected);
+    public delegate void OnAGVValidatedDlg(IAGVDevice iagv, bool success);
+
     public class WareHouse
     {
         private AGVServer server;
@@ -22,6 +25,9 @@ namespace AGVDispatcher.App
         private AGVDispatcher dispatcher;
         private WareHouseMapv2 _map;
         public event OnDispacherAllFinishedDlg OnDispacherAllFinished;
+        public event OnAGVConnectedDlg OnAGVConnected;
+        public event OnAGVValidatedDlg OnAGVValidated;
+        public event OnAGVDisconnectedDlg OnAGVDisconnected;
         public WareHouseMapv2 Map => _map;
 
 
@@ -30,7 +36,7 @@ namespace AGVDispatcher.App
             config = GlobalConfig.Config;
             server = new AGVServer();
             server.OnAGVAuthResponse += Server_OnAGVAuthResponse;
-            server.OnAGVValidated += Server_OnAGVValidated;
+            server.OnAGVValidatResponseDlg += Server_OnAGVValidated;
             server.OnAGVStateResponse += Server_OnAGVStateResponse;
 
             _map = new WareHouseMapv2();
@@ -87,7 +93,7 @@ namespace AGVDispatcher.App
 
         public async void StopServerAsync(Action callback = null)
         {
-            AutoResetEvent mutex = new AutoResetEvent(dispatcher.RunningAGVCount > 0);
+            AutoResetEvent mutex = new AutoResetEvent(dispatcher.RunningAGVCount == 0);
             var ddd = new OnDispacherAllFinishedDlg((_) => { mutex.Set(); });
             dispatcher.OnDispacherAllFinished += ddd;
             Task task = new Task(() => { mutex.WaitOne(); server.StopServer(false); });
@@ -120,11 +126,15 @@ namespace AGVDispatcher.App
                 agv.SetComStateFlag(AGVComState.Authorized);
                 agv.SetWorkState(AGVWorkState.Idle);
             }
+            this.OnAGVValidated?.Invoke(agv, success);
         }
 
         private void Server_OnAGVAuthResponse(IComClient client, AGVComData<AuthResponseData> data)
         {
-
+            IAGVDevice rt_dev = null;
+            bool rt_inconf = false;
+            bool rt_ipexp = false;
+            bool rt_isauthneed = false;
             int dd = config.CheckDeviceByID(data.AGVID,out var conf);
 
             byte[] bb = new byte[8];
@@ -139,18 +149,24 @@ namespace AGVDispatcher.App
             if (dd > 0)
             {
                 AGV agv;
-                
-                if(!config.SystemConfig.CheckIP || IPAddress.Parse(conf.IP) == ((AGVTCPClient)client).IP)
+                if (!config.SystemConfig.CheckIP || IPAddress.Parse(conf.IP) == ((AGVTCPClient)client).IP)
+                {
+                    rt_ipexp = true;
                     if (!allagv.ContainsKey(data.AGVID))
                     {
+                        rt_inconf = true;
                         agv = new AGV();
                         allagv.Add(data.AGVID, agv);
                     }
-                agv = allagv[data.AGVID];      
+                }
+              
+                agv = allagv[data.AGVID];
+                rt_dev = agv;
 
                 agv.Init(data.AGVID, (AGVTCPClient)client, server, conf);
                 if (data.PayLoad.IsAuthNeeded)
-                { 
+                {
+                    rt_isauthneed = true;
                     agv.SetSalt(bb);
                     agv.SetComStateFlag(AGVComState.OnLine);
                     agv.Actions.AuthValidate();
@@ -164,18 +180,24 @@ namespace AGVDispatcher.App
             else if(dd < 0)
             {
                 PLC plc;
-                
+
                 if (!config.SystemConfig.CheckIP || IPAddress.Parse(conf.IP) == ((AGVTCPClient)client).IP)
+                {
+                    rt_ipexp = true;
                     if (!allplc.ContainsKey(data.AGVID))
                     {
+                        rt_inconf = true;
                         plc = new PLC();
                         allplc.Add(data.AGVID, plc);
                     }
+                }
                 plc = allplc[data.AGVID];
+                rt_dev = plc;
 
                 plc.Init(data.AGVID, (AGVTCPClient)client, server, conf);
                 if (data.PayLoad.IsAuthNeeded)
                 {
+                    rt_isauthneed = true;
                     plc.SetSalt(bb);
                     plc.SetComStateFlag(AGVComState.OnLine);
                     plc.AuthValidate();
@@ -189,7 +211,12 @@ namespace AGVDispatcher.App
             {
                 client.Disconnect();
             }
-
+            if(rt_dev is not null)
+            {
+                rt_dev.OnAGVDisconnected += (s) => { this.OnAGVDisconnected?.Invoke(s); };
+            }
+            bool? eee = (config.SystemConfig.CheckIP ? (bool?)rt_ipexp : null);
+            this.OnAGVConnected?.Invoke(rt_dev, rt_dev?.ComClient, rt_inconf, rt_isauthneed, eee);
         }
     }
 }

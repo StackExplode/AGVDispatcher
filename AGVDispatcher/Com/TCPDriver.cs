@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Diagnostics;
 
 namespace AGVDispatcher.Com
 {
@@ -117,6 +118,7 @@ namespace AGVDispatcher.Com
 
         }
 
+        int a = 0;
         protected virtual void HandleClientAsyncRec(IAsyncResult res)
         {
             if (_Listener == null || _Listener.Server == null || _Listener.Server.IsBound == false)
@@ -161,16 +163,18 @@ namespace AGVDispatcher.Com
 
             if (client.Available > 0)
             {
-                throw new Exception("Data too long!");
+                //throw new Exception("Data too long!");
+                a++;
             }
             if (b2r == 0)
             {
                 this.OnComClientDisconneted?.Invoke(state.Client);
                 state.Client.Disconnected();
-            }
-                
-            else
+                return;
+            } 
+            if(client.Available == 0)
             {
+                Debug.WriteLine($"Available={client.Available}, so I enter!");
                 state.Client.IsAlive = true;
                 if (AsyncRecBuffer)
                 {
@@ -187,6 +191,7 @@ namespace AGVDispatcher.Com
 
         public void Stop(bool abort = false)
         {
+
             if(_running && (_Listener?.Server.IsBound ?? false))
             {
                 _running = false;

@@ -37,6 +37,17 @@ namespace AGVDispatcher
             FakeTestInit.InitAGVConfig();
             FakeTestInit.InitPLCConfig();
             FakeTestInit.InitMap();
+            house.OnAGVConnected += (agv, _, _, _,_) => {
+                this.Invoke((MethodInvoker)(() => { listBox1.Items.Add($"ID为{agv.AGVID}的AGV已连接！"); }));
+            };
+            house.OnAGVDisconnected += (agv) =>
+            {
+                this.Invoke((MethodInvoker)(() => { listBox1.Items.Add($"ID为{agv.AGVID}的AGV已断连！"); }));
+            };
+            house.OnAGVValidated += (agv, succ) =>
+            {
+                this.Invoke((MethodInvoker)(() => { listBox1.Items.Add($"ID为{agv.AGVID}的AGV进行了身份验证，结果：{succ}！"); }));
+            };
         }
 
         private void House_OnDispacherAllFinished(bool emerg)
@@ -78,11 +89,11 @@ namespace AGVDispatcher
             {
                 if(tout)
                 {
-                    MessageBox.Show("查询AGV状态超时！");
+                    listBox1.Items.Add("查询AGV状态超时！");
                 }
                 else
                 {
-                    MessageBox.Show($"查询AGV状态成功，其输入端口1为{agv.CheckInputState(1)}");
+                    listBox1.Items.Add($"查询AGV状态成功，其输入端口1为{agv.CheckInputState(1)}");
                 }
 
             });
@@ -95,14 +106,19 @@ namespace AGVDispatcher
             {
                 if (tout)
                 {
-                    MessageBox.Show("查询PLC状态超时！");
+                    listBox1.Items.Add("查询PLC状态超时！");
                 }
                 else
                 {
-                    MessageBox.Show($"查询PLC状态成功，其输入端口1为{plc.CheckInputState(1)}");
+                    listBox1.Items.Add($"查询PLC状态成功，其输入端口1为{plc.CheckInputState(1)}");
                 }
 
             });
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            listBox1.Items.Clear();
         }
     }
 }

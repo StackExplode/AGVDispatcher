@@ -32,8 +32,10 @@ namespace AGVDispatcher.App
 #warning 根据实际情况填写
         public static void InitAGVConfig()
         {
-            
-            
+            AGVConfig agvc = new AGVConfig();
+            agvc.AGVID = 1;
+            agvc.Order = 1;
+            config.AddAGVConfig(agvc);
         }
 
         public static void InitPLCConfig()

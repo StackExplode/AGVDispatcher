@@ -35,6 +35,7 @@ namespace AGVDispatcher.Entity
 
         public event OnAGVStateUpdateDlg OnAGVStateUpdate;
         public event OnAGVComStateUpdateDlg OnAGVComStateUpdate;
+        public event OnAGVDisconnectedDlg OnAGVDisconnected;
 
         public AGVState State { get; private set; }
         public ushort PhysicPoint { get; private set; }
@@ -58,9 +59,9 @@ namespace AGVDispatcher.Entity
 
         public void SetPassword(string pass)
         {
-            for(int i=0;i<8;i++)
+            for(int i=0;i<8;i+=2)
             {
-                authcode[i] = Byte.Parse(pass.Substring(i, 1), System.Globalization.NumberStyles.HexNumber);
+                authcode[i] = Byte.Parse(pass.Substring(i, 2), System.Globalization.NumberStyles.HexNumber);
             }
 
         }
@@ -136,7 +137,7 @@ namespace AGVDispatcher.Entity
             this.client.OnDisconnected += () =>
             {
                 this.SetComStateFlag(0, AGVComState.OnLine);
-
+                OnAGVDisconnected?.Invoke(this);
             };
         }
 
@@ -159,7 +160,7 @@ namespace AGVDispatcher.Entity
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if(this.comstate == AGVComState.Normal)
+            if(this.comstate == AGVComState.Normal && PollInfoEnabled)
             {
                 this.Actions.SendQueryRequest();
                 if (!PollInfoWaitResponse)

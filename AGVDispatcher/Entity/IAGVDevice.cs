@@ -12,6 +12,7 @@ namespace AGVDispatcher.Entity
 {
     public delegate void OnAGVStateUpdateDlg(IAGVDevice iagv);
     public delegate void OnAGVComStateUpdateDlg(IAGVDevice iagv, AGVComState before, AGVComState after);
+    public delegate void OnAGVDisconnectedDlg(IAGVDevice iagv);
     public interface IAGVDevice
     {
         public AGVTCPClient ComClient { get; }
@@ -25,6 +26,7 @@ namespace AGVDispatcher.Entity
 
         public event OnAGVStateUpdateDlg OnAGVStateUpdate;
         public event OnAGVComStateUpdateDlg OnAGVComStateUpdate;
+        public event OnAGVDisconnectedDlg OnAGVDisconnected;
 
         public void Init(byte id, AGVTCPClient client, AGVServer server, IAGVDevConfig conf);
 
