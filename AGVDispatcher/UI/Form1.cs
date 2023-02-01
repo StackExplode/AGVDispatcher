@@ -15,7 +15,7 @@ using AGVDispatcher.App;
 using AGVDispatcher.Entity;
 using AGVDispatcher.Util;
 
-namespace AGVDispatcher
+namespace AGVDispatcher.UI
 {
     public partial class Form1 : Form
     {
@@ -126,6 +126,44 @@ namespace AGVDispatcher
         private void button8_Click(object sender, EventArgs e)
         {
             DataTemplateTest.Run();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            fm_config fm = new fm_config();
+            fm.ShowDialog();
+        }
+
+        class MyItemType
+        {
+            public MyItemType(int n) => val = n;
+            public int val { get; set; }
+            public string TheValue
+            {
+                get => $"The value = {val}";
+            }
+        }
+        MyItemType spec = new MyItemType(100);
+        BindingSource bs = new BindingSource();
+        private void button10_Click(object sender, EventArgs e)
+        {
+            BindingList<MyItemType> itms = new BindingList<MyItemType>();
+            itms.Add(new MyItemType(1));
+            itms.Add(spec);
+            itms.Add(new MyItemType(10));
+
+            bs.DataSource = itms;
+
+            listBox2.DisplayMember = "TheValue";
+            listBox2.ValueMember = "val";
+            listBox2.DataSource = bs;
+            
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            spec.val = 250;
+            bs.ResetBindings(false);
         }
     }
 

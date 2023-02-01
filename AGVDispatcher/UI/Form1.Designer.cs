@@ -1,4 +1,4 @@
-﻿namespace AGVDispatcher
+﻿namespace AGVDispatcher.UI
 {
     partial class Form1
     {
@@ -42,7 +42,11 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.button8 = new System.Windows.Forms.Button();
-            this.agvStateIndicator1 = new AGVDispatcher.AGVStateIndicator();
+            this.button9 = new System.Windows.Forms.Button();
+            this.agvStateIndicator1 = new AGVDispatcher.UI.AGVStateIndicator();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -173,7 +177,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(397, 391);
+            this.button8.Location = new System.Drawing.Point(367, 372);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 13;
@@ -181,19 +185,62 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(499, 334);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(99, 23);
+            this.button9.TabIndex = 15;
+            this.button9.Text = "ConfigWindow";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // agvStateIndicator1
             // 
             this.agvStateIndicator1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.agvStateIndicator1.Location = new System.Drawing.Point(397, 80);
             this.agvStateIndicator1.Name = "agvStateIndicator1";
-            this.agvStateIndicator1.Size = new System.Drawing.Size(257, 203);
+            this.agvStateIndicator1.Size = new System.Drawing.Size(259, 201);
             this.agvStateIndicator1.TabIndex = 14;
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 12;
+            this.listBox2.Location = new System.Drawing.Point(626, 346);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(213, 232);
+            this.listBox2.TabIndex = 16;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(499, 372);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(99, 23);
+            this.button10.TabIndex = 17;
+            this.button10.Text = "BindDataTest";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(499, 401);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(99, 23);
+            this.button11.TabIndex = 18;
+            this.button11.Text = "ChangeData";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 543);
+            this.ClientSize = new System.Drawing.Size(1068, 586);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.agvStateIndicator1);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.linkLabel1);
@@ -233,6 +280,10 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Button button8;
         private AGVStateIndicator agvStateIndicator1;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button11;
     }
 }
 

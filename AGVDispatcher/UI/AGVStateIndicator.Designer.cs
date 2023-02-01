@@ -1,4 +1,4 @@
-﻿namespace AGVDispatcher
+﻿namespace AGVDispatcher.UI
 {
     partial class AGVStateIndicator
     {
