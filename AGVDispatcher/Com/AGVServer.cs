@@ -73,20 +73,27 @@ namespace AGVDispatcher.Com
 
         private void Server_OnComDataReceived(IComClient client, byte[] data)
         {
-            var fdata = new AGVComData<UnknownData>();
-            fdata.SetBuffer(data);
-            ((AGVTCPClient)client).UnLock();
-
-            if (fdata.CheckCode != fdata.CheckSum())
+            IComData fdata = null;
+            bool recfinish = ((AGVTCPClient)client).RecData(data, (bf) =>
+             {
+                 fdata = new AGVComData<UnknownData>();
+                 fdata.SetBuffer(bf);
+                 ((AGVTCPClient)client).UnLock();
+             });
+    
+            if (!recfinish)
+                return;
+            
+            if (fdata.CheckCode != fdata.CalcCheckSum())
                 return;    
 
             if (fdata.DataType == ComDataType.AuthResponse)
             {
-                OnAGVAuthResponse?.Invoke((AGVTCPClient)client, (AGVComData<AuthResponseData>)fdata);
+                OnAGVAuthResponse?.Invoke((AGVTCPClient)client, (fdata.UnsafeAs<AuthResponseData>()));
             }
             else if(fdata.DataType == ComDataType.GenralResponse)
             {
-                AGVComData<GeneralResponseData> rdata = (AGVComData<GeneralResponseData>)fdata;
+                AGVComData<GeneralResponseData> rdata = fdata.UnsafeAs<GeneralResponseData>();
                 if(rdata.PayLoad.RequestCode == ComDataType.Validation)
                 {
                     bool succ = (rdata.PayLoad.ErrorCode == ComErrorCode.Success ? true : false);
@@ -95,7 +102,7 @@ namespace AGVDispatcher.Com
             }
             else if(fdata.DataType == ComDataType.StateResponse)
             {
-                OnAGVStateResponse?.Invoke(fdata.AGVID, (AGVComData<StateResponseData>)fdata);
+                OnAGVStateResponse?.Invoke(fdata.AGVID, fdata.UnsafeAs<StateResponseData>());
             }
             
         }

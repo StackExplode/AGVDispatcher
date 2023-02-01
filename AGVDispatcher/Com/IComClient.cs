@@ -10,13 +10,13 @@ using AGVDispatcher.App;
 
 namespace AGVDispatcher.Com
 {
-    public delegate void OnDisconnectedDlg();
+    public delegate void OnDisconnectedDlg(IComClient client);
     public interface IComClient
     {
         bool IsAlive { get; set; }
 
         void Disconnect();
-        void Disconnected();
+        //void FireDisconnected();
         public event OnDisconnectedDlg OnDisconnected;
     }
 
@@ -32,9 +32,33 @@ namespace AGVDispatcher.Com
         public void Lock() => mutex.Wait(GlobalConfig.Config.SystemConfig.AGVComTimeout);
         public void UnLock() => mutex.Release();
 
+        private byte[] DataBuffer { get; }
+        private int reclen = 0;
+        private static int dlen => Entity.AGVComData<Entity.IComDataField>.DataLen;
+        public bool RecData(byte[] buff,Action<byte[]> onRecFinish = null)
+        {
+            Buffer.BlockCopy(buff, 0, this.DataBuffer, this.reclen, buff.Length);
+            this.reclen += buff.Length;
+            if (reclen == dlen)
+            {
+                onRecFinish?.Invoke(this.DataBuffer);
+                reclen = 0;
+                return true;
+            }
+            else if (reclen > dlen)
+            {
+                string errstr = $"Rec Data too long! reclen={reclen} > {dlen}";
+                reclen = 0;
+                throw new Exception(errstr);
+            }
+            else
+                return false;
+        }
+
         public AGVTCPClient(TcpClient cl)
         {
             Client = cl;
+            DataBuffer = new byte[dlen];
         }
         public TcpClient Client { get; }
         public bool IsAlive { get; set; } = false;
@@ -49,16 +73,20 @@ namespace AGVDispatcher.Com
 
         public void Disconnect()
         {
-            Client.Close();
-            IsAlive = false;
-            OnDisconnected?.Invoke();
+            if(IsAlive)
+            {
+                Client.Close();
+                IsAlive = false;
+                OnDisconnected?.Invoke(this);
+            }  
         }
 
-        public void Disconnected()
-        {
-            IsAlive = false;
-            OnDisconnected?.Invoke();
-        }
+//         public void FireDisconnected()
+//         {
+//             Client.Close();
+//             IsAlive = false;
+//             OnDisconnected?.Invoke(this);
+//         }
         //public bool IsAlive => Client.Connected;
 
 

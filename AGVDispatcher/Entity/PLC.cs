@@ -130,7 +130,7 @@ namespace AGVDispatcher.Entity
             timer = new();
             timer.AutoReset = false;
             timer.Elapsed += Timer_Elapsed;
-            this.client.OnDisconnected += () =>
+            this.client.OnDisconnected += (cl) =>
             {
                 this.SetComStateFlag(0, AGVComState.OnLine);
                 OnAGVDisconnected?.Invoke(this);
@@ -169,10 +169,10 @@ namespace AGVDispatcher.Entity
             this.server = server;
             this.client = client;
             this.AGVID = id;
-            this.client.OnDisconnected += () =>
-            {
-                this.SetComStateFlag(0, AGVComState.OnLine);
-            };
+//             this.client.OnDisconnected += (cl) =>
+//             {
+//                 this.SetComStateFlag(0, AGVComState.OnLine);
+//             };
             if(conf != null)
             {
                 PLCConfig c = (PLCConfig)conf;

@@ -107,6 +107,7 @@
     <Compile Include="Com\IComClient.cs" />
     <Compile Include="Com\IComDriver.cs" />
     <Compile Include="Com\TCPDriver.cs" />
+    <Compile Include="DataTemplateTest.cs" />
     <Compile Include="Entity\AGV.cs" />
     <Compile Include="Entity\AGVBehavior.cs" />
     <Compile Include="Entity\AllEnums.cs" />

@@ -24,6 +24,8 @@ namespace AGVDispatcher.Com
 
         public bool IsAvaliable => _Listener == null ? false : true;
 
+        List<IComClient> allclients = new List<IComClient>();
+
         public event OnComDataReceivedDlg OnComDataReceived;
         public event OnComClientConnectedDlg OnComClientConnected;
         public event OnComDataSentDlg OnComDataSent;
@@ -35,6 +37,18 @@ namespace AGVDispatcher.Com
         public int MaxClients { get; private set; }
         public int TransmitTimeout { get; set; } = 10000;
         public bool AsyncRecBuffer { get; set; } = true;
+
+        public TCPDriver()
+        {
+            this.OnComClientDisconneted += (client) =>
+            {
+                allclients.Remove(client);
+            };
+            this.OnComClientConnected += (client) =>
+            {
+                allclients.Add(client);
+            };
+        }
 
         internal class RecState
         {
@@ -112,6 +126,10 @@ namespace AGVDispatcher.Com
                 client.GetStream().ReadTimeout = TransmitTimeout;
                 AGVTCPClient carclient = new AGVTCPClient(client) { IsAlive = true };
                 RecState state = new RecState { Client = carclient, Buffer = buff };
+                carclient.OnDisconnected += (cl) => {
+                    Debug.WriteLine("Client Disconnected!");
+                    this.OnComClientDisconneted?.Invoke(cl); 
+                };
                 this.OnComClientConnected?.Invoke(carclient);
                 state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, HandleClientAsyncRec, state);
             }
@@ -121,19 +139,26 @@ namespace AGVDispatcher.Com
         int a = 0;
         protected virtual void HandleClientAsyncRec(IAsyncResult res)
         {
-            if (_Listener == null || _Listener.Server == null || _Listener.Server.IsBound == false)
-                return;
+            
             RecState state = (RecState)res.AsyncState;
             TcpClient client = state.Client.Client;
             if (client == null)
                 return;
 
+            if (_Listener == null || _Listener.Server == null)
+            {
+                if (_Listener.Server.IsBound == false)
+                    state.Client.Disconnect();
+                return;
+            }
+
+            
+
             byte[] oldbuff = state.Buffer;
             
             if(client.Connected == false )
             {
-                this.OnComClientDisconneted?.Invoke(state.Client);
-                state.Client.Disconnected();
+                state.Client.Disconnect();
                 return;
             }
             NetworkStream ns = state.Stream;
@@ -167,9 +192,8 @@ namespace AGVDispatcher.Com
                 a++;
             }
             if (b2r == 0)
-            {
-                this.OnComClientDisconneted?.Invoke(state.Client);
-                state.Client.Disconnected();
+            { 
+                state.Client.Disconnect();
                 return;
             } 
             else if(client.Available == 0 && !ns.DataAvailable)
@@ -180,7 +204,7 @@ namespace AGVDispatcher.Com
                 {
                     byte[] buffer = new byte[b2r];
                     Buffer.BlockCopy(state.Buffer, 0, buffer, 0, b2r);
-                    this.OnComDataReceived?.Invoke(state.Client, buffer);
+                    Task.Run(() => this.OnComDataReceived?.Invoke(state.Client, buffer));
                 }
                 else
                     this.OnComDataReceived?.Invoke(state.Client, state.Buffer);
@@ -199,7 +223,10 @@ namespace AGVDispatcher.Com
                 _running = false;
                 _Listener.Server.Close(1);
                 _Listener.Stop();
-
+                while(allclients.Count != 0)
+                {
+                    allclients.First().Disconnect();
+                }
             }
         }
 

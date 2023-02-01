@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -44,15 +45,16 @@ namespace AGVDispatcher.Entity
     public interface IComData
     {
         public ComDataType DataType { get; }
-        public byte[] RawBuffer { get; }
+        public ReadOnlyCollection<byte> RawBuffer { get; }
         public void SetBuffer(byte[] data);
-        public byte CheckSum();
+        public byte CalcCheckSum();
         public byte CheckCode { get; }
         public byte AGVID { get; }
         public ushort SerialCode { get; }
         public AGVComData<UnknownData> AsUnkownData();
         public AGVComData<T> UnsafeAs<T>() where T : IComDataField;
     }
+
 
     public class AGVComData<TData> : IComData where TData : IComDataField
     {
@@ -77,7 +79,7 @@ namespace AGVDispatcher.Entity
             get => RawData.DataType;
             //set => RawData.DataType = value;
         }
-        public byte[] RawBuffer => buffer;
+        public ReadOnlyCollection<byte> RawBuffer => Array.AsReadOnly(buffer);
 
         public AGVComData(byte id,ushort serialcode = 0):this()
         {
@@ -85,7 +87,7 @@ namespace AGVDispatcher.Entity
             SerialCode = serialcode;
         }
 
-        public void SetBufferPtr(byte[] buff)
+        public void ChangeBuffer(byte[] buff)
         {
             this.buffer = buff;
         }
@@ -99,7 +101,7 @@ namespace AGVDispatcher.Entity
             }
         }
 
-        public ref DataField<TTT> GetRawData<TTT>() where TTT : IComDataField
+        public ref DataField<TTT> GetRawDataAs<TTT>() where TTT : IComDataField
         {
             ref DataField<TTT> data = ref Unsafe.As<byte, DataField<TTT>>(ref buffer[0]);
             return ref data;
@@ -128,12 +130,12 @@ namespace AGVDispatcher.Entity
         {
             RawData.StartFlag = 0x55;
             RawData.EndFlag = 0xAA;
-            RawData.CheckCode = CheckSum();
+            RawData.CheckCode = CalcCheckSum();
             RawData.DataType = PayLoad.DataType;
             return buffer;
         }
 
-        public byte CheckSum()
+        public byte CalcCheckSum()
         {
             uint sum = 0;
             for (int i = 1; i <= 23; i++)

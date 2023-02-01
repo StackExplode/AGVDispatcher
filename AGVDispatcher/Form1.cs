@@ -125,22 +125,10 @@ namespace AGVDispatcher
 
         private void button8_Click(object sender, EventArgs e)
         {
-            byte[] data = new byte[26];
-
-            for(int i=0;i<26;i++)
-            {
-                data[i] = (byte)i;
-            }
-            data[0] = 0x55;
-            data[^1] = 0xAA;
-
-            IComData rdata = new AGVComData<UnknownData>();
-            AGVComData<StateResponseData> fdata = rdata.UnsafeAs<StateResponseData>();
-
-            fdata.SetBuffer(data);
-            Debug.WriteLine($"AGVID={fdata.AGVID}, Voltage={fdata.PayLoad.Voltage}");
-            Debug.WriteLine($"BaseType={fdata.DataType}, Voltage={fdata.PayLoad.DataType}");
+            DataTemplateTest.Run();
         }
     }
+
+
 
 }
