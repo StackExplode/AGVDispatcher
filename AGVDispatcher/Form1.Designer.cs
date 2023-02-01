@@ -36,13 +36,13 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.agvStateIndicator1 = new AGVDispatcher.AGVStateIndicator();
             this.button6 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.button8 = new System.Windows.Forms.Button();
+            this.agvStateIndicator1 = new AGVDispatcher.AGVStateIndicator();
             this.SuspendLayout();
             // 
             // button1
@@ -122,14 +122,6 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "还剩下没完成的：1.轮询显示状态，2.地图UI，3.设置界面";
             // 
-            // agvStateIndicator1
-            // 
-            this.agvStateIndicator1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.agvStateIndicator1.Location = new System.Drawing.Point(421, 73);
-            this.agvStateIndicator1.Name = "agvStateIndicator1";
-            this.agvStateIndicator1.Size = new System.Drawing.Size(257, 203);
-            this.agvStateIndicator1.TabIndex = 1;
-            // 
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(44, 138);
@@ -189,11 +181,20 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // agvStateIndicator1
+            // 
+            this.agvStateIndicator1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.agvStateIndicator1.Location = new System.Drawing.Point(397, 80);
+            this.agvStateIndicator1.Name = "agvStateIndicator1";
+            this.agvStateIndicator1.Size = new System.Drawing.Size(257, 203);
+            this.agvStateIndicator1.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(903, 543);
+            this.Controls.Add(this.agvStateIndicator1);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.listBox1);
@@ -207,7 +208,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.agvStateIndicator1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -219,7 +219,6 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private AGVStateIndicator agvStateIndicator1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
@@ -233,6 +232,7 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Button button8;
+        private AGVStateIndicator agvStateIndicator1;
     }
 }
 
