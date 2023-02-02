@@ -10,5 +10,6 @@ namespace AGVDispatcher.Entity
     public class TurnPoint : NormalPoint
     {
         public override PointType PointType => PointType.Turn;
+        
     }
 }

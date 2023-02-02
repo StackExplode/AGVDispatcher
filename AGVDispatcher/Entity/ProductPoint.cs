@@ -15,6 +15,11 @@ namespace AGVDispatcher.Entity
 
         public override PointType PointType => PointType.Product;
 
+        public override string Name => IsTakePoint ? "取货点" : "存货点";
+
+        private string AvailableString() => IsAvailable ? "有" : "无";
+        public override string PointDescription => $"货物号：{ProductID}, {AvailableString()}货物";
+
         public override void CopyFrom(IPoint pt)
         {
             base.CopyFrom(pt);

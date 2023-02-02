@@ -12,7 +12,8 @@ namespace AGVDispatcher.Entity
     [XmlInclude(typeof(BreakZonePoint))]
     [XmlInclude(typeof(WorkPoint))]
     [XmlInclude(typeof(ProductPoint))]
-    public interface IPoint
+    [XmlInclude(typeof(CheckPoint))]
+    public interface IPoint : IDescripable
     {
         //public string RFIDSerial { get; }
         public ushort PhysicID { get; set; }
@@ -23,5 +24,10 @@ namespace AGVDispatcher.Entity
         public bool Equals(ushort other, bool isphy = false);
 
 
+    }
+
+    public interface IDescripable
+    {
+        public string Description { get; }
     }
 }

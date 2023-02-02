@@ -22,11 +22,11 @@ namespace AGVDispatcher.App
             SystemConfig = new SystemConfig();
         }
 
-        public int CheckDeviceByID(byte id,out IAGVDevConfig dev)
+        public int CheckDeviceByID(byte id,out IAGVDevConfig dev,bool checkagvuse = true)
         {
             foreach(var agv in AllAGV_ByOrder)
             {
-                if (id == agv.Value.AGVID)
+                if (id == agv.Value.AGVID && (!checkagvuse || agv.Value.InUse))
                 {
                     dev = agv.Value;
                     return 1;
@@ -125,6 +125,7 @@ namespace AGVDispatcher.App
         public byte Order { get; set; }
         public string IP { get; set; }
         public string Password { get; set; }
+        public bool InUse { get; set; } = true;
 
         public int CompareTo(AGVConfig other)
         {

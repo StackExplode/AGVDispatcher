@@ -11,9 +11,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 using AGVDispatcher.App;
 using AGVDispatcher.Entity;
 using AGVDispatcher.Util;
+using ExtendedXmlSerializer;
+using ExtendedXmlSerializer.Configuration;
 
 namespace AGVDispatcher.UI
 {
@@ -130,7 +134,7 @@ namespace AGVDispatcher.UI
 
         private void button9_Click(object sender, EventArgs e)
         {
-            fm_config fm = new fm_config();
+            fm_config fm = new fm_config(house);
             fm.ShowDialog();
         }
 
@@ -164,6 +168,22 @@ namespace AGVDispatcher.UI
         {
             spec.val = 250;
             bs.ResetBindings(false);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            var dic = new Dictionary<ushort, IPoint>()
+            {
+                [1] = new NormalPoint(),
+                [2] = new NormalPoint() { LogicID = 222},
+                [3] = new WorkPoint(1) { PLCOrder = 38}
+            };
+
+            IExtendedXmlSerializer serializer = new ConfigurationContainer().Create();
+            System.IO.FileStream file = System.IO.File.Create("./test.xml");
+            XmlWriterSettings setting = new XmlWriterSettings() { Indent = true};
+            serializer.Serialize(setting ,file, dic);
+            file.Close();
         }
     }
 

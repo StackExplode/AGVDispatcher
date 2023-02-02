@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -183,10 +184,15 @@ namespace AGVDispatcher.Entity
 
     public enum PointType : byte
     {
+        [Description("一般点")]
         Normal = 0,
+        [Description("出发点")]
         BreakZone,
+        [Description("货物点")]
         Product,
+        [Description("转弯点")]
         Turn,
+        [Description("作业点")]
         WorkStation
     }
 

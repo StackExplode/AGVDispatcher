@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Xml.Serialization;
 using System.Linq;
+using System.Collections.ObjectModel;
+using AGVDispatcher.Util;
+using ExtendedXmlSerializer;
+using System.Xml;
+using ExtendedXmlSerializer.Configuration;
 
 namespace AGVDispatcher.App
 {
@@ -25,6 +30,8 @@ namespace AGVDispatcher.App
             InitPoints();
 
         }
+
+        public List<IPoint> AllPoints => all_pt_logic.Values.ToList();
 
         public void GeneratePHYIndex()
         {
@@ -58,9 +65,9 @@ namespace AGVDispatcher.App
                     LogicID = (ushort)(1000 + i)
                 });
 
-            all_pt_logic.Add(5001, new WorkPoint() { LogicID = 5001, PLCOrder = 1 });
-            all_pt_logic.Add(5002, new WorkPoint() { LogicID = 5002, PLCOrder = 2 });
-            all_pt_logic.Add(5006, new WorkPoint() { LogicID = 5006, PLCOrder = 3 });
+            all_pt_logic.Add(5001, new WorkPoint(1) { LogicID = 5001, PLCOrder = 1 });
+            all_pt_logic.Add(5002, new WorkPoint(2) { LogicID = 5002, PLCOrder = 2 });
+            all_pt_logic.Add(5006, new WorkPoint(5) { LogicID = 5006, PLCOrder = 3 });
 
             for (ushort i = 1; i <= MAX_PROD; i++)
             {
@@ -182,28 +189,42 @@ namespace AGVDispatcher.App
 
         public void SaveToFile(string fname)
         {
-            XmlSerializer writer = new XmlSerializer(all_pt_logic.GetType());
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            //             var wrapper = new DictSerializeWrapper<ushort, IPoint>(all_pt_logic);
+            //             XmlSerializer writer = new XmlSerializer(wrapper.GetType());
+            //             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            // 
+            //             System.IO.FileStream file = System.IO.File.Create(fname);
+            // 
+            //             writer.Serialize(file, wrapper, ns);
+            //             file.Close();
 
+            IExtendedXmlSerializer serializer = new ConfigurationContainer().Create();
             System.IO.FileStream file = System.IO.File.Create(fname);
-
-            writer.Serialize(file, this, ns);
+            XmlWriterSettings setting = new XmlWriterSettings() { Indent = true };
+            serializer.Serialize(setting, file, all_pt_logic);
             file.Close();
         }
 
         public void LoadFromFile(string fname)
         {
-            System.Xml.Serialization.XmlSerializer reader =
-                new System.Xml.Serialization.XmlSerializer(all_pt_logic.GetType());
+            //             var wrapper = new DictSerializeWrapper<ushort, IPoint>(all_pt_logic);
+            // 
+            //             System.Xml.Serialization.XmlSerializer reader =
+            //                 new System.Xml.Serialization.XmlSerializer(wrapper.GetType());
+            // 
+            //             System.IO.StreamReader file = new System.IO.StreamReader(fname);
+            // 
+            //             var dic = (DictSerializeWrapper<ushort, IPoint>)reader.Deserialize(file);
+            //             file.Close();
 
-            System.IO.StreamReader file = new System.IO.StreamReader(fname);
-
-            Dictionary<ushort, IPoint> dic = (Dictionary<ushort, IPoint>)reader.Deserialize(file);
+            IExtendedXmlSerializer serializer = new ConfigurationContainer().Create();
+            var file = (System.IO.Stream)(new System.IO.FileStream(fname, System.IO.FileMode.Open));
+            var dic = serializer.Deserialize<Dictionary<ushort,IPoint>>(file);
             file.Close();
 
-            foreach (var d in dic)
+            foreach (var d in all_pt_logic)
             {
-                all_pt_logic[d.Value.LogicID].CopyFrom(d.Value);
+                d.Value.CopyFrom(dic[d.Key]);
             }
         }
     }

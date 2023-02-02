@@ -30,8 +30,8 @@ namespace AGVDispatcher.UI
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,6 +51,22 @@ namespace AGVDispatcher.UI
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1093, 591);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // listBox1
+            // 
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.listBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 19;
+            this.listBox1.Location = new System.Drawing.Point(3, 210);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.ScrollAlwaysVisible = true;
+            this.listBox1.Size = new System.Drawing.Size(1087, 378);
+            this.listBox1.TabIndex = 1;
+            this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
+            this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
+            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
+            // 
             // panel1
             // 
             this.panel1.BackgroundImage = global::AGVDispatcher.Properties.Resources.agvmap2;
@@ -62,70 +78,6 @@ namespace AGVDispatcher.UI
             this.panel1.Size = new System.Drawing.Size(1093, 207);
             this.panel1.TabIndex = 0;
             // 
-            // listBox1
-            // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.listBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 19;
-            this.listBox1.Items.AddRange(new object[] {
-            "无法那佛问",
-            "大瓦房狗娃",
-            "福娃福娃",
-            "稳定爱的",
-            "10001[2313](取货点) - PLC编号：2，电平：高，大无畏：啊",
-            "阿发哇斧王",
-            "无法那佛问",
-            "大瓦房狗娃",
-            "福娃福娃",
-            "稳定爱的",
-            "挖的斧王",
-            "阿发哇斧王",
-            "无法那佛问",
-            "大瓦房狗娃",
-            "福娃福娃",
-            "无法那佛问",
-            "大瓦房狗娃",
-            "福娃福娃",
-            "稳定爱的",
-            "挖的斧王",
-            "阿发哇斧王",
-            "无法那佛问",
-            "大瓦房狗娃",
-            "福娃福娃",
-            "稳定爱的",
-            "挖的斧王",
-            "阿发哇斧王",
-            "无法那佛问",
-            "大瓦房狗娃",
-            "福娃福娃",
-            "稳定爱的",
-            "挖的斧王",
-            "阿发哇斧王",
-            "无法那佛问",
-            "大瓦房狗娃",
-            "福娃福娃",
-            "稳定爱的",
-            "挖的斧王",
-            "阿发哇斧王",
-            "稳定爱的",
-            "挖的斧王",
-            "阿发哇斧王",
-            "无法那佛问",
-            "大瓦房狗娃",
-            "福娃福娃",
-            "稳定爱的",
-            "挖的斧王",
-            "阿发哇斧王"});
-            this.listBox1.Location = new System.Drawing.Point(3, 210);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(1087, 378);
-            this.listBox1.TabIndex = 1;
-            this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
-            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
-            // 
             // AGVMapConfiger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -133,6 +85,7 @@ namespace AGVDispatcher.UI
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "AGVMapConfiger";
             this.Size = new System.Drawing.Size(1093, 591);
+            this.Load += new System.EventHandler(this.AGVMapConfiger_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

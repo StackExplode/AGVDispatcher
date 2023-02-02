@@ -55,7 +55,10 @@ namespace AGVDispatcher.Entity
 
         public bool CheckInputState(int index)
         {
-            Contract.Assert(index >= 1 && index <= 4);
+            Contract.Assert(index >= 1 && index <= 5);
+            if (index == 5)
+                return this.HookState;
+
             bool rt = ((byte)InputState & (1 << (8 - index))) == 0;
             return !rt;
         }

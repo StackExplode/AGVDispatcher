@@ -132,7 +132,7 @@ namespace AGVDispatcher.App
         private void Server_OnAGVAuthResponse(IComClient client, AGVComData<AuthResponseData> data)
         {
             IAGVDevice rt_dev = null;
-            bool rt_inconf = false;
+            bool rt_inconf = true;
             bool rt_ipexp = false;
             bool rt_isauthneed = false;
             int dd = config.CheckDeviceByID(data.AGVID,out var conf);
@@ -154,7 +154,7 @@ namespace AGVDispatcher.App
                     rt_ipexp = true;
                     if (!allagv.ContainsKey(data.AGVID))
                     {
-                        rt_inconf = true;
+                        //rt_inconf = true;
                         agv = new AGV();
                         allagv.Add(data.AGVID, agv);
                     }
@@ -186,7 +186,7 @@ namespace AGVDispatcher.App
                     rt_ipexp = true;
                     if (!allplc.ContainsKey(data.AGVID))
                     {
-                        rt_inconf = true;
+                        //rt_inconf = true;
                         plc = new PLC();
                         allplc.Add(data.AGVID, plc);
                     }
@@ -209,6 +209,7 @@ namespace AGVDispatcher.App
             }
             else
             {
+                rt_inconf = false;
                 client.Disconnect();
             }
             if(rt_dev is not null)

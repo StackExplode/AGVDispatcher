@@ -18,7 +18,7 @@ namespace AGVDispatcher.App
         WareHouseMap map;
         Dictionary<int, AGV> allagv;
         Dictionary<int, PLC> allplc;
-        Dictionary<int, int> agv_order;
+        //Dictionary<int, int> agv_order;
         int miss_count = 0;
         public event OnDispacherAllFinishedDlg OnDispacherAllFinished;
 
@@ -30,12 +30,12 @@ namespace AGVDispatcher.App
             this.map = map;
             allagv = agvs;
             allplc = plcs;
-            agv_order = new Dictionary<int, int>();
-            foreach (var agv in allagv)
-            {
-                agv_order.Add(agv.Value.Order, agv.Value.AGVID);
-            }
             NewZhangZongActions = () => new BLL.v2.ZhangZongSeqActionsV2();
+        }
+
+        private KeyValuePair<int,AGV>[] GenerateSortedAGVs()
+        {     
+            return allagv.OrderBy(i => i.Value.Order).ToArray();
         }
 
         public void StartRunMissions()
@@ -44,12 +44,13 @@ namespace AGVDispatcher.App
                 throw new Exception("There Still AGV Running! Cannot Start New Loop!");
             map.ResetMapState();
             miss_count = 0;
-            for (int i=0;i<allagv.Count;i++)
+            var ordered = GenerateSortedAGVs();
+            for (int i=0;i< allagv.Count;i++)
             {
                 if (map.LastAvilableProduct < 0)
                 {
                     BreakZonePoint pt = map.GetLastBreakZonePoint();
-                    AGV agv = allagv[agv_order[i]];
+                    AGV agv = ordered[i].Value;
                     if(!pt.Equals(agv.PhysicPoint, true))
                     {
                         miss_count++;
@@ -70,7 +71,7 @@ namespace AGVDispatcher.App
                 {
                     miss_count++;
                     int prod = map.PickLastestProduct();
-                    QueuedMission mis = new QueuedMission(NewZhangZongActions(), allagv[agv_order[i]], allplc, map, prod);
+                    QueuedMission mis = new QueuedMission(NewZhangZongActions(), ordered[i].Value, allplc, map, prod);
                     mis.OnMissionFinished += MissionFinishHandler;
                     mis.Start();
                 }

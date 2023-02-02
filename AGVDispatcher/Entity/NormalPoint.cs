@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AGVDispatcher.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,19 @@ namespace AGVDispatcher.Entity
         public ushort PhysicID { get; set; }
 
         public ushort LogicID { get; set; }
+        public virtual string Name => @PointType.GetDescription();
+        public virtual string PointDescription => "无描述";
 
         public virtual PointType @PointType => PointType.Normal;
+
+        public virtual string Description
+        {
+            get
+            {
+                return string.Format("{0}[{1}] - {2}: {3}", LogicID, PhysicID, Name , PointDescription);
+            }
+        }
+
 
         public virtual void CopyFrom(IPoint pt)
         {
