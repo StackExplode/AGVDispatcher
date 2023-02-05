@@ -133,11 +133,7 @@ namespace AGVDispatcher.Entity
             timer = new();
             timer.AutoReset = false;
             timer.Elapsed += Timer_Elapsed;
-            this.client.OnDisconnected += (cl) =>
-            {
-                this.SetComStateFlag(0, AGVComState.OnLine);
-                OnAGVDisconnected?.Invoke(this);
-            };
+           
         }
 
         public void StartInfoPolling()
@@ -172,11 +168,16 @@ namespace AGVDispatcher.Entity
             this.server = server;
             this.client = client;
             this.AGVID = id;
-//             this.client.OnDisconnected += (cl) =>
-//             {
-//                 this.SetComStateFlag(0, AGVComState.OnLine);
-//             };
-            if(conf != null)
+            this.client.OnDisconnected += (cl) =>
+            {
+                this.SetComStateFlag(0, AGVComState.OnLine);
+                OnAGVDisconnected?.Invoke(this);
+            };
+            //             this.client.OnDisconnected += (cl) =>
+            //             {
+            //                 this.SetComStateFlag(0, AGVComState.OnLine);
+            //             };
+            if (conf != null)
             {
                 PLCConfig c = (PLCConfig)conf;
                 this.ExpectedIP = IPAddress.Parse(c.IP);

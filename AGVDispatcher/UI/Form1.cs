@@ -19,6 +19,13 @@ using AGVDispatcher.Util;
 using ExtendedXmlSerializer;
 using ExtendedXmlSerializer.Configuration;
 
+/*
+ TODO:
+1. 准备后才能启动
+2. 定时查询AGV状态
+3. 
+ */
+
 namespace AGVDispatcher.UI
 {
     public partial class Form1 : Form
@@ -37,14 +44,23 @@ namespace AGVDispatcher.UI
             house = new WareHouse();
             house.OnDispacherAllFinished += House_OnDispacherAllFinished;
             //#error TODO:没写完
-            GlobalConfig.Config = FakeTestInit.FakeReadConfig("配置文件路径");
+            GlobalConfig.Config = FakeTestInit.FakeReadConfig();
             FakeTestInit.House = house;
             FakeTestInit.InitSystem();
             FakeTestInit.InitAGVConfig();
             FakeTestInit.InitPLCConfig();
             FakeTestInit.InitMap();
             house.OnAGVConnected += (agv, _, _, _,_) => {
-                this.Invoke((MethodInvoker)(() => { listBox1.Items.Add($"ID为{agv.AGVID}的AGV已连接！"); }));
+                this.Invoke((MethodInvoker)(() => {
+                listBox1.Items.Add($"ID为{agv.AGVID}的AGV已连接！");
+                (agv as AGV).InfoQueryInterval = GlobalConfig.Config.SystemConfig.AGVQueryInterval;
+                (agv as AGV).StartInfoPolling(false);
+                (agv as AGV).OnAGVStateUpdate += (a) =>
+                {
+                this.Invoke((MethodInvoker)(()=>{ listBox1.Items.Add($"查询AGV状态成功，其当前物理点位为{((AGV)a).PhysicPoint}"); }));
+                        
+                    };
+                }));
             };
             house.OnAGVDisconnected += (agv) =>
             {
@@ -99,7 +115,7 @@ namespace AGVDispatcher.UI
                 }
                 else
                 {
-                    listBox1.Items.Add($"查询AGV状态成功，其输入端口1为{agv.CheckInputState(1)}");
+                    listBox1.Items.Add($"查询AGV状态成功，其当前物理点位为{agv.PhysicPoint}");
                 }
 
             });
@@ -149,25 +165,32 @@ namespace AGVDispatcher.UI
         }
         MyItemType spec = new MyItemType(100);
         BindingSource bs = new BindingSource();
+        List<MyItemType> itms;
         private void button10_Click(object sender, EventArgs e)
         {
-            BindingList<MyItemType> itms = new BindingList<MyItemType>();
+            itms = new List<MyItemType>();
             itms.Add(new MyItemType(1));
             itms.Add(spec);
             itms.Add(new MyItemType(10));
 
-            bs.DataSource = itms;
+            //bs.DataSource = itms;
 
             listBox2.DisplayMember = "TheValue";
             listBox2.ValueMember = "val";
-            listBox2.DataSource = bs;
-            
+            listBox2.DataSource = itms;
+
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
             spec.val = 250;
             bs.ResetBindings(false);
+            
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -185,6 +208,8 @@ namespace AGVDispatcher.UI
             serializer.Serialize(setting ,file, dic);
             file.Close();
         }
+
+       
     }
 
 

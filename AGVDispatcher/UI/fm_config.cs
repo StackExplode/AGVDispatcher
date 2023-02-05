@@ -25,13 +25,14 @@ namespace AGVDispatcher.UI
 
         private void fm_config_Load(object sender, EventArgs e)
         {
-            house.Map.LoadFromFile("./map.xml");
+            house.Map.LoadFromFile("./Roaming/map.xml");
             agvMapConfiger1.RefreshData();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.house.Map.SaveToFile("./map.xml");
+            this.house.Map.SaveToFile("./Roaming/map.xml");
+
         }
 
         private void button3_Click(object sender, EventArgs e)

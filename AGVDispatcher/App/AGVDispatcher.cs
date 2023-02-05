@@ -97,9 +97,9 @@ namespace AGVDispatcher.App
 
         public void EmergencyStop()
         {
-            for (int i = 0; i < allagv.Count; i++)
+            foreach(var agv in allagv)
             {
-                allagv[i].Actions.EmergStop();
+                agv.Value.Actions.EmergStop();
             }
             miss_count = 0;
             this.OnDispacherAllFinished?.Invoke(true);

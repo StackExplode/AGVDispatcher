@@ -15,19 +15,15 @@ namespace AGVDispatcher.BLL
         protected int WORK_IO { get; set; } 
         protected int FINISH_IO { get; set; } 
 
-        protected int PLCNum { get; init; }
+        protected int PLCNum { get; set; }
         private Dictionary<int, PLC> plcs;
         private WareHouseMap map;
+        private byte workstation;
         WorkPoint workpt;
 
         public Action_CallPLCWork(byte workstation)
         {
-            workpt = map.GetWorkStationPoint(workstation);
-            PLCNum = GlobalConfig.Config.GetPLCByOrder(workpt.PLCOrder);
-            this.WORK_LEVEL = workpt.WorkLevel;
-            this.FINISH_LEVEL = workpt.FinishLevel;
-            this.WORK_IO = workpt.WorkIO;
-            this.FINISH_IO = workpt.FinishIO;
+            this.workstation = workstation;
         }
 
         public bool CheckActionEnd()
@@ -40,11 +36,19 @@ namespace AGVDispatcher.BLL
         {
             this.plcs = plcs;
             this.map = map;
+
+            workpt = map.GetWorkStationPoint(workstation);
+            PLCNum = GlobalConfig.Config.GetPLCByOrder(workpt.PLCOrder);
+            this.WORK_LEVEL = workpt.WorkLevel;
+            this.FINISH_LEVEL = workpt.FinishLevel;
+            this.WORK_IO = workpt.WorkIO;
+            this.FINISH_IO = workpt.FinishIO;
         }
 
         public bool Run()
         {
-            if(workpt.GetType() != typeof(CheckPoint))
+            
+            if (workpt.GetType() != typeof(CheckPoint))
                 plcs[PLCNum].SetOutputState(WORK_IO, WORK_LEVEL);
             return true;
         }

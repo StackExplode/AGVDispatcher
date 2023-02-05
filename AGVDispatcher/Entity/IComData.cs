@@ -130,8 +130,8 @@ namespace AGVDispatcher.Entity
         {
             RawData.StartFlag = 0x55;
             RawData.EndFlag = 0xAA;
-            RawData.CheckCode = CalcCheckSum();
             RawData.DataType = PayLoad.DataType;
+            RawData.CheckCode = CalcCheckSum();
             return buffer;
         }
 

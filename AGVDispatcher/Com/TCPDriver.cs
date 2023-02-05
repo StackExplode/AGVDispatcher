@@ -75,16 +75,16 @@ namespace AGVDispatcher.Com
                 _Listener = new TcpListener(ListenIP, ListenPort);
             
         }
-        private Mutex send_mutex = new Mutex();
+        private SemaphoreSlim send_mutex = new SemaphoreSlim(1);
         public virtual void SendData(IComClient client, byte[] data)
         {
             AGVTCPClient carclient = client as AGVTCPClient;
             NetworkStream ns = carclient.Client.GetStream();
-            send_mutex.WaitOne();
+            send_mutex.Wait();
             ns.WriteTimeout = TransmitTimeout;
             var task = ns.WriteAsync(data, 0, data.Length);
             task.ContinueWith((t) => {
-                send_mutex.ReleaseMutex();
+                send_mutex.Release();
                 this.OnComDataSent?.Invoke(client, data.Length); 
             });
         }

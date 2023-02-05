@@ -21,7 +21,7 @@ namespace AGVDispatcher.App
         private AGVServer server;
         private Dictionary<int, AGV> allagv = new Dictionary<int, AGV>();
         private Dictionary<int, PLC> allplc = new Dictionary<int, PLC>();
-        private Config config;
+        //private Config config;
         private AGVDispatcher dispatcher;
         private WareHouseMapv2 _map;
         public event OnDispacherAllFinishedDlg OnDispacherAllFinished;
@@ -33,7 +33,7 @@ namespace AGVDispatcher.App
 
         public WareHouse(/*Config cfg*/)
         {
-            config = GlobalConfig.Config;
+            //config = GlobalConfig.Config;
             server = new AGVServer();
             server.OnAGVAuthResponse += Server_OnAGVAuthResponse;
             server.OnAGVValidatResponseDlg += Server_OnAGVValidated;
@@ -68,7 +68,7 @@ namespace AGVDispatcher.App
             var agv = allagv[agvid];
             var ddd = new OnAGVStateUpdateDlg((_)=> { mutex.Set(); });
             agv.OnAGVStateUpdate += ddd;
-            await Task.Run(() => { agv.Actions.SendQueryRequest(); tout=mutex.WaitOne(tmout); });
+            await Task.Run(() => { agv.Actions.SendQueryRequest(); tout=!mutex.WaitOne(tmout); });
             agv.OnAGVStateUpdate -= ddd;
             callback(agv, tout);
         }
@@ -131,6 +131,7 @@ namespace AGVDispatcher.App
 
         private void Server_OnAGVAuthResponse(IComClient client, AGVComData<AuthResponseData> data)
         {
+            var config = GlobalConfig.Config;
             IAGVDevice rt_dev = null;
             bool rt_inconf = true;
             bool rt_ipexp = false;

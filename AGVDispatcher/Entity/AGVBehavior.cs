@@ -48,7 +48,7 @@ namespace AGVDispatcher.Entity
                 AGVComData<SetPointInsCacheData> data = new AGVComData<SetPointInsCacheData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.Point = goal.PhysicID;
                 data.PayLoad.CacheOP = CacheOpCode.Create;
-                ref var ins1 = ref data.PayLoad.Instructions(0);
+                ref var ins1 = ref data.PayLoad.Instructions(1);
                 ins1.OpCode = InsOpCode.Stop;
                 ins1.Param = 0; //Forward
                 agv.server.SendData(agv, data);
@@ -74,7 +74,7 @@ namespace AGVDispatcher.Entity
                 AGVComData<SetPointInsCacheData> data = new AGVComData<SetPointInsCacheData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.CacheOP = CacheOpCode.Create;
                 data.PayLoad.Point = point.PhysicID;
-                for(int i = 0;i < insts.Count; i++)
+                for(int i = 1;i <= insts.Count; i++)
                 {
                     ref var ins = ref data.PayLoad.Instructions(i);
                     ins.OpCode = insts[i].opcode;
