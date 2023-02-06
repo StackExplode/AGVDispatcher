@@ -31,7 +31,7 @@ namespace AGVDispatcher.Util
         {
             if (value == null)
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException("Enum is null!");
             }
 
             string description = value.ToString();
@@ -44,11 +44,29 @@ namespace AGVDispatcher.Util
             {
                 description = attributes[0].Description;
             }
-            else
-            {
-                description = value.ToString();
-            }
+           
             return description;
+        }
+
+        public static System.Drawing.Color? GetUIColor(this Enum value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException("Enum is null!");
+            }
+
+            System.Drawing.Color? rt = null;
+            FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
+            UIColorAttribute[] attributes =
+               (UIColorAttribute[])
+             fieldInfo.GetCustomAttributes(typeof(UIColorAttribute), false);
+
+            if (attributes != null && attributes.Length > 0)
+            {
+                rt = attributes[0].@Color;
+            }
+ 
+            return rt;
         }
 
         public static void RefreshItemEx(this ListBox box, int index)

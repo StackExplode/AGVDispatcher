@@ -44,19 +44,19 @@ namespace AGVDispatcher.UI
             this.panel4 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txt_stopdelay = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txt_hookdelay = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txt_tmout = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.chk_checkIP = new System.Windows.Forms.CheckBox();
+            this.txt_polltime = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txt_port = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.agvMapConfiger1 = new AGVDispatcher.UI.AGVMapConfiger();
@@ -127,6 +127,7 @@ namespace AGVDispatcher.UI
             // 
             // panel_plc
             // 
+            this.panel_plc.AutoScroll = true;
             this.panel_plc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel_plc.Controls.Add(this.panel6);
             this.panel_plc.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -155,6 +156,7 @@ namespace AGVDispatcher.UI
             this.button4.TabIndex = 1;
             this.button4.Text = "+\r\n新\r\n增\r\nP\r\nL\r\nC\r\n+";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // panel_map
             // 
@@ -187,6 +189,7 @@ namespace AGVDispatcher.UI
             this.button5.TabIndex = 2;
             this.button5.Text = "快速货物设置";
             this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button2
             // 
@@ -198,6 +201,7 @@ namespace AGVDispatcher.UI
             this.button2.TabIndex = 1;
             this.button2.Text = "放弃";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -216,19 +220,19 @@ namespace AGVDispatcher.UI
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.label11);
             this.panel4.Controls.Add(this.label9);
-            this.panel4.Controls.Add(this.textBox5);
+            this.panel4.Controls.Add(this.txt_stopdelay);
             this.panel4.Controls.Add(this.label10);
             this.panel4.Controls.Add(this.label7);
-            this.panel4.Controls.Add(this.textBox4);
+            this.panel4.Controls.Add(this.txt_hookdelay);
             this.panel4.Controls.Add(this.label8);
             this.panel4.Controls.Add(this.label5);
-            this.panel4.Controls.Add(this.textBox3);
+            this.panel4.Controls.Add(this.txt_tmout);
             this.panel4.Controls.Add(this.label6);
             this.panel4.Controls.Add(this.label4);
-            this.panel4.Controls.Add(this.checkBox1);
-            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Controls.Add(this.chk_checkIP);
+            this.panel4.Controls.Add(this.txt_polltime);
             this.panel4.Controls.Add(this.label3);
-            this.panel4.Controls.Add(this.textBox1);
+            this.panel4.Controls.Add(this.txt_port);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Controls.Add(this.label1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -251,24 +255,24 @@ namespace AGVDispatcher.UI
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(160, 71);
+            this.label9.Location = new System.Drawing.Point(160, 125);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
+            this.label9.Size = new System.Drawing.Size(17, 12);
             this.label9.TabIndex = 15;
-            this.label9.Text = "毫秒";
+            this.label9.Text = "秒";
             // 
-            // textBox5
+            // txt_stopdelay
             // 
-            this.textBox5.Location = new System.Drawing.Point(91, 68);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(63, 21);
-            this.textBox5.TabIndex = 14;
-            this.textBox5.Text = "500";
+            this.txt_stopdelay.Location = new System.Drawing.Point(91, 122);
+            this.txt_stopdelay.Name = "txt_stopdelay";
+            this.txt_stopdelay.Size = new System.Drawing.Size(63, 21);
+            this.txt_stopdelay.TabIndex = 14;
+            this.txt_stopdelay.Text = "10";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(5, 71);
+            this.label10.Location = new System.Drawing.Point(5, 125);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(89, 12);
             this.label10.TabIndex = 13;
@@ -279,17 +283,17 @@ namespace AGVDispatcher.UI
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(160, 152);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(29, 12);
+            this.label7.Size = new System.Drawing.Size(17, 12);
             this.label7.TabIndex = 12;
-            this.label7.Text = "毫秒";
+            this.label7.Text = "秒";
             // 
-            // textBox4
+            // txt_hookdelay
             // 
-            this.textBox4.Location = new System.Drawing.Point(91, 149);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(63, 21);
-            this.textBox4.TabIndex = 11;
-            this.textBox4.Text = "500";
+            this.txt_hookdelay.Location = new System.Drawing.Point(91, 149);
+            this.txt_hookdelay.Name = "txt_hookdelay";
+            this.txt_hookdelay.Size = new System.Drawing.Size(63, 21);
+            this.txt_hookdelay.TabIndex = 11;
+            this.txt_hookdelay.Text = "10";
             // 
             // label8
             // 
@@ -303,72 +307,72 @@ namespace AGVDispatcher.UI
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(160, 125);
+            this.label5.Location = new System.Drawing.Point(160, 98);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 9;
             this.label5.Text = "毫秒";
             // 
-            // textBox3
+            // txt_tmout
             // 
-            this.textBox3.Location = new System.Drawing.Point(91, 122);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(63, 21);
-            this.textBox3.TabIndex = 8;
-            this.textBox3.Text = "500";
+            this.txt_tmout.Location = new System.Drawing.Point(91, 95);
+            this.txt_tmout.Name = "txt_tmout";
+            this.txt_tmout.Size = new System.Drawing.Size(63, 21);
+            this.txt_tmout.TabIndex = 8;
+            this.txt_tmout.Text = "10000";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 125);
+            this.label6.Location = new System.Drawing.Point(5, 98);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(89, 12);
             this.label6.TabIndex = 7;
-            this.label6.Text = "停车延时等待：";
+            this.label6.Text = "通信超时时间：";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(160, 98);
+            this.label4.Location = new System.Drawing.Point(160, 71);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 6;
             this.label4.Text = "毫秒";
             // 
-            // checkBox1
+            // chk_checkIP
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(175, 43);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(108, 16);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "是否检查IP绑定";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chk_checkIP.AutoSize = true;
+            this.chk_checkIP.Location = new System.Drawing.Point(175, 43);
+            this.chk_checkIP.Name = "chk_checkIP";
+            this.chk_checkIP.Size = new System.Drawing.Size(108, 16);
+            this.chk_checkIP.TabIndex = 5;
+            this.chk_checkIP.Text = "是否检查IP绑定";
+            this.chk_checkIP.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // txt_polltime
             // 
-            this.textBox2.Location = new System.Drawing.Point(91, 95);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(63, 21);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "500";
+            this.txt_polltime.Location = new System.Drawing.Point(91, 68);
+            this.txt_polltime.Name = "txt_polltime";
+            this.txt_polltime.Size = new System.Drawing.Size(63, 21);
+            this.txt_polltime.TabIndex = 4;
+            this.txt_polltime.Text = "1000";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 98);
+            this.label3.Location = new System.Drawing.Point(5, 71);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 3;
             this.label3.Text = "轮询数据间隔：";
             // 
-            // textBox1
+            // txt_port
             // 
-            this.textBox1.Location = new System.Drawing.Point(91, 41);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(63, 21);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "17878";
+            this.txt_port.Location = new System.Drawing.Point(91, 41);
+            this.txt_port.Name = "txt_port";
+            this.txt_port.Size = new System.Drawing.Size(63, 21);
+            this.txt_port.TabIndex = 2;
+            this.txt_port.Text = "17878";
             // 
             // label2
             // 
@@ -409,7 +413,9 @@ namespace AGVDispatcher.UI
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "fm_config";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "设置";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fm_config_FormClosing);
             this.Load += new System.EventHandler(this.fm_config_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel_agv.ResumeLayout(false);
@@ -441,19 +447,19 @@ namespace AGVDispatcher.UI
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txt_stopdelay;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txt_hookdelay;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txt_tmout;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.CheckBox chk_checkIP;
+        private System.Windows.Forms.TextBox txt_polltime;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_port;
         private AGVMapConfiger agvMapConfiger1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button5;

@@ -31,13 +31,13 @@ namespace AGVDispatcher.UI
         {
             this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txt_id = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txt_order = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txt_pass = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txt_ip = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -64,14 +64,15 @@ namespace AGVDispatcher.UI
             this.linkLabel1.TabIndex = 2;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "×";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // textBox1
+            // txt_id
             // 
-            this.textBox1.Location = new System.Drawing.Point(64, 53);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(106, 21);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "1";
+            this.txt_id.Location = new System.Drawing.Point(64, 53);
+            this.txt_id.Name = "txt_id";
+            this.txt_id.Size = new System.Drawing.Size(106, 21);
+            this.txt_id.TabIndex = 5;
+            this.txt_id.Text = "1";
             // 
             // label2
             // 
@@ -82,13 +83,13 @@ namespace AGVDispatcher.UI
             this.label2.TabIndex = 4;
             this.label2.Text = "PLC编号:";
             // 
-            // textBox2
+            // txt_order
             // 
-            this.textBox2.Location = new System.Drawing.Point(64, 89);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(106, 21);
-            this.textBox2.TabIndex = 7;
-            this.textBox2.Text = "1";
+            this.txt_order.Location = new System.Drawing.Point(64, 89);
+            this.txt_order.Name = "txt_order";
+            this.txt_order.Size = new System.Drawing.Size(106, 21);
+            this.txt_order.TabIndex = 7;
+            this.txt_order.Text = "1";
             // 
             // label3
             // 
@@ -99,12 +100,12 @@ namespace AGVDispatcher.UI
             this.label3.TabIndex = 6;
             this.label3.Text = "PLC次序:";
             // 
-            // textBox3
+            // txt_pass
             // 
-            this.textBox3.Location = new System.Drawing.Point(64, 126);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(106, 21);
-            this.textBox3.TabIndex = 9;
+            this.txt_pass.Location = new System.Drawing.Point(64, 126);
+            this.txt_pass.Name = "txt_pass";
+            this.txt_pass.Size = new System.Drawing.Size(106, 21);
+            this.txt_pass.TabIndex = 9;
             // 
             // label4
             // 
@@ -115,12 +116,12 @@ namespace AGVDispatcher.UI
             this.label4.TabIndex = 8;
             this.label4.Text = "通信密码:";
             // 
-            // textBox4
+            // txt_ip
             // 
-            this.textBox4.Location = new System.Drawing.Point(64, 165);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(106, 21);
-            this.textBox4.TabIndex = 11;
+            this.txt_ip.Location = new System.Drawing.Point(64, 165);
+            this.txt_ip.Name = "txt_ip";
+            this.txt_ip.Size = new System.Drawing.Size(106, 21);
+            this.txt_ip.TabIndex = 11;
             // 
             // label5
             // 
@@ -136,13 +137,13 @@ namespace AGVDispatcher.UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.txt_ip);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txt_pass);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txt_order);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txt_id);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.linkLabel1);
@@ -157,13 +158,13 @@ namespace AGVDispatcher.UI
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_id;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txt_order;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txt_pass;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txt_ip;
         private System.Windows.Forms.Label label5;
     }
 }

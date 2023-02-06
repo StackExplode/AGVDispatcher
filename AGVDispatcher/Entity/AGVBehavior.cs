@@ -90,6 +90,28 @@ namespace AGVDispatcher.Entity
                 agv.server.SendData(agv, data);
             }
 
+            public void AGVReady()
+            {
+                AGVComData<ButtonSimulateData> data = new AGVComData<ButtonSimulateData>(agv.AGVID, agv.LatestSerialCode);
+                data.PayLoad.Ready = true;
+                agv.server.SendData(agv, data);
+            }
+
+            public void ClearFault()
+            {
+                AGVComData<ButtonSimulateData> data = new AGVComData<ButtonSimulateData>(agv.AGVID, agv.LatestSerialCode);
+                data.PayLoad.FaultClear = true;
+                agv.server.SendData(agv, data);
+            }
+
+            public void ClearFaultAndReady()
+            {
+                AGVComData<ButtonSimulateData> data = new AGVComData<ButtonSimulateData>(agv.AGVID, agv.LatestSerialCode);
+                data.PayLoad.FaultClear = true;
+                data.PayLoad.Ready = true;
+                agv.server.SendData(agv, data);
+            }
+
             public void SendQueryRequest()
             {
                 AGVComData<QueryStateData> data = new AGVComData<QueryStateData>(agv.AGVID, agv.LatestSerialCode);

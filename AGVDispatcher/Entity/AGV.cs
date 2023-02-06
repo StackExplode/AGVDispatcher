@@ -37,7 +37,7 @@ namespace AGVDispatcher.Entity
         public event OnAGVComStateUpdateDlg OnAGVComStateUpdate;
         public event OnAGVDisconnectedDlg OnAGVDisconnected;
 
-        public AGVState State { get; private set; }
+        public AGVState State { get; private set; } = AGVState.UnReady;
         public ushort PhysicPoint { get; private set; }
         protected ushort LogicPoint { get; private set; }
         public DirectionCode Direction { get; private set; }
@@ -50,7 +50,7 @@ namespace AGVDispatcher.Entity
         public IPAddress IP => ((IPEndPoint)ComClient.Client.Client.RemoteEndPoint).Address;
         public IPAddress ExpectedIP { get; set; }
 
-        public ushort LatestSerialCode => sid++;
+        public ushort LatestSerialCode => unchecked(sid++);
         private AGVServer server;
         public AGVServer Server => server;
         private byte[] authcode = new byte[16];

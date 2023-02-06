@@ -16,10 +16,10 @@ namespace AGVDispatcher.App
 
         public static Config FakeReadConfig()
         {
-            if (File.Exists("./Roaming/config.xml"))
-                config = Config.LoadFromFile("./Roaming/config.xml");
-            else
-                config = new Config();
+            config = new Config();
+//             if (File.Exists("./Roaming/config.xml"))
+//                 config.LoadFromFile("./Roaming/config.xml");
+
             
             return config;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,30 +10,50 @@ namespace AGVDispatcher.Entity
 {
     public enum AGVState : byte
     {
+        [Description("空闲待命"), UIColor(KnownColor.Green)]
         StopIdle = 0,
+        [Description("运行中"), UIColor(KnownColor.SkyBlue)]
         Running = 1,
+        [Description("急停"), UIColor(KnownColor.Red)]
         E_Stop = 2,
+        [Description("驱动故障"), UIColor(KnownColor.Red)]
         DriverFailure = 3,
+        [Description("脱线"), UIColor(KnownColor.Red)]
         OutOfLine = 4,
+        [Description("满线"), UIColor(KnownColor.Red)]
         FullLine = 5,
+        [Description("防撞触发"), UIColor(KnownColor.Orange)]
         Anticollision_M = 6,
+        [Description("光电触发"), UIColor(KnownColor.Orange)]
         Anticollision_L = 7,
+        [Description("电量不足"), UIColor(KnownColor.Red)]
         BatteryLow = 8,
+        [Description("内部错误"), UIColor(KnownColor.Red)]
         InternalError = 9,
+        [Description("指令超时"), UIColor(KnownColor.Red)]
         DispatchTimeout = 10,
+        [Description("执行超时"), UIColor(KnownColor.Red)]
         ExecutionTimout = 11,
+        [Description("限位触发"), UIColor(KnownColor.Orange)]
         LimitTrigger = 12,
+        [Description("未准备"), UIColor(KnownColor.Yellow)]
         UnReady = 255
     }
 
     [Flags]
     public enum AGVComState : byte
     {
+        [Description("未知状态")]
         Unkown = 0,
+        [Description("在线")]
         OnLine = 1,
+        [Description("验证")]
         Authorized = (1 << 1),
+        [Description("通信超时")]
         TimeOut = (1 << 2),
+        [Description("通信错误")]
         ComError = (1 << 3),
+        [Description("正常")]
         Normal = OnLine | Authorized,
 
     }
@@ -222,5 +243,20 @@ namespace AGVDispatcher.Entity
         LeftTurn = 0,
         RightTurn = 1,
         Switch = 2
+    }
+
+    [System.AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
+    sealed class UIColorAttribute : Attribute
+    {
+        readonly KnownColor _color;
+
+        public UIColorAttribute(KnownColor c)
+        {
+            this._color = c;
+
+        }
+
+        public Color @Color => Color.FromKnownColor(_color);
+        
     }
 }

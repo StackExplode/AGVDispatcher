@@ -43,12 +43,13 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
-            this.agvStateIndicator1 = new AGVDispatcher.UI.AGVStateIndicator();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
+            this.agvStateIndicator1 = new AGVDispatcher.UI.AGVStateIndicator();
             this.SuspendLayout();
             // 
             // button1
@@ -93,7 +94,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(419, 51);
+            this.label2.Location = new System.Drawing.Point(395, 29);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(161, 12);
             this.label2.TabIndex = 5;
@@ -197,14 +198,6 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
-            // agvStateIndicator1
-            // 
-            this.agvStateIndicator1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.agvStateIndicator1.Location = new System.Drawing.Point(397, 80);
-            this.agvStateIndicator1.Name = "agvStateIndicator1";
-            this.agvStateIndicator1.Size = new System.Drawing.Size(259, 201);
-            this.agvStateIndicator1.TabIndex = 14;
-            // 
             // listBox2
             // 
             this.listBox2.FormattingEnabled = true;
@@ -254,11 +247,31 @@
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(690, 95);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(149, 95);
+            this.button14.TabIndex = 21;
+            this.button14.Text = "Real";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // agvStateIndicator1
+            // 
+            this.agvStateIndicator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(223)))), ((int)(((byte)(223)))));
+            this.agvStateIndicator1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.agvStateIndicator1.Location = new System.Drawing.Point(377, 51);
+            this.agvStateIndicator1.Name = "agvStateIndicator1";
+            this.agvStateIndicator1.Size = new System.Drawing.Size(270, 220);
+            this.agvStateIndicator1.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1068, 586);
+            this.Controls.Add(this.button14);
             this.Controls.Add(this.button13);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.button11);
@@ -310,6 +323,7 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button button14;
     }
 }
 

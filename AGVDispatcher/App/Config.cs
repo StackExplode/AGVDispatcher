@@ -1,30 +1,43 @@
-﻿using System;
+﻿using ExtendedXmlSerializer;
+using ExtendedXmlSerializer.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace AGVDispatcher.App
 {
+
     [Serializable]
-    [XmlRoot("SaveData")]
+    //[XmlRoot("SaveData")]
     public class Config
     {
-        private Dictionary<int,AGVConfig> AllAGV_ByOrder { get; set; } = new Dictionary<int, AGVConfig>();
-        private Dictionary<int, PLCConfig> AllPLC_ByOrder { get; set; } = new Dictionary<int, PLCConfig>();
-        public SystemConfig @SystemConfig { get; set; }
+        [XmlElement]
+        private Dictionary<int,AGVConfig> _AllAGV_ByOrder = new Dictionary<int, AGVConfig>();
+        [XmlElement]
+        private Dictionary<int, PLCConfig> _AllPLC_ByOrder = new Dictionary<int, PLCConfig>();
+        [XmlElement]
+        SystemConfig sysconfig;
+        [XmlIgnore]
+        public SystemConfig @SystemConfig { get => sysconfig; private set => sysconfig = value; }
+        [XmlIgnore]
+        public Dictionary<int, AGVConfig> AllAGV_ByOrder => _AllAGV_ByOrder;
+        [XmlIgnore]
+        public Dictionary<int, PLCConfig> AllPLC_ByOrder => _AllPLC_ByOrder;
 
         public Config()
-        { 
-            SystemConfig = new SystemConfig();
+        {
+            sysconfig = new SystemConfig();
         }
 
         public int CheckDeviceByID(byte id,out IAGVDevConfig dev,bool checkagvuse = true)
         {
-            foreach(var agv in AllAGV_ByOrder)
+            foreach(var agv in _AllAGV_ByOrder)
             {
                 if (id == agv.Value.AGVID && (!checkagvuse || agv.Value.InUse))
                 {
@@ -32,7 +45,7 @@ namespace AGVDispatcher.App
                     return 1;
                 }
             }
-            foreach (var plc in AllPLC_ByOrder)
+            foreach (var plc in _AllPLC_ByOrder)
             {
                 if (id == plc.Value.PLCID)
                 {
@@ -46,37 +59,47 @@ namespace AGVDispatcher.App
 
         public void AddAGVConfig(AGVConfig agvc)
         {
-            AllAGV_ByOrder.Add(agvc.Order, agvc);
+            _AllAGV_ByOrder.Add(agvc.Order, agvc);
         }
 
         public void AddPLCConfig(PLCConfig plcc)
         {
-            AllPLC_ByOrder.Add(plcc.Order, plcc);
+            _AllPLC_ByOrder.Add(plcc.Order, plcc);
         }
 
-        public void ClearAGVConfig() => AllAGV_ByOrder.Clear();
+        public void ClearAGVConfig() => _AllAGV_ByOrder.Clear();
 
-        public void ClearPLCConfig() => AllPLC_ByOrder.Clear();
+        public void ClearPLCConfig() => _AllPLC_ByOrder.Clear();
 
-        public int GetAGVByOrder(int order) => AllAGV_ByOrder[order].AGVID;
+        public int GetAGVByOrder(int order) => _AllAGV_ByOrder[order].AGVID;
 
-        public int GetPLCByOrder(int order) => AllPLC_ByOrder[order].PLCID;
+        public int GetPLCByOrder(int order) => _AllPLC_ByOrder[order].PLCID;
 
 
 
         public void SaveToFile(string fname)
         {
 
-            XmlSerializer writer = new XmlSerializer(this.GetType());
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-
+            IExtendedXmlSerializer serializer = new ConfigurationContainer().Create();
             System.IO.FileStream file = System.IO.File.Create(fname);
-
-            writer.Serialize(file, this, ns);
+            XmlWriterSettings setting = new XmlWriterSettings() { Indent = true };
+            serializer.Serialize(setting, file, this);
             file.Close();
         }
 
-        public static Config LoadFromFile(string fname)
+        public void LoadFromFile(string fname)
+        {
+            IExtendedXmlSerializer serializer = new ConfigurationContainer().Create();
+            var file = (System.IO.Stream)(new System.IO.FileStream(fname, System.IO.FileMode.Open));
+            Config sd = serializer.Deserialize<Config>(file);
+            file.Close();
+
+            this.SystemConfig = sd.SystemConfig;
+            this._AllAGV_ByOrder = sd._AllAGV_ByOrder;
+            this._AllPLC_ByOrder = sd._AllPLC_ByOrder;
+        }
+
+        public static Config ReadFromFile(string fname)
         {
             System.Xml.Serialization.XmlSerializer reader =
                 new System.Xml.Serialization.XmlSerializer(typeof(Config));
@@ -94,6 +117,12 @@ namespace AGVDispatcher.App
     {
         private static Config conf;
         private static ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
+
+        public static void CreateNewConfig()
+        {
+            @Config = new Config();
+        }
+
         public static Config @Config
         {
             get
@@ -103,7 +132,7 @@ namespace AGVDispatcher.App
                 locker.ExitReadLock();
                 return rt;
             }
-            set
+            private set
             {
                 locker.EnterWriteLock();
                 conf = value;

@@ -31,7 +31,7 @@ namespace AGVDispatcher.App
 
         }
 
-        public List<IPoint> AllPoints => all_pt_logic.Values.ToList();
+        public ReadOnlyCollection<IPoint> AllPoints => all_pt_logic.Values.ToList().AsReadOnly();
 
         public void GeneratePHYIndex()
         {

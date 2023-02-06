@@ -44,7 +44,7 @@ namespace AGVDispatcher.UI
             house = new WareHouse();
             house.OnDispacherAllFinished += House_OnDispacherAllFinished;
             //#error TODO:没写完
-            GlobalConfig.Config = FakeTestInit.FakeReadConfig();
+            GlobalConfig.CreateNewConfig();
             FakeTestInit.House = house;
             FakeTestInit.InitSystem();
             FakeTestInit.InitAGVConfig();
@@ -209,7 +209,11 @@ namespace AGVDispatcher.UI
             file.Close();
         }
 
-       
+        private void button14_Click(object sender, EventArgs e)
+        {
+            fm_main fm = new fm_main();
+            fm.ShowDialog();
+        }
     }
 
 
