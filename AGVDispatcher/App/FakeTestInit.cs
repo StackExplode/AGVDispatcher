@@ -34,7 +34,7 @@ namespace AGVDispatcher.App
             config.SystemConfig.StopDelay = 5;
 
         }
-#warning 根据实际情况填写
+//#warning 根据实际情况填写
         public static void InitAGVConfig()
         {
             AGVConfig agvc = new AGVConfig();

@@ -14,7 +14,7 @@ namespace AGVDispatcher.Entity
     {
         private AGVTCPClient client;
         public AGVTCPClient ComClient => client;
-        private AGVComState comstate = AGVComState.Unkown;
+        private AGVComState comstate = AGVComState.OffLine;
         public AGVComState ComState => comstate;
 
         public byte AGVID { get; private set; }

@@ -168,6 +168,12 @@
     <Compile Include="UI\fm_main.Designer.cs">
       <DependentUpon>fm_main.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\fm_run.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\fm_run.Designer.cs">
+      <DependentUpon>fm_run.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\IAGVDevConfigBlock.cs" />
     <Compile Include="UI\MapView.cs">
       <SubType>UserControl</SubType>
@@ -187,6 +193,12 @@
     <Compile Include="UI\PLCConfigBlock.Designer.cs">
       <DependentUpon>PLCConfigBlock.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\PLCIndicator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\PLCIndicator.Designer.cs">
+      <DependentUpon>PLCIndicator.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\PointConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +207,12 @@
     </Compile>
     <Compile Include="UI\ProductConfigForm.Designer.cs">
       <DependentUpon>ProductConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\RemoveAGVUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\RemoveAGVUI.Designer.cs">
+      <DependentUpon>RemoveAGVUI.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\TurnPointConfigForm.cs">
       <SubType>Form</SubType>
@@ -264,6 +282,9 @@
     <EmbeddedResource Include="UI\fm_main.resx">
       <DependentUpon>fm_main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\fm_run.resx">
+      <DependentUpon>fm_run.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -286,11 +307,17 @@
     <EmbeddedResource Include="UI\PLCConfigBlock.resx">
       <DependentUpon>PLCConfigBlock.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\PLCIndicator.resx">
+      <DependentUpon>PLCIndicator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\PointConfigForm.resx">
       <DependentUpon>PointConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ProductConfigForm.resx">
       <DependentUpon>ProductConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\RemoveAGVUI.resx">
+      <DependentUpon>RemoveAGVUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\TurnPointConfigForm.resx">
       <DependentUpon>TurnPointConfigForm.cs</DependentUpon>
@@ -333,6 +360,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\robot-delivery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PLCReal.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

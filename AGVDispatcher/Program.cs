@@ -35,9 +35,11 @@ namespace AGVDispatcher
 
             var lsn = new TextWriterTraceListener(logfile);
             Trace.Listeners.Add(lsn);
+#if !DEBUG
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+#endif
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Helpers.LogInfo("========程序启动！========");
@@ -46,12 +48,13 @@ namespace AGVDispatcher
 #else
             Application.Run(new UI.fm_main());
 #endif
-            Helpers.LogInfo("========程序结束！========");
+            Helpers.LogInfo("********程序结束！********");
         }
 
         private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             Helpers.LogException(e.Exception);
+            
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -62,6 +65,7 @@ namespace AGVDispatcher
         private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
             Helpers.LogException(e.Exception);
+            
         }
     }
 }

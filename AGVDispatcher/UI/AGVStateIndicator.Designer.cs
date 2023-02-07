@@ -66,6 +66,7 @@
             this.btn_estop = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.lbl_order = new System.Windows.Forms.Label();
+            this.btn_startup = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pic_agv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_com)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_state)).BeginInit();
@@ -128,13 +129,13 @@
             this.lbl_comstate.Font = new System.Drawing.Font("宋体", 11.5F);
             this.lbl_comstate.Location = new System.Drawing.Point(113, 11);
             this.lbl_comstate.Name = "lbl_comstate";
-            this.lbl_comstate.Size = new System.Drawing.Size(56, 16);
+            this.lbl_comstate.Size = new System.Drawing.Size(40, 16);
             this.lbl_comstate.TabIndex = 3;
-            this.lbl_comstate.Text = "未连接";
+            this.lbl_comstate.Text = "离线";
             // 
             // pic_state
             // 
-            this.pic_state.BackColor = System.Drawing.Color.Red;
+            this.pic_state.BackColor = System.Drawing.Color.DarkGray;
             this.pic_state.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pic_state.Location = new System.Drawing.Point(87, 33);
             this.pic_state.Name = "pic_state";
@@ -148,9 +149,9 @@
             this.lbl_state.Font = new System.Drawing.Font("宋体", 11.5F);
             this.lbl_state.Location = new System.Drawing.Point(113, 37);
             this.lbl_state.Name = "lbl_state";
-            this.lbl_state.Size = new System.Drawing.Size(56, 16);
+            this.lbl_state.Size = new System.Drawing.Size(40, 16);
             this.lbl_state.TabIndex = 3;
-            this.lbl_state.Text = "未准备";
+            this.lbl_state.Text = "未知";
             this.lbl_state.Click += new System.EventHandler(this.label2_Click);
             // 
             // lbl_ip
@@ -159,9 +160,9 @@
             this.lbl_ip.ForeColor = System.Drawing.Color.Blue;
             this.lbl_ip.Location = new System.Drawing.Point(3, 171);
             this.lbl_ip.Name = "lbl_ip";
-            this.lbl_ip.Size = new System.Drawing.Size(95, 12);
+            this.lbl_ip.Size = new System.Drawing.Size(47, 12);
             this.lbl_ip.TabIndex = 5;
-            this.lbl_ip.Text = "192.168.101.100";
+            this.lbl_ip.Text = "0.0.0.0";
             // 
             // label3
             // 
@@ -178,9 +179,9 @@
             this.lbl_logi.Font = new System.Drawing.Font("宋体", 11.5F);
             this.lbl_logi.Location = new System.Drawing.Point(147, 63);
             this.lbl_logi.Name = "lbl_logi";
-            this.lbl_logi.Size = new System.Drawing.Size(48, 16);
+            this.lbl_logi.Size = new System.Drawing.Size(16, 16);
             this.lbl_logi.TabIndex = 3;
-            this.lbl_logi.Text = "50001";
+            this.lbl_logi.Text = "0";
             this.lbl_logi.Click += new System.EventHandler(this.label2_Click);
             // 
             // label5
@@ -218,9 +219,9 @@
             this.lbl_volt.Font = new System.Drawing.Font("宋体", 11.5F);
             this.lbl_volt.Location = new System.Drawing.Point(153, 168);
             this.lbl_volt.Name = "lbl_volt";
-            this.lbl_volt.Size = new System.Drawing.Size(48, 16);
+            this.lbl_volt.Size = new System.Drawing.Size(40, 16);
             this.lbl_volt.TabIndex = 3;
-            this.lbl_volt.Text = "24.1V";
+            this.lbl_volt.Text = "0.0V";
             this.lbl_volt.Click += new System.EventHandler(this.label2_Click);
             // 
             // label8
@@ -238,9 +239,9 @@
             this.lbl_battery.Font = new System.Drawing.Font("宋体", 11.5F);
             this.lbl_battery.Location = new System.Drawing.Point(221, 167);
             this.lbl_battery.Name = "lbl_battery";
-            this.lbl_battery.Size = new System.Drawing.Size(40, 16);
+            this.lbl_battery.Size = new System.Drawing.Size(24, 16);
             this.lbl_battery.TabIndex = 3;
-            this.lbl_battery.Text = "100%";
+            this.lbl_battery.Text = "0%";
             this.lbl_battery.Click += new System.EventHandler(this.label2_Click);
             // 
             // label9
@@ -410,32 +411,38 @@
             // btn_ready
             // 
             this.btn_ready.BackColor = System.Drawing.Color.Cyan;
-            this.btn_ready.Location = new System.Drawing.Point(4, 190);
+            this.btn_ready.Enabled = false;
+            this.btn_ready.Location = new System.Drawing.Point(70, 190);
             this.btn_ready.Name = "btn_ready";
-            this.btn_ready.Size = new System.Drawing.Size(75, 23);
+            this.btn_ready.Size = new System.Drawing.Size(57, 23);
             this.btn_ready.TabIndex = 13;
-            this.btn_ready.Text = "强制准备";
+            this.btn_ready.Text = "准备";
             this.btn_ready.UseVisualStyleBackColor = false;
+            this.btn_ready.Click += new System.EventHandler(this.btn_ready_Click);
             // 
             // btn_fault
             // 
             this.btn_fault.BackColor = System.Drawing.Color.Orange;
-            this.btn_fault.Location = new System.Drawing.Point(95, 190);
+            this.btn_fault.Enabled = false;
+            this.btn_fault.Location = new System.Drawing.Point(136, 190);
             this.btn_fault.Name = "btn_fault";
-            this.btn_fault.Size = new System.Drawing.Size(75, 23);
+            this.btn_fault.Size = new System.Drawing.Size(57, 23);
             this.btn_fault.TabIndex = 13;
-            this.btn_fault.Text = "清除故障";
+            this.btn_fault.Text = "清故障";
             this.btn_fault.UseVisualStyleBackColor = false;
+            this.btn_fault.Click += new System.EventHandler(this.btn_fault_Click);
             // 
             // btn_estop
             // 
             this.btn_estop.BackColor = System.Drawing.Color.Red;
-            this.btn_estop.Location = new System.Drawing.Point(186, 190);
+            this.btn_estop.Enabled = false;
+            this.btn_estop.Location = new System.Drawing.Point(202, 190);
             this.btn_estop.Name = "btn_estop";
-            this.btn_estop.Size = new System.Drawing.Size(75, 23);
+            this.btn_estop.Size = new System.Drawing.Size(57, 23);
             this.btn_estop.TabIndex = 13;
             this.btn_estop.Text = "急停";
             this.btn_estop.UseVisualStyleBackColor = false;
+            this.btn_estop.Click += new System.EventHandler(this.btn_estop_Click);
             // 
             // label15
             // 
@@ -458,12 +465,25 @@
             this.lbl_order.Text = "0";
             this.lbl_order.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btn_startup
+            // 
+            this.btn_startup.BackColor = System.Drawing.Color.Lime;
+            this.btn_startup.Enabled = false;
+            this.btn_startup.Location = new System.Drawing.Point(4, 190);
+            this.btn_startup.Name = "btn_startup";
+            this.btn_startup.Size = new System.Drawing.Size(57, 23);
+            this.btn_startup.TabIndex = 16;
+            this.btn_startup.Text = "启动";
+            this.btn_startup.UseVisualStyleBackColor = false;
+            this.btn_startup.Click += new System.EventHandler(this.btn_startup_Click);
+            // 
             // AGVStateIndicator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(223)))), ((int)(((byte)(223)))));
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.btn_startup);
             this.Controls.Add(this.lbl_order);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.btn_estop);
@@ -504,6 +524,7 @@
             this.Controls.Add(this.label1);
             this.Name = "AGVStateIndicator";
             this.Size = new System.Drawing.Size(270, 220);
+            this.Load += new System.EventHandler(this.AGVStateIndicator_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pic_agv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_com)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_state)).EndInit();
@@ -561,5 +582,6 @@
         private System.Windows.Forms.Button btn_estop;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lbl_order;
+        private System.Windows.Forms.Button btn_startup;
     }
 }

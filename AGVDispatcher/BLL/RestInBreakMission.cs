@@ -35,17 +35,25 @@ namespace AGVDispatcher.BLL
                 locker.Set();
         }
 
+        bool forceexit = false;
         public void Start()
         {
+            forceexit = false;
             Task task = new Task(() =>
             {
                 agv.Actions.SetAutoStop(bpt);
                 agv.Actions.RunStraigth();
                 locker.WaitOne();
             });
-            task.ContinueWith((t) => { this.OnMissionFinished?.Invoke(this); });
+            task.ContinueWith((t) => { this.OnMissionFinished?.Invoke(this, forceexit); });
             task.Start();  
             
+        }
+
+        public void Abort()
+        {
+            forceexit = true;
+            locker.Set();
         }
 
         protected virtual void Dispose(bool disposing)

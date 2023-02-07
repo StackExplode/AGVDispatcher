@@ -43,8 +43,7 @@ namespace AGVDispatcher.Entity
     [Flags]
     public enum AGVComState : byte
     {
-        [Description("未知状态")]
-        Unkown = 0,
+        OffLine = 0,
         [Description("在线")]
         OnLine = 1,
         [Description("验证")]
@@ -53,7 +52,7 @@ namespace AGVDispatcher.Entity
         TimeOut = (1 << 2),
         [Description("通信错误")]
         ComError = (1 << 3),
-        [Description("正常")]
+        [Description("通信正常")]
         Normal = OnLine | Authorized,
 
     }
@@ -129,6 +128,9 @@ namespace AGVDispatcher.Entity
         ClockwiseRotate = 5,
         LeftMove = 6,
         RightMove = 7,
+
+        SameAsLast = 0,
+        ReverseAsLast = 1
     }
 
     [Flags]

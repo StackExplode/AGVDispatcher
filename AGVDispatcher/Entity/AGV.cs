@@ -18,7 +18,7 @@ namespace AGVDispatcher.Entity
         private ushort sid = 1;
         private AGVTCPClient client;
         public AGVTCPClient ComClient => client;
-        private AGVComState comstate = AGVComState.Unkown;
+        private AGVComState comstate = AGVComState.OffLine;
         public AGVComState ComState => comstate;
         public byte AGVID { get; private set; }
         public int Order { get; private set; }
@@ -39,7 +39,7 @@ namespace AGVDispatcher.Entity
 
         public AGVState State { get; private set; } = AGVState.UnReady;
         public ushort PhysicPoint { get; private set; }
-        protected ushort LogicPoint { get; private set; }
+        public ushort LogicPoint { get; private set; }
         public DirectionCode Direction { get; private set; }
         public bool HookState { get; private set; }
         public IOState InputState { get; private set; }

@@ -108,13 +108,17 @@ namespace AGVDispatcher.App
             server.StopServer(true);
         }
 
-        public bool StartRun()
+        public bool CheckReadyToGo() => dispatcher.CheckAGVReady();
+
+        public bool StartRun(bool check = true)
         {
-            if (!dispatcher.CheckAGVReady())
+            if (check && !CheckReadyToGo())
                 return false;
             dispatcher.StartRunMissions();
             return true;
         }
+
+        public bool AbortAGVMission(AGV agv) => dispatcher.AbortMission(agv);
 
         public void EmergencyStop() => dispatcher.EmergencyStop();
 
@@ -137,6 +141,7 @@ namespace AGVDispatcher.App
             bool rt_ipexp = false;
             bool rt_isauthneed = false;
             int dd = config.CheckDeviceByID(data.AGVID,out var conf);
+            bool rrr = false;
 
             byte[] bb = new byte[8];
             unsafe
@@ -176,6 +181,7 @@ namespace AGVDispatcher.App
                 {
                     agv.SetComStateFlag(AGVComState.Normal);
                     agv.SetWorkState(AGVWorkState.Idle);
+                    rrr = true;
                 }        
             }
             else if(dd < 0)
@@ -206,6 +212,7 @@ namespace AGVDispatcher.App
                 else
                 {
                     plc.SetComStateFlag(AGVComState.Normal);
+                    rrr = true;
                 }
             }
             else
@@ -219,6 +226,7 @@ namespace AGVDispatcher.App
             }
             bool? eee = (config.SystemConfig.CheckIP ? (bool?)rt_ipexp : null);
             this.OnAGVConnected?.Invoke(rt_dev, rt_dev?.ComClient, rt_inconf, rt_isauthneed, eee);
+            this.OnAGVValidated?.Invoke(rt_dev, true);
         }
     }
 }

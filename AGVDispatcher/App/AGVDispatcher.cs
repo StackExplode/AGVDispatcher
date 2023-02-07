@@ -18,6 +18,7 @@ namespace AGVDispatcher.App
         WareHouseMap map;
         Dictionary<int, AGV> allagv;
         Dictionary<int, PLC> allplc;
+        Dictionary<int, IMission> allmissions = new Dictionary<int, IMission>();
         //Dictionary<int, int> agv_order;
         int miss_count = 0;
         public event OnDispacherAllFinishedDlg OnDispacherAllFinished;
@@ -55,12 +56,13 @@ namespace AGVDispatcher.App
                     {
                         miss_count++;
                         var mis = new RestInBreakMission(agv, pt);
-                        mis.OnMissionFinished += (lastmis) =>
+                        TryAddMissionDict(agv.AGVID, mis);
+                        mis.OnMissionFinished += (lastmis, _) =>
                         {
+                            agv.SetWorkState(AGVWorkState.Idle);
                             miss_count--;
                             if (miss_count <= 0)
-                            {
-                                agv.SetWorkState(AGVWorkState.Idle);
+                            { 
                                 this.OnDispacherAllFinished?.Invoke(false);
                             }
                         };
@@ -72,6 +74,7 @@ namespace AGVDispatcher.App
                     miss_count++;
                     int prod = map.PickLastestProduct();
                     QueuedMission mis = new QueuedMission(NewZhangZongActions(), ordered[i].Value, allplc, map, prod);
+                    TryAddMissionDict(ordered[i].Value.AGVID, mis);
                     mis.OnMissionFinished += MissionFinishHandler;
                     mis.Start();
                 }
@@ -94,15 +97,35 @@ namespace AGVDispatcher.App
             return true;
         }
 
+        public bool AbortMission(AGV agv)
+        {
+            var id = agv.AGVID;
+            if (!allmissions.ContainsKey(id))
+                return false;
+            var miss = allmissions[id];
+            if (miss == null)
+                return false;
+            miss.Abort();
+            return true;
+        }
+
+        private void TryAddMissionDict(ushort id, IMission miss)
+        {
+            if (!allmissions.ContainsKey(id))
+                allmissions.Add(id, miss);
+            else
+                allmissions[id] = miss;
+        }
 
         public void EmergencyStop()
         {
             foreach(var agv in allagv)
             {
                 agv.Value.Actions.EmergStop();
+                AbortMission(agv.Value);
             }
-            miss_count = 0;
-            this.OnDispacherAllFinished?.Invoke(true);
+            //miss_count = 0;
+            //this.OnDispacherAllFinished?.Invoke(true);
         }
 
 #if !DEBUG
@@ -111,7 +134,8 @@ namespace AGVDispatcher.App
         public void RunCustomQueue(AGV agv,IQueuedActions acts, OnMissionFinishedDlg callback = null, params object[] param)
         {
             QueuedMission mis = new QueuedMission(acts, agv, allplc, map, param);
-            if(callback != null)
+            TryAddMissionDict(agv.AGVID, mis);
+            if (callback != null)
                 mis.OnMissionFinished += callback;
             mis.Start();
         }
@@ -130,13 +154,25 @@ namespace AGVDispatcher.App
         {
             TempQueue q = new TempQueue(act);
             QueuedMission mis = new QueuedMission(q, agv, allplc, map, param);
+            TryAddMissionDict(agv.AGVID, mis);
             if (callback != null)
                 mis.OnMissionFinished += callback;
             mis.Start();
         }
 #endif
-        private void MissionFinishHandler(IMission mission)
+        private void MissionFinishHandler(IMission mission,bool isabort)
         {
+            if(isabort)
+            {
+                miss_count--;
+                mission.AGVCar.SetWorkState(AGVWorkState.Idle);
+                if (miss_count <= 0)
+                {
+                    this.OnDispacherAllFinished?.Invoke(false);
+                }
+                return;
+            }
+
             if(map.LastAvilableProduct < 0)
             {
                 
@@ -146,12 +182,13 @@ namespace AGVDispatcher.App
                 if (!pt.Equals(agv.PhysicPoint, true))
                 {
                     var mis = new RestInBreakMission(agv, pt);
-                    mis.OnMissionFinished += (lastmis) =>
+                    TryAddMissionDict(agv.AGVID, mis);
+                    mis.OnMissionFinished += (lastmis,_) =>
                     {
                         miss_count--;
+                        agv.SetWorkState(AGVWorkState.Idle);
                         if (miss_count <= 0)
                         {
-                            agv.SetWorkState(AGVWorkState.Idle);
                             this.OnDispacherAllFinished?.Invoke(false);
                         }
                     };
@@ -161,9 +198,9 @@ namespace AGVDispatcher.App
                 else
                 {
                     miss_count--;
+                    agv.SetWorkState(AGVWorkState.Idle);
                     if (miss_count <= 0)
                     {
-                        agv.SetWorkState(AGVWorkState.Idle);
                         this.OnDispacherAllFinished?.Invoke(false);
                     }
                 }
@@ -173,6 +210,7 @@ namespace AGVDispatcher.App
             {
                 int prod = map.PickLastestProduct();
                 QueuedMission mis = new QueuedMission(NewZhangZongActions(), mission.AGVCar, allplc, map, prod);
+                TryAddMissionDict(mission.AGVCar.AGVID, mis);
                 mis.OnMissionFinished += MissionFinishHandler;
                 mission.Dispose();
                 mis.Start();

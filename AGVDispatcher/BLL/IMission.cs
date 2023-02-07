@@ -9,11 +9,12 @@ using AGVDispatcher.App;
 
 namespace AGVDispatcher.BLL
 {
-    public delegate void OnMissionFinishedDlg(IMission mission);
+    public delegate void OnMissionFinishedDlg(IMission mission, bool isabort);
     public interface IMission : IDisposable
     {
         public void Start();
         public event OnMissionFinishedDlg OnMissionFinished;
         public AGV AGVCar { get; }
+        public void Abort();
     }
 }

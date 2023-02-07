@@ -30,6 +30,20 @@ namespace AGVDispatcher.Entity
                 agv.server.SendData(agv, data);
             }
 
+            public void RunAsLast()
+            {
+                AGVComData<StartRunData> data = new AGVComData<StartRunData>(agv.AGVID, agv.LatestSerialCode);
+                data.PayLoad.Direction = DirectionCode.SameAsLast;
+                agv.server.SendData(agv, data);
+            }
+
+            public void StopRun(StopType st)
+            {
+                AGVComData<StopRunData> data = new AGVComData<StopRunData>(agv.AGVID, agv.LatestSerialCode);
+                data.PayLoad.StopType = st;
+                agv.server.SendData(agv, data);
+            }
+
             public void AuthValidate()
             {
                 AGVComData<ValidationData> data = new AGVComData<ValidationData>(agv.AGVID, agv.LatestSerialCode);

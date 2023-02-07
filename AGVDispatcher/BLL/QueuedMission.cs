@@ -44,11 +44,13 @@ namespace AGVDispatcher.BLL
                 locker.Set();
         }
 
+        bool forceexit = false;
         public virtual void Start()
         {
+            forceexit = false;
             Task task = new Task(() =>
             {
-                while(queue.Count > 0)
+                while(queue.Count > 0 && !forceexit)
                 {
                     currentAct = queue.Dequeue();
                     currentAct.Init(_agv, _plcs, _map, param);
@@ -56,8 +58,15 @@ namespace AGVDispatcher.BLL
                         locker.WaitOne();
                 }
             });
-            task.ContinueWith((t) => { this.OnMissionFinished?.Invoke(this); });
+            task.ContinueWith((t) => { this.OnMissionFinished?.Invoke(this, forceexit); });
             task.Start();
+           
+        }
+
+        public void Abort()
+        {
+            forceexit = true;
+            locker.Set();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -89,5 +98,7 @@ namespace AGVDispatcher.BLL
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        
     }
 }
