@@ -173,7 +173,7 @@ namespace AGVDispatcher.UI
         private void btn_removeagv_Click(object sender, EventArgs e)
         {
 //#error 最后的最后
-            List<int> lst = new List<int>() { 1,2,3};
+            List<int> lst = new List<int>();
             foreach(var a in allagvpanels)
             {
                 if(a.Value.AGVDevice is not null)
