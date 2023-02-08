@@ -9,6 +9,7 @@ namespace AGVDispatcher
 {
     internal static class Program
     {
+        
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -22,6 +23,17 @@ namespace AGVDispatcher
             {
                 MessageBox.Show("你不能多次启动本程序，请先关闭运行中的实例！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+
+            if (!Directory.Exists("./Roaming"))
+                Directory.CreateDirectory("./Roaming");
+            if(!File.Exists("./Roaming/config.xml"))
+            {
+                Helpers.WriteStringFile(Properties.Resources.config, "./Roaming/config.xml");
+            }
+            if (!File.Exists("./Roaming/map.xml"))
+            {
+                Helpers.WriteStringFile(Properties.Resources.map, "./Roaming/map.xml");
             }
 
             string logfile = "./Roaming/Error.log";

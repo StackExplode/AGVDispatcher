@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,15 @@ namespace AGVDispatcher.Util
 
             Trace.TraceInformation(sb.ToString());
             Trace.Flush();
+        }
+
+        public static void WriteStringFile(string s, string fname)
+        {
+            FileStream fs = new FileStream(fname, FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.Write(s);
+            sw.Close();
+            fs.Close();
         }
     }
 }
