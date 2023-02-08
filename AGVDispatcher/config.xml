@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Config xmlns="clr-namespace:AGVDispatcher.App;assembly=AGVDispatcher">
+  <_AllAGV_ByOrder>
+    <Item xmlns="https://extendedxmlserializer.github.io/system">
+      <Key>1</Key>
+      <Value>
+        <AGVID>1</AGVID>
+        <Order>1</Order>
+        <InUse>true</InUse>
+      </Value>
+    </Item>
+  </_AllAGV_ByOrder>
+  <_AllPLC_ByOrder>
+    <Item xmlns="https://extendedxmlserializer.github.io/system">
+      <Key>1</Key>
+      <Value>
+        <PLCID>1</PLCID>
+        <Order>1</Order>
+      </Value>
+    </Item>
+  </_AllPLC_ByOrder>
+  <sysconfig>
+    <ListenPort>17878</ListenPort>
+    <CheckIP>false</CheckIP>
+    <StopDelay>10</StopDelay>
+    <HookDelay>15</HookDelay>
+    <AGVQueryInterval>1000</AGVQueryInterval>
+    <AGVComTimeout>10000</AGVComTimeout>
+  </sysconfig>
+</Config>

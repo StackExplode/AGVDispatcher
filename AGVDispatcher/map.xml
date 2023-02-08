@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dictionary xmlns:ns1="clr-namespace:AGVDispatcher.Entity;assembly=AGVDispatcher" xmlns:exs="https://extendedxmlserializer.github.io/v2" exs:arguments="unsignedShort,ns1:IPoint" xmlns="https://extendedxmlserializer.github.io/system">
+  <Item>
+    <Key>1</Key>
+    <Value exs:type="ns1:BreakZonePoint">
+      <Order>0</Order>
+      <PhysicID>777</PhysicID>
+      <LogicID>0</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2</Key>
+    <Value exs:type="ns1:BreakZonePoint">
+      <Order>1</Order>
+      <PhysicID>789</PhysicID>
+      <LogicID>1</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>3</Key>
+    <Value exs:type="ns1:BreakZonePoint">
+      <Order>2</Order>
+      <PhysicID>0</PhysicID>
+      <LogicID>2</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>4</Key>
+    <Value exs:type="ns1:BreakZonePoint">
+      <Order>3</Order>
+      <PhysicID>0</PhysicID>
+      <LogicID>3</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>150</Key>
+    <Value exs:type="ns1:NormalPoint">
+      <PhysicID>7888</PhysicID>
+      <LogicID>150</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>101</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>222</PhysicID>
+      <LogicID>101</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1001</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>422</PhysicID>
+      <LogicID>1001</LogicID>
+      <ProductID>1</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>102</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>102</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1002</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1002</LogicID>
+      <ProductID>2</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>103</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>103</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1003</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1003</LogicID>
+      <ProductID>3</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>104</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>104</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1004</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1004</LogicID>
+      <ProductID>4</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>105</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>105</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1005</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1005</LogicID>
+      <ProductID>5</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>106</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>106</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1006</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1006</LogicID>
+      <ProductID>6</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>107</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>107</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1007</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1007</LogicID>
+      <ProductID>7</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>108</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>108</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1008</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1008</LogicID>
+      <ProductID>8</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>109</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>109</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1009</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1009</LogicID>
+      <ProductID>9</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>110</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>110</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1010</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1010</LogicID>
+      <ProductID>10</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>111</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>111</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1011</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1011</LogicID>
+      <ProductID>11</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>112</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>112</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1012</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1012</LogicID>
+      <ProductID>12</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>113</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>113</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1013</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1013</LogicID>
+      <ProductID>13</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>114</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>114</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1014</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1014</LogicID>
+      <ProductID>14</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>115</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>115</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1015</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1015</LogicID>
+      <ProductID>15</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>116</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>116</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1016</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1016</LogicID>
+      <ProductID>16</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>117</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>117</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1017</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1017</LogicID>
+      <ProductID>17</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>118</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>118</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1018</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1018</LogicID>
+      <ProductID>18</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>119</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>119</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1019</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1019</LogicID>
+      <ProductID>19</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>120</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>120</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1020</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1020</LogicID>
+      <ProductID>20</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>121</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>121</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>1021</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>1021</LogicID>
+      <ProductID>21</ProductID>
+      <IsTakePoint>true</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>50001</Key>
+    <Value exs:type="ns1:WorkPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>50001</LogicID>
+      <PLCOrder>1</PLCOrder>
+      <WorkIO>1</WorkIO>
+      <WorkLevel>true</WorkLevel>
+      <FinishIO>1</FinishIO>
+      <FinishLevel>false</FinishLevel>
+    </Value>
+  </Item>
+  <Item>
+    <Key>50002</Key>
+    <Value exs:type="ns1:WorkPoint">
+      <PhysicID>3131</PhysicID>
+      <LogicID>50002</LogicID>
+      <PLCOrder>1</PLCOrder>
+      <WorkIO>2</WorkIO>
+      <WorkLevel>false</WorkLevel>
+      <FinishIO>2</FinishIO>
+      <FinishLevel>false</FinishLevel>
+    </Value>
+  </Item>
+  <Item>
+    <Key>50006</Key>
+    <Value exs:type="ns1:CheckPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>50006</LogicID>
+      <PLCOrder>1</PLCOrder>
+      <WorkIO>1</WorkIO>
+      <WorkLevel>true</WorkLevel>
+      <FinishIO>1</FinishIO>
+      <FinishLevel>true</FinishLevel>
+    </Value>
+  </Item>
+  <Item>
+    <Key>200</Key>
+    <Value exs:type="ns1:NormalPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>200</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>251</Key>
+    <Value exs:type="ns1:NormalPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>251</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>201</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>201</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2001</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2001</LogicID>
+      <ProductID>1</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>202</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>202</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2002</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2002</LogicID>
+      <ProductID>2</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>203</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>203</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2003</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2003</LogicID>
+      <ProductID>3</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>204</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>204</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2004</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2004</LogicID>
+      <ProductID>4</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>205</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>205</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2005</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2005</LogicID>
+      <ProductID>5</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>206</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>206</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2006</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2006</LogicID>
+      <ProductID>6</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>207</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>207</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2007</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2007</LogicID>
+      <ProductID>7</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>208</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>208</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2008</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2008</LogicID>
+      <ProductID>8</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>209</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>209</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2009</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2009</LogicID>
+      <ProductID>9</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>210</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>210</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2010</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2010</LogicID>
+      <ProductID>10</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>211</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>211</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2011</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2011</LogicID>
+      <ProductID>11</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>212</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>212</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2012</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2012</LogicID>
+      <ProductID>12</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>213</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>213</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2013</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2013</LogicID>
+      <ProductID>13</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>214</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>214</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2014</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2014</LogicID>
+      <ProductID>14</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>215</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>215</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2015</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2015</LogicID>
+      <ProductID>15</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>216</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>216</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2016</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2016</LogicID>
+      <ProductID>16</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>217</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>217</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2017</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2017</LogicID>
+      <ProductID>17</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>218</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>218</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2018</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2018</LogicID>
+      <ProductID>18</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>219</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>219</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2019</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2019</LogicID>
+      <ProductID>19</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>220</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>220</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2020</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2020</LogicID>
+      <ProductID>20</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+  <Item>
+    <Key>221</Key>
+    <Value exs:type="ns1:TurnPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>221</LogicID>
+    </Value>
+  </Item>
+  <Item>
+    <Key>2021</Key>
+    <Value exs:type="ns1:ProductPoint">
+      <PhysicID>0</PhysicID>
+      <LogicID>2021</LogicID>
+      <ProductID>21</ProductID>
+      <IsTakePoint>false</IsTakePoint>
+      <IsAvailable>true</IsAvailable>
+    </Value>
+  </Item>
+</Dictionary>
