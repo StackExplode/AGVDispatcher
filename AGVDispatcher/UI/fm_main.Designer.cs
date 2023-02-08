@@ -134,6 +134,7 @@ namespace AGVDispatcher.UI
             this.Name = "fm_main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AGV控制系统";
+            this.Load += new System.EventHandler(this.fm_main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

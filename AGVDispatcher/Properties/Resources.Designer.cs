@@ -81,6 +81,52 @@ namespace AGVDispatcher.Properties {
         }
         
         /// <summary>
+        ///   查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Config xmlns=&quot;clr-namespace:AGVDispatcher.App;assembly=AGVDispatcher&quot;&gt;
+        ///  &lt;_AllAGV_ByOrder&gt;
+        ///    &lt;Item xmlns=&quot;https://extendedxmlserializer.github.io/system&quot;&gt;
+        ///      &lt;Key&gt;1&lt;/Key&gt;
+        ///      &lt;Value&gt;
+        ///        &lt;AGVID&gt;1&lt;/AGVID&gt;
+        ///        &lt;Order&gt;1&lt;/Order&gt;
+        ///        &lt;InUse&gt;true&lt;/InUse&gt;
+        ///      &lt;/Value&gt;
+        ///    &lt;/Item&gt;
+        ///  &lt;/_AllAGV_ByOrder&gt;
+        ///  &lt;_AllPLC_ByOrder&gt;
+        ///    &lt;Item xmlns=&quot;https://extendedxmlserializer.github.io/system&quot;&gt;
+        ///      &lt;Key&gt;1&lt;/Key&gt;
+        ///      &lt;Value&gt;
+        ///        &lt;PLCID&gt;1&lt;/PLC [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string config {
+            get {
+                return ResourceManager.GetString("config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Dictionary xmlns:ns1=&quot;clr-namespace:AGVDispatcher.Entity;assembly=AGVDispatcher&quot; xmlns:exs=&quot;https://extendedxmlserializer.github.io/v2&quot; exs:arguments=&quot;unsignedShort,ns1:IPoint&quot; xmlns=&quot;https://extendedxmlserializer.github.io/system&quot;&gt;
+        ///  &lt;Item&gt;
+        ///    &lt;Key&gt;1&lt;/Key&gt;
+        ///    &lt;Value exs:type=&quot;ns1:BreakZonePoint&quot;&gt;
+        ///      &lt;Order&gt;0&lt;/Order&gt;
+        ///      &lt;PhysicID&gt;777&lt;/PhysicID&gt;
+        ///      &lt;LogicID&gt;0&lt;/LogicID&gt;
+        ///    &lt;/Value&gt;
+        ///  &lt;/Item&gt;
+        ///  &lt;Item&gt;
+        ///    &lt;Key&gt;2&lt;/Key&gt;
+        ///    &lt;Value exs:type=&quot;ns1:Brea [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string map {
+            get {
+                return ResourceManager.GetString("map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Bitmap PLCReal {

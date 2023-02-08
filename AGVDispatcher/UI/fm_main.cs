@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Reflection;
 
 using AGVDispatcher.App;
+using System.IO;
 
 namespace AGVDispatcher.UI
 {
@@ -45,6 +46,11 @@ namespace AGVDispatcher.UI
             fm.FormClosed += (_, _) => { this.Show(); };
             this.Hide();
             fm.ShowDialog();
+        }
+
+        private void fm_main_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }
