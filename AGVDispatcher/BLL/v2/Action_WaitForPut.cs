@@ -42,7 +42,7 @@ namespace AGVDispatcher.BLL.v2
             {
                 busy = map.PutBusy;
             }
-
+            Util.Helpers.SingleAGVDebug("Wait for put, busy={0}", busy);
             return busy;
         }
     }

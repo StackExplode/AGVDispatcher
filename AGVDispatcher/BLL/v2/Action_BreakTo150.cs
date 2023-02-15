@@ -1,7 +1,9 @@
 ﻿using AGVDispatcher.App;
 using AGVDispatcher.Entity;
+using AGVDispatcher.Util;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +15,9 @@ namespace AGVDispatcher.BLL.v2
     {
         public bool CheckActionEnd()
         {
-            return (map.PickWaitPoint.Equals(agv.PhysicPoint, true));
+            var rt = (map.PickWaitPoint.Equals(agv.PhysicPoint, true));
+            Helpers.SingleAGVDebugIf(rt, "Go to 111 finished!");
+            return rt;
         }
 
         AGV agv;
@@ -27,6 +31,7 @@ namespace AGVDispatcher.BLL.v2
 
         public bool Run()
         {
+            Helpers.SingleAGVDebug("Start to go to 111!");
             agv.Actions.SetAutoStop(map.PickWaitPoint);
             agv.Actions.RunStraigth();
             return true;

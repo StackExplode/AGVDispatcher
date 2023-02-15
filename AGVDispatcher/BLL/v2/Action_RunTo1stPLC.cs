@@ -14,6 +14,7 @@ namespace AGVDispatcher.BLL.v2
         {
             bool con1 = wpt.Equals(agv.PhysicPoint, true);
             bool con2 = (agv.HookState == false);
+            Util.Helpers.SingleAGVDebugIf(con1 && con2, "Run to WorkPt1 OK!Hook down OK!");
             return con1 && con2;
         }
 
@@ -33,11 +34,12 @@ namespace AGVDispatcher.BLL.v2
         {
             map.PickBusy = false;
 
-            (TurnPoint tpt, _) = map.PickProductTurnWay(product);
-            List<(InsOpCode, byte)> list = new List<(InsOpCode, byte)>();
+            (TurnPoint tpt, _) = map.GetPickProductTurnWay(product);
 
-            
-            list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.Foreward));
+            List<(InsOpCode, byte)> list = new List<(InsOpCode, byte)>();
+            list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.StopDelay));
+            //Stright bug
+            list.Add(((InsOpCode, byte))(InsOpCode.Turn, OpTurnType.LeftTurn));
             agv.Actions.AddOpCache(tpt, list);
 
             list.Clear();
@@ -48,6 +50,8 @@ namespace AGVDispatcher.BLL.v2
             agv.Actions.AddOpCache(wpt, list);
 
             agv.Actions.ForceStation(tpt);
+
+            Util.Helpers.SingleAGVDebug("Start to run to 1st WorkPt from Pick turn point");
 
             return true;
         }

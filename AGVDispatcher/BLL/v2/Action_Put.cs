@@ -14,6 +14,7 @@ namespace AGVDispatcher.BLL.v2
         {
             bool con1 = map.GetPutProductPoint(prod).Equals(agv.PhysicPoint, true);
             bool con2 = (agv.HookState == false);
+            Util.Helpers.SingleAGVDebugIf(con1 && con2, "Put finished, and Hook is down! ProdID={0}", prod);
             return con1 && con2;
         }
 
@@ -36,7 +37,7 @@ namespace AGVDispatcher.BLL.v2
                 map.PutBusy = true;
 
             List<(InsOpCode, byte)> list = new List<(InsOpCode opcode, byte param)>();
-            (TurnPoint pt, TurnType turn) = map.PutProductTurnWay(prod);
+            (TurnPoint pt, TurnType turn) = map.GetPutProductTurnWay(prod);
 
             if (issp)
                 list.Add(((InsOpCode, byte))(InsOpCode.Turn, OpTurnType.LeftTurn));
@@ -49,9 +50,11 @@ namespace AGVDispatcher.BLL.v2
                 if(i != prod)
                 {
                     list.Clear();
-                    (TurnPoint ppt, _) = map.PutProductTurnWay(i);
-                    list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.SameAsLast));
+                    (TurnPoint ppt, _) = map.GetPutProductTurnWay(i);
+                    //Stright bug
+                    list.Add(((InsOpCode, byte))(InsOpCode.Turn, OpTurnType.LeftTurn));
                     agv.Actions.AddOpCache(ppt, list);
+                    //Task.Delay(200);
                 }
             }
 
@@ -75,6 +78,8 @@ namespace AGVDispatcher.BLL.v2
             agv.Actions.AddOpCache(map.GetPutProductPoint(prod), list);
 
             agv.Actions.ForceStation(map.PutWaitPoint);
+
+            Util.Helpers.SingleAGVDebug("Start to put product! ProdID={0}", prod);
 
             return true;
         }

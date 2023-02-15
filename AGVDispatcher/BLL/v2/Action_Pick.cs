@@ -2,6 +2,7 @@
 using AGVDispatcher.Entity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace AGVDispatcher.BLL.v2
         {
             bool con1 = map.GetPickProductPoint(prod).Equals(agv.PhysicPoint, true);
             bool con2 = agv.HookState == true;
+            Util.Helpers.SingleAGVDebugIf(con1 && con2, "Hook is up, pick ok! ProdID={0}", prod);
             return con1 && con2;
         }
 
@@ -31,7 +33,7 @@ namespace AGVDispatcher.BLL.v2
         {
             map.PickBusy = true;
 
-            (TurnPoint point, TurnType turn) = map.PickProductTurnWay(prod);
+            (TurnPoint point, TurnType turn) = map.GetPickProductTurnWay(prod);
             List<(InsOpCode, byte)> list = new List<(InsOpCode, byte)>();
 
             if (turn != TurnType.NoChange)
@@ -45,14 +47,16 @@ namespace AGVDispatcher.BLL.v2
                 agv.Actions.AddOpCache(point, list);
             }
 
-            for (ushort i = 0; i<map.MAX_PROD; i++)
+            for (ushort i = 1; i<=map.MAX_PROD; i++)
             {
                 if(i != prod)
                 {
-                    (TurnPoint pt, _) = map.PickProductTurnWay(i);
+                    (TurnPoint pt, _) = map.GetPickProductTurnWay(i);
                     list.Clear();
-                    list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.SameAsLast));
+                    //Same As Last not work, for AGV can never detect what is front or back!
+                    list.Add(((InsOpCode, byte))(InsOpCode.Turn, OpTurnType.LeftTurn));
                     agv.Actions.AddOpCache(pt, list);
+                    //Task.Delay(200);
                 }
             }
 
@@ -64,7 +68,9 @@ namespace AGVDispatcher.BLL.v2
             //list.Add((InsOpCode.Run, (byte)OpRunParam.ReverseAsLast));   //3 = Reverse from last direction
             agv.Actions.AddOpCache(map.GetPickProductPoint(prod), list);
 
+            Util.Helpers.SingleAGVDebug($"Start to pick prod, prodid={prod}");
             agv.Actions.RunStraigth();
+
 
             return true;
         }

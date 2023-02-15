@@ -12,7 +12,9 @@ namespace AGVDispatcher.BLL.v2
     {
         public bool CheckActionEnd()
         {
-            return map.PutWaitPoint.Equals(agv.PhysicPoint, true);
+            bool rt = map.PutWaitPoint.Equals(agv.PhysicPoint, true);
+            Util.Helpers.SingleAGVDebugIf(rt, "Arrive at PutWaitPoint!");
+            return rt;
         }
 
         AGV agv;
@@ -27,7 +29,7 @@ namespace AGVDispatcher.BLL.v2
         public bool Run()
         {
             List<(InsOpCode, byte)> list = new List<(InsOpCode, byte)>();
-            WorkPoint wpt = map.GetWorkStationPoint(3);
+            WorkPoint wpt = map.GetWorkStationPoint(5);
 
             list.Add(((InsOpCode, byte))(InsOpCode.Hook, OpHookParam.Hookup));
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.HookDelay));
@@ -37,6 +39,7 @@ namespace AGVDispatcher.BLL.v2
             agv.Actions.SetAutoStop(map.PutWaitPoint);
 
             agv.Actions.ForceStation(wpt);
+            Util.Helpers.SingleAGVDebug("Start run from Workpt5 to PutWaitPoint({0})", wpt.LogicID);
 
             return true;
 

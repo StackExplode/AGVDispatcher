@@ -214,6 +214,13 @@ namespace AGVDispatcher.UI
             fm_main fm = new fm_main();
             fm.ShowDialog();
         }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            var data = new AGVComData<StateResponseData>();
+            data.RawData.PayLoad.BatteryPercent = 20;
+            Util.Helpers.SingleAGVDebug(Util.Helpers.DumpComData(data));
+        }
     }
 
 

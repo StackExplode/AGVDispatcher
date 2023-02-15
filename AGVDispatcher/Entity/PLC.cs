@@ -68,7 +68,7 @@ namespace AGVDispatcher.Entity
             bool rt = ((byte)OutputState & (1 << (8 - index))) == 0;
             return !rt;
         }
-        public void SetOutputState(int index, bool state)
+        public void WriteOutputState(int index, bool state)
         {
             Contract.Assert(index >= 1 && index <= 5);
             IOSetMode io = (state ? IOSetMode.Trigger : IOSetMode.Release);

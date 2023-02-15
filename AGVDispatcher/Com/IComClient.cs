@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using AGVDispatcher.App;
+using System.Diagnostics;
 
 namespace AGVDispatcher.Com
 {
@@ -29,8 +30,22 @@ namespace AGVDispatcher.Com
     public class AGVTCPClient : IComClient, IBlockedCom
     {
         SemaphoreSlim mutex = new SemaphoreSlim(1);
-        public void Lock() => mutex.Wait(GlobalConfig.Config.SystemConfig.AGVComTimeout);
-        public void UnLock() => mutex.Release();
+#warning Add time out print
+        public void Lock()
+        {
+            var rt = mutex.Wait(GlobalConfig.Config.SystemConfig.AGVComTimeout);
+            if (!rt)
+            {
+                Debug.WriteLine("AGV Com Timeout!");
+                mutex.Release();
+            }
+                
+        }
+        public void UnLock()
+        {
+            if (mutex.CurrentCount == 0)
+                mutex.Release();
+        }
 
         private byte[] DataBuffer { get; }
         private int reclen = 0;

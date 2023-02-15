@@ -2,6 +2,7 @@
 using AGVDispatcher.Entity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,9 +28,12 @@ namespace AGVDispatcher.BLL.v2
 
         public virtual bool Run()
         {
-            agv.Actions.DelOPCache(map.GetPickProductPoint(prod));
-            (IPoint pt, _) = map.PickProductTurnWay(prod);
+            
+            var pt1 = map.GetPickProductPoint(prod);
+            agv.Actions.DelOPCache(pt1);
+            (IPoint pt, _) = map.GetPickProductTurnWay(prod);
             agv.Actions.DelOPCache(pt);
+            Debug.WriteLine("Delete Pickpoint cache!");
             return false;
         }
     }
@@ -38,9 +42,11 @@ namespace AGVDispatcher.BLL.v2
     {
         public override bool Run()
         {
+            
             agv.Actions.DelOPCache(map.GetPutProductPoint(prod));
-            (IPoint pt, _) = map.PutProductTurnWay(prod);
+            (IPoint pt, _) = map.GetPutProductTurnWay(prod);
             agv.Actions.DelOPCache(pt);
+            Util.Helpers.SingleAGVDebug("Clear putpoint cache!");
             return false;
         }
     }

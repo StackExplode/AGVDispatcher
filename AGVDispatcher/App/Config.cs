@@ -2,6 +2,7 @@
 using ExtendedXmlSerializer.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -117,6 +118,12 @@ namespace AGVDispatcher.App
     {
         private static Config conf;
         private static ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
+
+        
+        public static class DebugConfig
+        {
+            public static int RunSkipFrom { get; set; } = 0;
+        }
 
         public static void CreateNewConfig()
         {

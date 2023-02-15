@@ -28,8 +28,9 @@ namespace AGVDispatcher.BLL
 
         public bool CheckActionEnd()
         {
-            return (plcs[PLCNum].CheckInputState(FINISH_IO) == FINISH_LEVEL);
-
+            bool rt = (plcs[PLCNum].CheckInputState(FINISH_IO) == FINISH_LEVEL);
+            Util.Helpers.SingleAGVDebugIf(rt, "WorkPt{0} finish signal rec!", workstation);
+            return rt;
         }
 
         public void Init(AGV agv, Dictionary<int, PLC> plcs, WareHouseMap map, params object[] param)
@@ -37,6 +38,7 @@ namespace AGVDispatcher.BLL
             this.plcs = plcs;
             this.map = map;
 
+           
             workpt = map.GetWorkStationPoint(workstation);
             PLCNum = GlobalConfig.Config.GetPLCByOrder(workpt.PLCOrder);
             this.WORK_LEVEL = workpt.WorkLevel;
@@ -47,9 +49,11 @@ namespace AGVDispatcher.BLL
 
         public bool Run()
         {
-            
+            //Hook delay bug
+            System.Threading.Thread.Sleep(GlobalConfig.Config.SystemConfig.HookDelay);
             if (workpt.GetType() != typeof(CheckPoint))
-                plcs[PLCNum].SetOutputState(WORK_IO, WORK_LEVEL);
+                plcs[PLCNum].WriteOutputState(WORK_IO, WORK_LEVEL);
+            Util.Helpers.SingleAGVDebug("Call WorkPt{0} to work! IO={1},Level={2}", workstation, WORK_IO, WORK_LEVEL);
             return true;
         }
     }

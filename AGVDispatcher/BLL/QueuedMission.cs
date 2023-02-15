@@ -44,10 +44,21 @@ namespace AGVDispatcher.BLL
                 locker.Set();
         }
 
+        [System.Diagnostics.Conditional("DEBUG")]
+        void SkipStep()
+        {
+            int sk = GlobalConfig.DebugConfig.RunSkipFrom;
+            if (sk <= 0)
+                return;
+            for (int i = 0; i < sk; i++)
+                queue.Dequeue();
+        }
+
         bool forceexit = false;
         public virtual void Start()
         {
             forceexit = false;
+            SkipStep();
             Task task = new Task(() =>
             {
                 while(queue.Count > 0 && !forceexit)

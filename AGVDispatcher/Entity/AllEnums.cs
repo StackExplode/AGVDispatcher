@@ -10,7 +10,7 @@ namespace AGVDispatcher.Entity
 {
     public enum AGVState : byte
     {
-        [Description("空闲待命"), UIColor(KnownColor.Green)]
+        [Description("空闲待命"), UIColor(KnownColor.Lime)]
         StopIdle = 0,
         [Description("运行中"), UIColor(KnownColor.SkyBlue)]
         Running = 1,

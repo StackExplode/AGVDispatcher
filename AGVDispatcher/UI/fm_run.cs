@@ -167,7 +167,7 @@ namespace AGVDispatcher.UI
         private void btn_ready_Click(object sender, EventArgs e)
         {
             foreach (var a in allagvpanels)
-                a.Value.AGVDevice?.Actions.ClearFaultAndReady();
+                a.Value.AGVDevice?.Actions.AGVReady();
         }
 
         private void btn_removeagv_Click(object sender, EventArgs e)

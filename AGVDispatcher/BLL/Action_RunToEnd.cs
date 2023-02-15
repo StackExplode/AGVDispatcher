@@ -37,7 +37,7 @@ namespace AGVDispatcher.BLL
             agv.Actions.AddOpCache(plc3_pt, list);
 
             list.Clear();
-            var turn = map.PutProductTurnWay(this.product);
+            var turn = map.GetPutProductTurnWay(this.product);
             if(turn.Item2 != TurnType.NoChange)
             {
                 list.Add((InsOpCode.Turn, (byte)((byte)turn.Item2 - 2)));

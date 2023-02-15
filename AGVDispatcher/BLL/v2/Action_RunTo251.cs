@@ -41,7 +41,7 @@ namespace AGVDispatcher.BLL.v2
 
             map.PutBusy = false;
             List<(InsOpCode, byte)> list = new List<(InsOpCode opcode, byte param)>();
-            (TurnPoint pt, TurnType turn) = map.PutProductTurnWay(prod);
+            (TurnPoint pt, TurnType turn) = map.GetPutProductTurnWay(prod);
 
             
             if (turn == TurnType.NoChange)

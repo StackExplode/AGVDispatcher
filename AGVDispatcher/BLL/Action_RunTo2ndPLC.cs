@@ -19,6 +19,7 @@ namespace AGVDispatcher.BLL
         {
             bool con1 = (map.GetWorkStationPoint(end_plc).Equals(agv.PhysicPoint,true));
             bool con2 = (agv.HookState == false);
+            Util.Helpers.SingleAGVDebugIf(con1 && con2, "Arrive at WorkPt{0}, and hook is down!", end_plc);
             return (con1 && con2);
         }
 
@@ -35,16 +36,18 @@ namespace AGVDispatcher.BLL
             lst.Add((InsOpCode.Hook, (byte)OpHookParam.Hookup));
             lst.Add(((InsOpCode.Delay), GlobalConfig.Config.SystemConfig.HookDelay));
             lst.Add((InsOpCode.Run, (byte)OpRunParam.SameAsLast));
-            agv.Actions.AddOpCache(map.GetPickProductPoint(start_plc), lst);
+            agv.Actions.AddOpCache(map.GetWorkStationPoint(start_plc), lst);
 
             lst.Clear();
             lst.Add((InsOpCode.Stop, (byte)StopType.Normal));
             lst.Add(((InsOpCode.Delay), GlobalConfig.Config.SystemConfig.StopDelay));
             lst.Add((InsOpCode.Hook, (byte)OpHookParam.Release));
             lst.Add(((InsOpCode.Delay), GlobalConfig.Config.SystemConfig.HookDelay));
-            agv.Actions.AddOpCache(map.GetPickProductPoint(end_plc), lst);
+            agv.Actions.AddOpCache(map.GetWorkStationPoint(end_plc), lst);
 
-            agv.Actions.ForceStation(map.GetPickProductPoint(start_plc));
+            agv.Actions.ForceStation(map.GetWorkStationPoint(start_plc));
+
+            Util.Helpers.SingleAGVDebug("Start to run from WorkPt{0} to WorkPt{1}", start_plc, end_plc);
 
             return true;
         }

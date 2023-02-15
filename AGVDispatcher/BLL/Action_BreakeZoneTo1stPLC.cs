@@ -30,7 +30,7 @@ namespace AGVDispatcher.BLL
 
         public bool Run()
         {
-            (TurnPoint point, TurnType turn) = map.PickProductTurnWay(product);
+            (TurnPoint point, TurnType turn) = map.GetPickProductTurnWay(product);
             List<(InsOpCode, byte)> list = new List<(InsOpCode, byte)>();
             if(turn != TurnType.NoChange)
             {

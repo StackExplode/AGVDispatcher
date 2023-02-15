@@ -101,6 +101,7 @@
             this.lbl_id.TabIndex = 0;
             this.lbl_id.Text = "0";
             this.lbl_id.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_id.Click += new System.EventHandler(this.lbl_id_Click);
             // 
             // pic_agv
             // 
@@ -112,6 +113,7 @@
             this.pic_agv.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pic_agv.TabIndex = 1;
             this.pic_agv.TabStop = false;
+            this.pic_agv.Click += new System.EventHandler(this.pic_agv_Click);
             // 
             // pic_com
             // 
@@ -464,6 +466,7 @@
             this.lbl_order.TabIndex = 15;
             this.lbl_order.Text = "0";
             this.lbl_order.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_order.Click += new System.EventHandler(this.lbl_order_Click);
             // 
             // btn_startup
             // 

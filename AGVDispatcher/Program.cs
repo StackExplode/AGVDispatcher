@@ -5,8 +5,10 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace AGVDispatcher
 {
+
     internal static class Program
     {
         
@@ -47,7 +49,7 @@ namespace AGVDispatcher
 
             var lsn = new TextWriterTraceListener(logfile);
             Trace.Listeners.Add(lsn);
-#if !DEBUG
+#if DEBUG
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;

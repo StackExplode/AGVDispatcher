@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AGVDispatcher.Entity;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -44,6 +45,24 @@ namespace AGVDispatcher.Util
             Trace.Flush();
         }
 
+        [Conditional("SINGLE_DEBUG")]
+        public static void SingleAGVDebug(string msg, params object[] pa)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            sb.Append(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ff"));
+            sb.Append("]");
+            sb.Append(msg);
+            Debug.WriteLine(sb.ToString(), pa);
+        }
+
+        [Conditional("SINGLE_DEBUG")]
+        public static void SingleAGVDebugIf(bool con,string msg, params object[] pa)
+        {
+            if (con)
+                SingleAGVDebug(msg, pa);
+        }
+
         public static void WriteStringFile(string s, string fname)
         {
             FileStream fs = new FileStream(fname, FileMode.Create);
@@ -52,5 +71,23 @@ namespace AGVDispatcher.Util
             sw.Close();
             fs.Close();
         }
+
+        public static string DumpComData(IComData data)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("AGV=");
+            sb.Append(data.AGVID);
+            sb.Append(",DataType=");
+            sb.Append(((ComDataType)data.RawBuffer[4]).GetDescription());
+            sb.Append(",Check=");
+            sb.Append(data.UnsafeAs<UnknownData>().CalcCheckSum().ToString("X2"));
+            sb.Append(",Payload=");
+            for (int i = 4; i < 24; i++)
+                sb.Append(data.RawBuffer[i].ToString("X2") + " ");
+            return sb.ToString();
+        }
+
+        
     }
+
 }

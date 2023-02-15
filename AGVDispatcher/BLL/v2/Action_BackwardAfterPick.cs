@@ -2,6 +2,7 @@
 using AGVDispatcher.Entity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,9 @@ namespace AGVDispatcher.BLL.v2
     {
         public bool CheckActionEnd()
         {
-            return endpoint.Equals(agv.PhysicPoint, true);
+            bool rt = endpoint.Equals(agv.PhysicPoint, true);
+            Util.Helpers.SingleAGVDebugIf(rt, "Backward from pick point to turn point OK!");
+            return rt;
         }
 
         AGV agv;
@@ -28,15 +31,25 @@ namespace AGVDispatcher.BLL.v2
 
         public bool Run()
         {
-            (TurnPoint tpt, _) = map.PickProductTurnWay(product);
+            (TurnPoint tpt, _) = map.GetPickProductTurnWay(product);
             List<(InsOpCode, byte)> list = new List<(InsOpCode, byte)>();
             endpoint = tpt;
 
             list.Add(((InsOpCode, byte))(InsOpCode.Stop, StopType.Normal));
-            list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.StopDelay));
+            
             agv.Actions.AddOpCache(tpt, list);
 
+            //Hook delay bug
+            System.Threading.Thread.Sleep(GlobalConfig.Config.SystemConfig.HookDelay * 1000);
+
             agv.Actions.RunBackward();
+            Task.Delay(200);
+            agv.Actions.RunBackward();
+            Task.Delay(200);
+            agv.Actions.RunBackward();
+            Task.Delay(200);
+
+            Util.Helpers.SingleAGVDebug("Start to backward from pick point to turn point!");
 
             return true;
         }

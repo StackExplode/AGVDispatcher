@@ -14,16 +14,16 @@ namespace AGVDispatcher.App
         public override int MAX_PROD => 21;
         public override int MAX_BREAK => 4;
 
-        public override (TurnPoint, TurnType) PickProductTurnWay(int prod)
+        public override (TurnPoint, TurnType) GetPickProductTurnWay(int prod)
         {
             return ((TurnPoint)this[(ushort)(100 + prod)], TurnType.RightTurn);
         }
 
-        public override (TurnPoint, TurnType) PutProductTurnWay(int prod)
+        public override (TurnPoint, TurnType) GetPutProductTurnWay(int prod)
         {
-            if(prod == 6)
-                return ((TurnPoint)this[206], TurnType.NoChange);
-            else
+            //if(prod == 6)
+            //    return ((TurnPoint)this[206], TurnType.NoChange);
+            //else
                 return ((TurnPoint)this[(ushort)(200 + prod)], TurnType.RightTurn);
         }
 
@@ -93,6 +93,7 @@ namespace AGVDispatcher.App
 
         public bool IsPutProdctSpecial(int productid)
         {
+            return false;
             if (productid >= 1 && productid <= 5)
                 return true;
             else

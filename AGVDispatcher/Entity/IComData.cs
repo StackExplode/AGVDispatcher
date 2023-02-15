@@ -63,6 +63,9 @@ namespace AGVDispatcher.Entity
         public AGVComData()
         {
             buffer = new byte[DataLen];
+            RawData.DataType = PayLoad.DataType;
+            RawData.StartFlag = 0x55;
+            RawData.EndFlag = 0xAA;
         }
         public byte AGVID
         {
@@ -101,11 +104,11 @@ namespace AGVDispatcher.Entity
             }
         }
 
-        public ref DataField<TTT> GetRawDataAs<TTT>() where TTT : IComDataField
-        {
-            ref DataField<TTT> data = ref Unsafe.As<byte, DataField<TTT>>(ref buffer[0]);
-            return ref data;
-        }
+        //public ref DataField<TTT> GetRawDataAs<TTT>() where TTT : IComDataField
+        //{
+        //    ref DataField<TTT> data = ref Unsafe.As<byte, DataField<TTT>>(ref buffer[0]);
+        //    return ref data;
+        //}
 
         public ref TData PayLoad
         {
@@ -127,11 +130,8 @@ namespace AGVDispatcher.Entity
 
 
         public byte[] ToArray()
-        {
-            RawData.StartFlag = 0x55;
-            RawData.EndFlag = 0xAA;
-            RawData.DataType = PayLoad.DataType;
-            RawData.CheckCode = CalcCheckSum();
+        {            
+            RawData.CheckCode = CalcCheckSum();  
             return buffer;
         }
 

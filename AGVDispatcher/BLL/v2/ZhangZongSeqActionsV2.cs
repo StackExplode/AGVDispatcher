@@ -34,9 +34,10 @@ namespace AGVDispatcher.BLL.v2
             ActionQueue.Enqueue(new Action_Put());
             ActionQueue.Enqueue(new Action_PutBackDelCache());
             ActionQueue.Enqueue(new Action_BackwardAfterPut());
-            ActionQueue.Enqueue(new Action_RunTo251());
-            ActionQueue.Enqueue(new Action_WaitForBreak());
-            ActionQueue.Enqueue(new AGVDispatcher.BLL.v2.Action_RunToEnd());
+            //ActionQueue.Enqueue(new Action_RunTo251());
+            //ActionQueue.Enqueue(new Action_WaitForBreak());
+            //ActionQueue.Enqueue(new AGVDispatcher.BLL.v2.Action_RunToEnd());
+            ActionQueue.Enqueue(new AGVDispatcher.BLL.v2.Action_RunToEnd_v3());
             ActionQueue.Enqueue(new Action_ClearCache());
         }
     }

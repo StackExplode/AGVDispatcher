@@ -130,7 +130,7 @@ namespace AGVDispatcher.App
             return (BreakZonePoint)pt;
         }
 
-        public virtual (TurnPoint, TurnType) PickProductTurnWay(int prod)
+        public virtual (TurnPoint, TurnType) GetPickProductTurnWay(int prod)
         {
             if (prod >= 28 && prod <= 33)
                 return ((TurnPoint)this[103], TurnType.LeftTurn);
@@ -142,7 +142,7 @@ namespace AGVDispatcher.App
                 return ((TurnPoint)this[101], TurnType.NoChange);
         }
 
-        public virtual (TurnPoint, TurnType) PutProductTurnWay(int prod)
+        public virtual (TurnPoint, TurnType) GetPutProductTurnWay(int prod)
         {
             if (prod >= 1 && prod <= 20)
                 return ((TurnPoint)this[106], TurnType.RightTurn);
@@ -179,7 +179,7 @@ namespace AGVDispatcher.App
                 if (isphy)
                 {
                     var query = from r in all_pt_logic where r.Value.PhysicID == id select r.Value;
-                    return (query?.First());
+                    return (query.Count() > 0 ? query.First() : null);
                     //return all_pt_physic[id];
                 }
                 else

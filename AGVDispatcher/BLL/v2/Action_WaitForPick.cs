@@ -1,5 +1,6 @@
 ﻿using AGVDispatcher.App;
 using AGVDispatcher.Entity;
+using AGVDispatcher.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace AGVDispatcher.BLL.v2
         public bool Run()
         {
             busy = map.PickBusy;
+            Helpers.SingleAGVDebug("Wait for enter pick, busy={0}.", busy);
             return busy;
         }
     }
