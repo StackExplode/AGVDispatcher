@@ -12,7 +12,7 @@ namespace AGVDispatcher.Entity
         public byte Order { get; set; }
         public override PointType PointType => PointType.BreakZone;
 
-        public override string Name => $"第{Order}出发点";
+        public override string Name => $"第{Order+1}待命位";
 
         public override void CopyFrom(IPoint pt)
         {

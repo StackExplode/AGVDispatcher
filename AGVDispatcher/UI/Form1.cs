@@ -221,6 +221,17 @@ namespace AGVDispatcher.UI
             data.RawData.PayLoad.BatteryPercent = 20;
             Util.Helpers.SingleAGVDebug(Util.Helpers.DumpComData(data));
         }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            WareHouseMapv2 map = new WareHouseMapv2();
+            SaveFileDialog sv = new SaveFileDialog();
+            sv.Filter = "xml文件|*.xml";
+            if(sv.ShowDialog() == DialogResult.OK)
+            {
+                map.SaveToFile(sv.FileName);
+            }
+        }
     }
 
 

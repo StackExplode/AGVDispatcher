@@ -47,8 +47,8 @@ namespace AGVDispatcher.Properties {
         }
         
         /// <summary>
-        ///   重写当前线程的 CurrentUICulture 属性，对
-        ///   使用此强类型资源类的所有资源查找执行重写。
+        ///   重写当前线程的 CurrentUICulture 属性
+        ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
@@ -66,6 +66,16 @@ namespace AGVDispatcher.Properties {
         internal static System.Drawing.Bitmap agvmap {
             get {
                 object obj = ResourceManager.GetObject("agvmap", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap agvmap_new {
+            get {
+                object obj = ResourceManager.GetObject("agvmap_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -112,6 +122,27 @@ namespace AGVDispatcher.Properties {
         ///    &lt;Key&gt;1&lt;/Key&gt;
         ///    &lt;Value exs:type=&quot;ns1:BreakZonePoint&quot;&gt;
         ///      &lt;Order&gt;0&lt;/Order&gt;
+        ///      &lt;PhysicID&gt;0&lt;/PhysicID&gt;
+        ///      &lt;LogicID&gt;1&lt;/LogicID&gt;
+        ///    &lt;/Value&gt;
+        ///  &lt;/Item&gt;
+        ///  &lt;Item&gt;
+        ///    &lt;Key&gt;2&lt;/Key&gt;
+        ///    &lt;Value exs:type=&quot;ns1:BreakZ [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string map {
+            get {
+                return ResourceManager.GetString("map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Dictionary xmlns:ns1=&quot;clr-namespace:AGVDispatcher.Entity;assembly=AGVDispatcher&quot; xmlns:exs=&quot;https://extendedxmlserializer.github.io/v2&quot; exs:arguments=&quot;unsignedShort,ns1:IPoint&quot; xmlns=&quot;https://extendedxmlserializer.github.io/system&quot;&gt;
+        ///  &lt;Item&gt;
+        ///    &lt;Key&gt;1&lt;/Key&gt;
+        ///    &lt;Value exs:type=&quot;ns1:BreakZonePoint&quot;&gt;
+        ///      &lt;Order&gt;0&lt;/Order&gt;
         ///      &lt;PhysicID&gt;777&lt;/PhysicID&gt;
         ///      &lt;LogicID&gt;0&lt;/LogicID&gt;
         ///    &lt;/Value&gt;
@@ -120,9 +151,9 @@ namespace AGVDispatcher.Properties {
         ///    &lt;Key&gt;2&lt;/Key&gt;
         ///    &lt;Value exs:type=&quot;ns1:Brea [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
-        internal static string map {
+        internal static string map_old {
             get {
-                return ResourceManager.GetString("map", resourceCulture);
+                return ResourceManager.GetString("map_old", resourceCulture);
             }
         }
         

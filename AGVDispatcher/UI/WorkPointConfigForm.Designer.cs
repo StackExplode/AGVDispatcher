@@ -69,7 +69,7 @@ namespace AGVDispatcher.UI
             this.txt_phy.Location = new System.Drawing.Point(83, 27);
             this.txt_phy.Name = "txt_phy";
             this.txt_phy.Size = new System.Drawing.Size(103, 21);
-            this.txt_phy.TabIndex = 7;
+            this.txt_phy.TabIndex = 0;
             // 
             // label2
             // 

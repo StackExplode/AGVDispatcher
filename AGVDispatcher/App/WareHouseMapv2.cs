@@ -1,6 +1,7 @@
 ﻿using AGVDispatcher.Entity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,25 +12,31 @@ namespace AGVDispatcher.App
     public class WareHouseMapv2 : WareHouseMap
     {
         public override BreakZonePoint BKEnterPoint => (BreakZonePoint)this[4];
-        public override int MAX_PROD => 21;
+        public override int MAX_PROD => 20;
         public override int MAX_BREAK => 4;
 
         public override (TurnPoint, TurnType) GetPickProductTurnWay(int prod)
         {
-            return ((TurnPoint)this[(ushort)(100 + prod)], TurnType.RightTurn);
+            Contract.Ensures(prod >= 1 && prod <= MAX_PROD);
+            //return ((TurnPoint)this[(ushort)(100 + prod)], TurnType.RightTurn);
+            if(prod <= 10)
+                return ((TurnPoint)this[(ushort)(100 + prod)], TurnType.RightTurn);
+            else
+                return ((TurnPoint)this[(ushort)(100 + prod + 1)], TurnType.RightTurn);
         }
 
         public override (TurnPoint, TurnType) GetPutProductTurnWay(int prod)
         {
+            Contract.Requires(prod >= 1 && prod <= MAX_PROD);
             //if(prod == 6)
             //    return ((TurnPoint)this[206], TurnType.NoChange);
             //else
-                return ((TurnPoint)this[(ushort)(200 + prod)], TurnType.RightTurn);
+            return ((TurnPoint)this[(ushort)(200 + prod)], TurnType.RightTurn);
         }
 
        
 
-        public NormalPoint PickWaitPoint => (NormalPoint)this[150];
+        public NormalPoint PickWaitPoint => (NormalPoint)this[111];
 
         private ReaderWriterLockSlim pick_lock = new ReaderWriterLockSlim();
         private ReaderWriterLockSlim put_lock = new ReaderWriterLockSlim();
@@ -91,7 +98,7 @@ namespace AGVDispatcher.App
             }
         }
 
-        public bool IsPutProdctSpecial(int productid)
+        public bool IsPutProdctSpecial([Pure]int productid)
         {
             return false;
             if (productid >= 1 && productid <= 5)
@@ -100,7 +107,7 @@ namespace AGVDispatcher.App
                 return false;
         }
 
-        public NormalPoint PutWaitPoint => (NormalPoint)this[200];
+        public NormalPoint PutWaitPoint => (NormalPoint)this[250];
         public NormalPoint BreakWaitPoint => (NormalPoint)this[251];
 
         protected override void InitPoints()
@@ -110,14 +117,17 @@ namespace AGVDispatcher.App
                 all_pt_logic.Add((ushort)(i + 1), new BreakZonePoint()
                 {
                     Order = (byte)(i),
-                    LogicID = i
+                    LogicID = (ushort)(i + 1)
                 });
 
-            all_pt_logic.Add(150, new NormalPoint() { LogicID = 150 });
+            all_pt_logic.Add(111, new NormalPoint() { LogicID = 111 });
 
             for(ushort i = 1; i <= MAX_PROD; i++)
             {
-                all_pt_logic.Add((ushort)(100 + i), new TurnPoint() { LogicID = (ushort)(100 + i) });
+                if(i <= 10)
+                    all_pt_logic.Add((ushort)(100 + i), new TurnPoint() { LogicID = (ushort)(100 + i) });
+                else
+                    all_pt_logic.Add((ushort)(100 + i + 1), new TurnPoint() { LogicID = (ushort)(100 + i + 1) });
                 all_pt_logic.Add((ushort)(1000 + i), new ProductPoint()
                 {
                     ProductID = (byte)i,
@@ -126,11 +136,11 @@ namespace AGVDispatcher.App
                 });
             }
 
-            all_pt_logic.Add(50001, new WorkPoint(1) { LogicID = 50001, PLCOrder = 1 });
-            all_pt_logic.Add(50002, new WorkPoint(2) { LogicID = 50002, PLCOrder = 1 });
-            all_pt_logic.Add(50006, new CheckPoint(5) { LogicID = 50006, PLCOrder = 1 });
+            all_pt_logic.Add(301, new WorkPoint(1) { LogicID = 301, PLCOrder = 1 });
+            all_pt_logic.Add(302, new WorkPoint(2) { LogicID = 302, PLCOrder = 1 });
+            all_pt_logic.Add(306, new CheckPoint(5) { LogicID = 306, PLCOrder = 1 });
 
-            all_pt_logic.Add(200, new NormalPoint() { LogicID = 200 });
+            all_pt_logic.Add(250, new NormalPoint() { LogicID = 250 });
             all_pt_logic.Add(251, new NormalPoint() { LogicID = 251 });
 
             for (ushort i = 1; i <= MAX_PROD; i++)

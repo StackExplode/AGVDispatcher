@@ -83,11 +83,12 @@ namespace AGVDispatcher.UI
             this.txt_phy.Location = new System.Drawing.Point(83, 53);
             this.txt_phy.Name = "txt_phy";
             this.txt_phy.Size = new System.Drawing.Size(122, 21);
-            this.txt_phy.TabIndex = 9;
+            this.txt_phy.TabIndex = 0;
             // 
             // rad_pick
             // 
             this.rad_pick.AutoSize = true;
+            this.rad_pick.Enabled = false;
             this.rad_pick.Location = new System.Drawing.Point(18, 80);
             this.rad_pick.Name = "rad_pick";
             this.rad_pick.Size = new System.Drawing.Size(59, 16);
@@ -99,6 +100,7 @@ namespace AGVDispatcher.UI
             // rad_put
             // 
             this.rad_put.AutoSize = true;
+            this.rad_put.Enabled = false;
             this.rad_put.Location = new System.Drawing.Point(18, 102);
             this.rad_put.Name = "rad_put";
             this.rad_put.Size = new System.Drawing.Size(59, 16);

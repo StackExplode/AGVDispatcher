@@ -451,6 +451,12 @@
   <ItemGroup>
     <None Include="map.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\新低图20230212-改.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\packages\Fody.6.6.4\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

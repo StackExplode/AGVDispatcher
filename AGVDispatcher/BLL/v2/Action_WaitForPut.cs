@@ -15,12 +15,12 @@ namespace AGVDispatcher.BLL.v2
             if (busy)
             {
                 if (map.IsPutProdctSpecial(prod))
-                    return map.PutSpBusy;
+                    return !map.PutSpBusy;
                 else
-                    return map.PutBusy;
+                    return !map.PutBusy;
             }
             else
-                return false;
+                return true;
         }
 
         WareHouseMapv2 map;

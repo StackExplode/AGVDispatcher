@@ -61,7 +61,7 @@ namespace AGVDispatcher.UI
             this.txt_phy.Location = new System.Drawing.Point(81, 39);
             this.txt_phy.Name = "txt_phy";
             this.txt_phy.Size = new System.Drawing.Size(127, 21);
-            this.txt_phy.TabIndex = 5;
+            this.txt_phy.TabIndex = 0;
             // 
             // NormalPointConfigForm
             // 

@@ -8,6 +8,8 @@ using AGVDispatcher.Util;
 using ExtendedXmlSerializer;
 using System.Xml;
 using ExtendedXmlSerializer.Configuration;
+using System;
+using System.Diagnostics.Contracts;
 
 namespace AGVDispatcher.App
 {
@@ -33,6 +35,7 @@ namespace AGVDispatcher.App
 
         public ReadOnlyCollection<IPoint> AllPoints => all_pt_logic.Values.ToList().AsReadOnly();
 
+        [Obsolete("Not recommended!")]
         public void GeneratePHYIndex()
         {
             all_pt_physic.Clear();
@@ -164,11 +167,13 @@ namespace AGVDispatcher.App
 
         public ProductPoint GetPickProductPoint(int prod)
         {
+            Contract.Requires(prod >= 1 && prod <= MAX_PROD);
             return (ProductPoint)this[(ushort)(1000 + prod)];
         }
 
         public ProductPoint GetPutProductPoint(int prod)
         {
+            Contract.Requires(prod >= 1 && prod <= MAX_PROD);
             return (ProductPoint)this[(ushort)(2000 + prod)];
         }
 

@@ -32,6 +32,19 @@ namespace AGVDispatcher.Util
             Trace.Flush();
         }
 
+        public static void LogWarning(string msg)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            sb.Append(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ff"));
+            sb.Append("]");
+            sb.Append(msg);
+            sb.AppendLine();
+
+            Trace.TraceWarning(sb.ToString());
+            Trace.Flush();
+        }
+
         public static void LogInfo(string msg)
         {
             StringBuilder sb = new StringBuilder();

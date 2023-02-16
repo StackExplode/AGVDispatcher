@@ -14,9 +14,9 @@ namespace AGVDispatcher.BLL.v2
         public bool CheckActionEnd()
         {
             if (busy)
-                return map.PickBusy;
+                return !map.PickBusy;
             else
-                return false;
+                return true;
         }
 
         WareHouseMapv2 map;

@@ -35,8 +35,9 @@ namespace AGVDispatcher.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::AGVDispatcher.Properties.Resources.agvmap;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::AGVDispatcher.Properties.Resources.agvmap_new;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Name = "MapView";
             this.Size = new System.Drawing.Size(1181, 370);

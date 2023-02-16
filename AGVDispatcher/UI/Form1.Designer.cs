@@ -49,8 +49,9 @@
             this.button12 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
-            this.agvStateIndicator1 = new AGVDispatcher.UI.AGVStateIndicator();
             this.button15 = new System.Windows.Forms.Button();
+            this.agvStateIndicator1 = new AGVDispatcher.UI.AGVStateIndicator();
+            this.button16 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -258,16 +259,6 @@
             this.button14.UseVisualStyleBackColor = true;
             this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
-            // agvStateIndicator1
-            // 
-            this.agvStateIndicator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(223)))), ((int)(((byte)(223)))));
-            this.agvStateIndicator1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.agvStateIndicator1.Location = new System.Drawing.Point(377, 51);
-            this.agvStateIndicator1.Name = "agvStateIndicator1";
-            this.agvStateIndicator1.Size = new System.Drawing.Size(270, 220);
-            this.agvStateIndicator1.TabIndex = 14;
-            this.agvStateIndicator1.UseAGVLogicPoint = false;
-            // 
             // button15
             // 
             this.button15.Location = new System.Drawing.Point(853, 245);
@@ -278,11 +269,32 @@
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
+            // agvStateIndicator1
+            // 
+            this.agvStateIndicator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(223)))), ((int)(((byte)(223)))));
+            this.agvStateIndicator1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.agvStateIndicator1.Location = new System.Drawing.Point(377, 51);
+            this.agvStateIndicator1.Name = "agvStateIndicator1";
+            this.agvStateIndicator1.Size = new System.Drawing.Size(270, 220);
+            this.agvStateIndicator1.TabIndex = 14;
+            this.agvStateIndicator1.UseAGVLogicPoint = false;
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(853, 289);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(75, 23);
+            this.button16.TabIndex = 23;
+            this.button16.Text = "Gen Map";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1068, 586);
+            this.Controls.Add(this.button16);
             this.Controls.Add(this.button15);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button13);
@@ -338,6 +350,7 @@
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button16;
     }
 }
 

@@ -30,13 +30,13 @@ namespace AGVDispatcher.Com
     public class AGVTCPClient : IComClient, IBlockedCom
     {
         SemaphoreSlim mutex = new SemaphoreSlim(1);
-#warning Add time out print
         public void Lock()
         {
             var rt = mutex.Wait(GlobalConfig.Config.SystemConfig.AGVComTimeout);
             if (!rt)
             {
-                Debug.WriteLine("AGV Com Timeout!");
+                string ip = (this.Client.Client.RemoteEndPoint as IPEndPoint)?.Address.ToString();
+                Util.Helpers.LogWarning($"AGV Communication Timeout! IP={ip}");
                 mutex.Release();
             }
                 
