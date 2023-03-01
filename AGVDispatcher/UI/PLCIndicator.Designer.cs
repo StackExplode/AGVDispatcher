@@ -160,7 +160,7 @@ namespace AGVDispatcher.UI
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 38;
-            this.label3.Text = "AGV IP：";
+            this.label3.Text = "PLC IP：";
             // 
             // lbl_ip
             // 
@@ -212,6 +212,7 @@ namespace AGVDispatcher.UI
             this.pic_o4.Size = new System.Drawing.Size(16, 16);
             this.pic_o4.TabIndex = 45;
             this.pic_o4.TabStop = false;
+            this.pic_o4.DoubleClick += new System.EventHandler(this.pic_o4_DoubleClick);
             // 
             // pic_o3
             // 
@@ -222,6 +223,7 @@ namespace AGVDispatcher.UI
             this.pic_o3.Size = new System.Drawing.Size(16, 16);
             this.pic_o3.TabIndex = 46;
             this.pic_o3.TabStop = false;
+            this.pic_o3.DoubleClick += new System.EventHandler(this.pic_o3_DoubleClick);
             // 
             // pic_o2
             // 
@@ -232,6 +234,7 @@ namespace AGVDispatcher.UI
             this.pic_o2.Size = new System.Drawing.Size(16, 16);
             this.pic_o2.TabIndex = 47;
             this.pic_o2.TabStop = false;
+            this.pic_o2.DoubleClick += new System.EventHandler(this.pic_o2_DoubleClick);
             // 
             // pic_o1
             // 
@@ -242,6 +245,7 @@ namespace AGVDispatcher.UI
             this.pic_o1.Size = new System.Drawing.Size(16, 16);
             this.pic_o1.TabIndex = 48;
             this.pic_o1.TabStop = false;
+            this.pic_o1.DoubleClick += new System.EventHandler(this.pic_o1_DoubleClick);
             // 
             // pic_i4
             // 
@@ -292,6 +296,7 @@ namespace AGVDispatcher.UI
             this.pic_hook.Size = new System.Drawing.Size(16, 16);
             this.pic_hook.TabIndex = 22;
             this.pic_hook.TabStop = false;
+            this.pic_hook.DoubleClick += new System.EventHandler(this.pic_hook_DoubleClick);
             // 
             // pic_com
             // 

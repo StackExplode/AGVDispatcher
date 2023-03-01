@@ -29,6 +29,9 @@ namespace AGVDispatcher.BLL
         public bool CheckActionEnd()
         {
             bool rt = (plcs[PLCNum].CheckInputState(FINISH_IO) == FINISH_LEVEL);
+#warning For Debug only!!
+            if (workstation != 1)
+                rt = true;
             Util.Helpers.SingleAGVDebugIf(rt, "WorkPt{0} finish signal rec!", workstation);
             return rt;
         }
@@ -50,7 +53,7 @@ namespace AGVDispatcher.BLL
         public bool Run()
         {
             //Hook delay bug
-            System.Threading.Thread.Sleep(GlobalConfig.Config.SystemConfig.HookDelay);
+            System.Threading.Thread.Sleep(GlobalConfig.Config.SystemConfig.HookDelay * 1000);
             if (workpt.GetType() != typeof(CheckPoint))
                 plcs[PLCNum].WriteOutputState(WORK_IO, WORK_LEVEL);
             Util.Helpers.SingleAGVDebug("Call WorkPt{0} to work! IO={1},Level={2}", workstation, WORK_IO, WORK_LEVEL);

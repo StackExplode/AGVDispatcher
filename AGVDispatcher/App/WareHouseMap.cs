@@ -104,21 +104,32 @@ namespace AGVDispatcher.App
             }
         }
 
-        public int PickLastestProduct()
+        public void PickLastestProduct()
         {
             prod_lock.EnterWriteLock();
+            if (_prod_av == -1)
+            {
+                prod_lock.ExitWriteLock();
+                return;
+            }
+                
             for (; _prod_av <= MAX_PROD; _prod_av++)
             {
                 ProductPoint pt = GetPickProductPoint(_prod_av);
                 if (pt.IsAvailable)
                 {
+                    Util.Helpers.SingleAGVDebug("PickLatest product={0}", pt.ProductID);
+                    pt.IsAvailable = false;
                     break;
                 }
             }
             if (_prod_av > MAX_PROD)
+            {
+                Util.Helpers.SingleAGVDebug("No avliable product, now av={0}", _prod_av);
                 _prod_av = -1;
+            }
             prod_lock.ExitWriteLock();
-            return _prod_av;
+            //return _prod_av;
         }
 
         private int _break_av = 0;
@@ -129,6 +140,7 @@ namespace AGVDispatcher.App
             break_lock.Enter(ref ll);
             _break_av++;
             var pt = this[(ushort)_break_av];
+            Contract.Ensures(_break_av <= 4 && pt != null);
             break_lock.Exit();
             return (BreakZonePoint)pt;
         }
@@ -155,11 +167,12 @@ namespace AGVDispatcher.App
 
         public WorkPoint GetWorkStationPoint(int index)
         {
+            return (WorkPoint)this[(ushort)(300 + index)];
             switch (index)
             {
-                case 1: return (WorkPoint)this[50001];
-                case 2: return (WorkPoint)this[50002];
-                case 5: return (WorkPoint)this[50006];
+                case 1: return (WorkPoint)this[301];
+                case 2: return (WorkPoint)this[302];
+                case 5: return (WorkPoint)this[305];
             }
 
             return null;
@@ -188,7 +201,10 @@ namespace AGVDispatcher.App
                     //return all_pt_physic[id];
                 }
                 else
-                    return all_pt_logic[id];
+                {
+                    bool succ = all_pt_logic.TryGetValue(id, out var point);
+                    return succ ? point : null;
+                }
             }
         }
 

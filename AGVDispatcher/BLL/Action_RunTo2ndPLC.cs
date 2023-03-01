@@ -56,6 +56,6 @@ namespace AGVDispatcher.BLL
     public class Action_RunTo3rdPLC : Action_RunTo2ndPLC
     {
         protected override int start_plc => 2;
-        protected override int end_plc => 3;
+        protected override int end_plc => 5;
     }
 }

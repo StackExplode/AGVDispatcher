@@ -31,9 +31,10 @@ namespace AGVDispatcher.BLL.v2
 
         public bool Run()
         {
-            Helpers.SingleAGVDebug("Start to go to 111!");
+           
             agv.Actions.SetAutoStop(map.PickWaitPoint);
             agv.Actions.RunStraigth();
+            Helpers.SingleAGVDebug("Start to go to 111!");
             return true;
         }
     }

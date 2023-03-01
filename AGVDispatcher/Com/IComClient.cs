@@ -12,6 +12,7 @@ using System.Diagnostics;
 namespace AGVDispatcher.Com
 {
     public delegate void OnDisconnectedDlg(IComClient client);
+    public delegate void OnClientTimeoutDlg(IComClient client);
     public interface IComClient
     {
         bool IsAlive { get; set; }
@@ -19,6 +20,7 @@ namespace AGVDispatcher.Com
         void Disconnect();
         //void FireDisconnected();
         public event OnDisconnectedDlg OnDisconnected;
+        public event OnClientTimeoutDlg OnClientTimeout;
     }
 
     public interface IBlockedCom
@@ -29,21 +31,29 @@ namespace AGVDispatcher.Com
 
     public class AGVTCPClient : IComClient, IBlockedCom
     {
+        public event OnClientTimeoutDlg OnClientTimeout;
         SemaphoreSlim mutex = new SemaphoreSlim(1);
+        SemaphoreSlim mutex2 = new SemaphoreSlim(1);
         public void Lock()
         {
-            var rt = mutex.Wait(GlobalConfig.Config.SystemConfig.AGVComTimeout);
+            mutex2.Wait();
+#warning Bad Patch
+            var rt = mutex.Wait(GlobalConfig.Config.SystemConfig.AGVComTimeout - 200);
+            mutex2.Release();
             if (!rt)
             {
                 string ip = (this.Client.Client.RemoteEndPoint as IPEndPoint)?.Address.ToString();
+                if (mutex.CurrentCount <= 0)
+                    mutex.Release();
+                this.OnClientTimeout.Invoke(this);
                 Util.Helpers.LogWarning($"AGV Communication Timeout! IP={ip}");
-                mutex.Release();
+                
             }
                 
         }
         public void UnLock()
         {
-            if (mutex.CurrentCount == 0)
+            if (mutex.CurrentCount <= 0)
                 mutex.Release();
         }
 

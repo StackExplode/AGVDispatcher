@@ -28,6 +28,7 @@ namespace AGVDispatcher.Entity
             {
                 AGVComData<StartRunData> data = new AGVComData<StartRunData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.Direction = DirectionCode.Backward;
+                //Util.Helpers.SingleAGVDebug(Util.Helpers.DumpComData(data));
                 agv.server.SendData(agv, data);
             }
 

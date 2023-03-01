@@ -39,6 +39,7 @@ namespace AGVDispatcher.BLL.v2
             List<(InsOpCode, byte)> list = new List<(InsOpCode, byte)>();
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.StopDelay));
             //Stright bug
+            list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.Foreward));
             list.Add(((InsOpCode, byte))(InsOpCode.Turn, OpTurnType.LeftTurn));
             agv.Actions.AddOpCache(tpt, list);
 

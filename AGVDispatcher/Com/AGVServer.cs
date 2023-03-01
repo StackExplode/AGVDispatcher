@@ -56,6 +56,7 @@ namespace AGVDispatcher.Com
         {
             AGVComData<AuthRequestData> data = new AGVComData<AuthRequestData>(0, 0);
             client.Lock();
+            Util.Helpers.SingleAGVDebug(Util.Helpers.DumpComDataRaw(data));
             server.SendData(client, data.ToArray());
         }
 
@@ -99,6 +100,7 @@ namespace AGVDispatcher.Com
                     bool succ = (rdata.PayLoad.ErrorCode == ComErrorCode.Success ? true : false);
                     OnAGVValidatResponseDlg?.Invoke(rdata.AGVID, succ);
                 }
+                Util.Helpers.SingleAGVDebug("Genetal Response:{0}", rdata.PayLoad.ErrorCode == ComErrorCode.Success);
             }
             else if(fdata.DataType == ComDataType.StateResponse)
             {

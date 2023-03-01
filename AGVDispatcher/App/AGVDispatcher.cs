@@ -72,7 +72,8 @@ namespace AGVDispatcher.App
                 else
                 {
                     miss_count++;
-                    int prod = map.PickLastestProduct();
+                    map.PickLastestProduct();
+                    int prod = map.LastAvilableProduct;
                     QueuedMission mis = new QueuedMission(NewZhangZongActions(), ordered[i].Value, allplc, map, prod);
                     TryAddMissionDict(ordered[i].Value.AGVID, mis);
                     mis.OnMissionFinished += MissionFinishHandler;
@@ -173,6 +174,7 @@ namespace AGVDispatcher.App
                 return;
             }
 
+            map.PickLastestProduct();
             if(map.LastAvilableProduct < 0)
             {
                 
@@ -208,7 +210,7 @@ namespace AGVDispatcher.App
             }
             else
             {
-                int prod = map.PickLastestProduct();
+                int prod = map.LastAvilableProduct;
                 QueuedMission mis = new QueuedMission(NewZhangZongActions(), mission.AGVCar, allplc, map, prod);
                 TryAddMissionDict(mission.AGVCar.AGVID, mis);
                 mis.OnMissionFinished += MissionFinishHandler;

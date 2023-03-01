@@ -40,7 +40,7 @@ namespace AGVDispatcher
 
             string logfile = "./Roaming/Error.log";
             string logbkup = "./Roaming/Error.log.old";
-            if (File.Exists(logfile) && (new FileInfo(logfile)).Length > 10*1024*1024)
+            if (File.Exists(logfile) && (new FileInfo(logfile)).Length > 100*1024*1024)
             {
                 if (File.Exists(logbkup))
                     File.Delete(logbkup);

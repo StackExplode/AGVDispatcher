@@ -32,8 +32,9 @@ namespace AGVDispatcher.BLL.v2
             var pt1 = map.GetPickProductPoint(prod);
             agv.Actions.DelOPCache(pt1);
             (IPoint pt, _) = map.GetPickProductTurnWay(prod);
-            agv.Actions.DelOPCache(pt);
-            Debug.WriteLine("Delete Pickpoint cache!");
+            //agv.Actions.DelOPCache(pt);
+            agv.Actions.ClearOPCache();
+            Util.Helpers.SingleAGVDebug("Delete Pickpoint cache!");
             return false;
         }
     }
@@ -45,7 +46,8 @@ namespace AGVDispatcher.BLL.v2
             
             agv.Actions.DelOPCache(map.GetPutProductPoint(prod));
             (IPoint pt, _) = map.GetPutProductTurnWay(prod);
-            agv.Actions.DelOPCache(pt);
+            //agv.Actions.DelOPCache(pt);
+            agv.Actions.ClearOPCache();
             Util.Helpers.SingleAGVDebug("Clear putpoint cache!");
             return false;
         }

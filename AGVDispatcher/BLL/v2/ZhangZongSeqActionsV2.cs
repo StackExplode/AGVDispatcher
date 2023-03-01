@@ -13,6 +13,7 @@ namespace AGVDispatcher.BLL.v2
         public ZhangZongSeqActionsV2()
         {
             ActionQueue = new Queue<IAGVAction>();
+            ActionQueue.Enqueue(new Action_ClearCache());
             ActionQueue.Enqueue(new Action_BreakTo150());
             ActionQueue.Enqueue(new Action_ClearCache());
             ActionQueue.Enqueue(new Action_WaitForPick());
@@ -21,6 +22,9 @@ namespace AGVDispatcher.BLL.v2
             ActionQueue.Enqueue(new Action_BackwardAfterPick());
             ActionQueue.Enqueue(new Action_RunTo1stPLC());
             ActionQueue.Enqueue(new Action_ClearCache());
+#if !DEBUG
+#error Change it!
+#endif
             ActionQueue.Enqueue(new Action_CallPLCWork(1));
             ActionQueue.Enqueue(new Action_RunTo2ndPLC());
             ActionQueue.Enqueue(new Action_ClearCache());

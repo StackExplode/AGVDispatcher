@@ -65,7 +65,7 @@ namespace AGVDispatcher.Entity
         public bool CheckOutputState(int index)
         {
             Contract.Assert(index >= 1 && index <= 4);
-            bool rt = ((byte)OutputState & (1 << (8 - index))) == 0;
+            bool rt = (((byte)OutputState & (1 << (8 - index))) == 0);
             return !rt;
         }
         public void WriteOutputState(int index, bool state)
@@ -82,7 +82,7 @@ namespace AGVDispatcher.Entity
                 case 5: data.PayLoad.Hook = io; break;
             }
             this.server.SendData(this, data);
-
+            Util.Helpers.SingleAGVDebug("ForvrPLC:{0}", Util.Helpers.DumpComData(data));
         }
         public void SetComStateFlag(AGVComState flag, AGVComState rflag = 0)
         {
@@ -180,15 +180,26 @@ namespace AGVDispatcher.Entity
             if (conf != null)
             {
                 PLCConfig c = (PLCConfig)conf;
-                this.ExpectedIP = IPAddress.Parse(c.IP);
-                this.SetPassword(c.Password);
+                if(c.IP is not null)
+                    this.ExpectedIP = IPAddress.Parse(c.IP);
+                if(c.Password is not null && c.Password.Length > 0)
+                    this.SetPassword(c.Password);
             }
+            client.OnClientTimeout += Client_OnClientTimeout;
+        }
+
+        private void Client_OnClientTimeout(IComClient client)
+        {
+            Util.Helpers.SingleAGVDebug("PLC Timeout!");
+            if (PollInfoEnabled && PollInfoWaitResponse)
+                this.timer.Enabled = true;
         }
 
         public void SendQueryRequest()
         {
             AGVComData<QueryStateData> data = new AGVComData<QueryStateData>(this.AGVID, this.LatestSerialCode);
             this.server.SendData(this, data);
+            //Util.Helpers.SingleAGVDebug("PLC QState:{0}", Util.Helpers.DumpComDataRaw(data));
         }
     }
 }

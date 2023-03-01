@@ -138,7 +138,7 @@ namespace AGVDispatcher.App
 
             all_pt_logic.Add(301, new WorkPoint(1) { LogicID = 301, PLCOrder = 1 });
             all_pt_logic.Add(302, new WorkPoint(2) { LogicID = 302, PLCOrder = 1 });
-            all_pt_logic.Add(306, new CheckPoint(5) { LogicID = 306, PLCOrder = 1 });
+            all_pt_logic.Add(305, new CheckPoint(5) { LogicID = 305, PLCOrder = 1 });
 
             all_pt_logic.Add(250, new NormalPoint() { LogicID = 250 });
             all_pt_logic.Add(251, new NormalPoint() { LogicID = 251 });

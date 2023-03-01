@@ -45,7 +45,7 @@ namespace AGVDispatcher.BLL.v2
                 list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.SameAsLast));
             agv.Actions.AddOpCache(map.PutWaitPoint, list);
 
-            for(int i=0;i<map.MAX_PROD;i++)
+            for(int i=1;i<=map.MAX_PROD;i++)
             {
                 if(i != prod)
                 {

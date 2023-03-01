@@ -93,7 +93,7 @@ namespace AGVDispatcher.UI
             {
                 var agv = iagv as AGV;
                 agv.InfoQueryInterval = GlobalConfig.Config.SystemConfig.AGVQueryInterval;
-                agv.StartInfoPolling(false);
+                agv.StartInfoPolling(true);
                 agv.Actions.AGVReady();
             }
             else if (iagv.AGVType == AGVType.PLCSimu)

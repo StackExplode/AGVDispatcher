@@ -37,15 +37,24 @@ namespace AGVDispatcher.BLL.v2
             list.Add(((InsOpCode, byte))(InsOpCode.Stop, StopType.Normal));
             agv.Actions.AddOpCache(pt, list);
 
-            //Hook delay bug
-            System.Threading.Thread.Sleep(GlobalConfig.Config.SystemConfig.HookDelay * 1000);
+            ////Hook delay bug
+            //System.Threading.Thread.Sleep(GlobalConfig.Config.SystemConfig.HookDelay * 1000);
 
-            agv.Actions.RunBackward();
-            Task.Delay(200);
-            agv.Actions.RunBackward();
-            Task.Delay(200);
-            agv.Actions.RunBackward();
-            Task.Delay(200);
+            //agv.Actions.RunBackward();
+            //Task.Delay(200);
+            //agv.Actions.RunBackward();
+            //Task.Delay(200);
+            //agv.Actions.RunBackward();
+            //Task.Delay(200);
+
+            var ppt = map.GetPutProductPoint(product);
+            list.Clear();
+            list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.HookDelay));
+            list.Add((InsOpCode.Run, (byte)OpRunParam.Backward));
+            agv.Actions.AddOpCache(ppt, list);
+
+            System.Threading.Thread.Sleep(50);
+            agv.Actions.ForceStation(ppt);
 
             Util.Helpers.SingleAGVDebug("Start to backward from put point to turn point!");
 

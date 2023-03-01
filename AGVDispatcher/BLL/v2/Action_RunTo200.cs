@@ -29,17 +29,23 @@ namespace AGVDispatcher.BLL.v2
         public bool Run()
         {
             List<(InsOpCode, byte)> list = new List<(InsOpCode, byte)>();
+#if !DEBUG
+#error Change it!
+#endif
             WorkPoint wpt = map.GetWorkStationPoint(5);
+            //var wpt = map.GetWorkStationPoint(1);
 
             list.Add(((InsOpCode, byte))(InsOpCode.Hook, OpHookParam.Hookup));
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.HookDelay));
-            list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.SameAsLast));
+            list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.Foreward));
             agv.Actions.AddOpCache(wpt, list);
 
             agv.Actions.SetAutoStop(map.PutWaitPoint);
 
             agv.Actions.ForceStation(wpt);
-            Util.Helpers.SingleAGVDebug("Start run from Workpt5 to PutWaitPoint({0})", wpt.LogicID);
+            Util.Helpers.SingleAGVDebug("Start run from Workpt5({0}) to PutWaitPoint({1})",
+                                        wpt.LogicID,
+                                        map.PutWaitPoint.LogicID);
 
             return true;
 

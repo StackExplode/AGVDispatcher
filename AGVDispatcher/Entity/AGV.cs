@@ -164,6 +164,12 @@ namespace AGVDispatcher.Entity
             }           
         }
 
+        private void Client_OnClientTimeout(IComClient client)
+        {
+            if (PollInfoEnabled && PollInfoWaitResponse)
+                this.timer.Enabled = true;
+        }
+
         public void Init(byte id, AGVTCPClient client, AGVServer server, IAGVDevConfig conf)
         {
             this.server = server;
@@ -187,6 +193,7 @@ namespace AGVDispatcher.Entity
                     this.SetPassword(c.Password);
                 this.Order = c.Order;
             }
+            client.OnClientTimeout += Client_OnClientTimeout;
         }
     }
 

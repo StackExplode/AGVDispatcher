@@ -86,5 +86,39 @@ namespace AGVDispatcher.UI
 
         }
 
+        private void pic_o1_DoubleClick(object sender, EventArgs e)
+        {
+#if DEBUG
+            this.plc.WriteOutputState(1, !plc.CheckOutputState(1));
+#endif
+        }
+
+        private void pic_o2_DoubleClick(object sender, EventArgs e)
+        {
+#if DEBUG
+            this.plc.WriteOutputState(2, !plc.CheckOutputState(2));
+#endif
+        }
+
+        private void pic_o3_DoubleClick(object sender, EventArgs e)
+        {
+#if DEBUG
+            this.plc.WriteOutputState(3, !plc.CheckOutputState(3));
+#endif
+        }
+
+        private void pic_o4_DoubleClick(object sender, EventArgs e)
+        {
+#if DEBUG
+            this.plc.WriteOutputState(4, !plc.CheckOutputState(4));
+#endif
+        }
+
+        private void pic_hook_DoubleClick(object sender, EventArgs e)
+        {
+#if DEBUG
+            this.plc.WriteOutputState(5, !plc.CheckInputState(5));
+#endif
+        }
     }
 }

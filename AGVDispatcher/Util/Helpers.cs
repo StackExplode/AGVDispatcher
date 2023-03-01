@@ -88,7 +88,7 @@ namespace AGVDispatcher.Util
         public static string DumpComData(IComData data)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("AGV=");
+            sb.Append("ID=");
             sb.Append(data.AGVID);
             sb.Append(",DataType=");
             sb.Append(((ComDataType)data.RawBuffer[4]).GetDescription());
@@ -97,6 +97,16 @@ namespace AGVDispatcher.Util
             sb.Append(",Payload=");
             for (int i = 4; i < 24; i++)
                 sb.Append(data.RawBuffer[i].ToString("X2") + " ");
+            return sb.ToString();
+        }
+
+        public static string DumpComDataRaw(IComData data)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 24; i++)
+                sb.Append(data.RawBuffer[i].ToString("X2") + " ");
+            sb.Append(data.CalcCheckSum().ToString("X2") + " ");
+            sb.Append(data.RawBuffer[25].ToString("X2"));
             return sb.ToString();
         }
 
