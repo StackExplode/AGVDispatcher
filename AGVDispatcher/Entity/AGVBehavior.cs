@@ -159,6 +159,14 @@ namespace AGVDispatcher.Entity
                 agv.server.SendData(agv, data);
 
             }
+
+            public void SetSpeed(byte speed)
+            {
+                Contract.Assert(speed >= 0 && speed <= 100);
+                AGVComData<SetSpeedData> data = new AGVComData<SetSpeedData>(agv.AGVID, agv.LatestSerialCode);
+                data.PayLoad.Speed = speed;
+                agv.server.SendData(agv, data);
+            }
         }
 
     }

@@ -57,12 +57,14 @@ namespace AGVDispatcher.BLL.v2
             if (turn != TurnType.NoChange)
             {
                 list.Add((InsOpCode.Turn, (byte)((byte)turn - 2)));
+                list.Add((InsOpCode.SetSpeed, 20));
                 agv.Actions.AddOpCache(point, list);
                 debug = (OpTurnType)((byte)turn - 2);
             }
             else
             {
                 list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.SameAsLast));
+                list.Add((InsOpCode.SetSpeed, 20));
                 agv.Actions.AddOpCache(point, list);
                 debug = (OpTurnType)((byte)turn - 2);
             }
@@ -71,6 +73,7 @@ namespace AGVDispatcher.BLL.v2
             list.Add((InsOpCode.Stop, (byte)StopType.Normal));
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.StopDelay));
             list.Add((InsOpCode.Hook, (byte)OpHookParam.Hookup));  //1 = Hook up
+            list.Add((InsOpCode.SetSpeed, 40));
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.HookDelay));
             //list.Add((InsOpCode.Run, (byte)OpRunParam.ReverseAsLast));   //3 = Reverse from last direction
             agv.Actions.AddOpCache(map.GetPickProductPoint(prod), list);
