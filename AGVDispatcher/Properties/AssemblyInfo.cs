@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("AGVDispatcher")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Designed by Jennings")]
 [assembly: AssemblyProduct("AGVDispatcher")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCopyright("Copyleft by Jennings aka NeNe with GPLv3.0 2023 All Rights Reversed")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.04.0.0")]
-[assembly: AssemblyFileVersion("1.04.0.0")]
+[assembly: AssemblyVersion("1.05.0.0")]
+[assembly: AssemblyFileVersion("1.05.0.0")]

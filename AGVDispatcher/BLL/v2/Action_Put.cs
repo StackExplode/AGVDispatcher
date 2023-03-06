@@ -76,7 +76,6 @@ namespace AGVDispatcher.BLL.v2
             list.Add(((InsOpCode, byte))(InsOpCode.Stop, StopType.Normal));
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.StopDelay));
             list.Add(((InsOpCode, byte))(InsOpCode.Hook, OpHookParam.Release));
-            list.Add((InsOpCode.SetSpeed, 40));
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.HookDelay));
             agv.Actions.AddOpCache(map.GetPutProductPoint(prod), list);
 

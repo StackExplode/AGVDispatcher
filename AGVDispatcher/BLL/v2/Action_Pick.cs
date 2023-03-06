@@ -73,7 +73,6 @@ namespace AGVDispatcher.BLL.v2
             list.Add((InsOpCode.Stop, (byte)StopType.Normal));
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.StopDelay));
             list.Add((InsOpCode.Hook, (byte)OpHookParam.Hookup));  //1 = Hook up
-            list.Add((InsOpCode.SetSpeed, 40));
             list.Add((InsOpCode.Delay, GlobalConfig.Config.SystemConfig.HookDelay));
             //list.Add((InsOpCode.Run, (byte)OpRunParam.ReverseAsLast));   //3 = Reverse from last direction
             agv.Actions.AddOpCache(map.GetPickProductPoint(prod), list);
