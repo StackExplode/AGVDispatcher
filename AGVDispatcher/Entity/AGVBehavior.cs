@@ -3,13 +3,56 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using AGVDispatcher.Util;
 
 namespace AGVDispatcher.Entity
 {
+    public delegate void OnAgvTooMuchErrorDlg(AGV agv);
     public partial class AGV : IAGVDevice
     {
         public AGVBehavior Actions { get; }
+        public event OnAgvTooMuchErrorDlg OnAgvTooMuchError;
+
+        public void ClearTooMuchErrorHandlers()
+        {
+            OnAgvTooMuchError = null;
+        }
+
+        protected void SendDataCheckGeneralRes<T>(AGVComData<T> data) where T : IComDataField
+        {
+            int retry = 3;
+            bool succ = true;
+            AutoResetEvent locker = new AutoResetEvent(false);
+            var dele1 = new Com.OnAGVGeneralResponseDlg((agv,s,data) =>
+            {
+                if(s == false)
+                    Util.Helpers.LogWarning($"AGV={agv} General response error={data.PayLoad.ErrorCode.GetDescription()}");
+                succ = s;
+                locker.Set();
+            });
+            var dele2 = new Com.OnClientTimeoutDlg((_) =>
+            {
+                succ = false;
+                locker.Set();
+            });
+
+            server.OnAGVGeneralResponse += dele1;
+            client.OnClientTimeout += dele2;
+            while (retry-- > 0)
+            {
+                this.server.SendData(this, data);
+                locker.WaitOne();
+                if (succ)
+                    break;
+            }
+            server.OnAGVGeneralResponse -= dele1;
+            client.OnClientTimeout -= dele2;
+            if (retry <= 0)
+                this.OnAgvTooMuchError(this);            
+        }
+
         public class AGVBehavior
         {
             private AGV agv;
@@ -17,11 +60,13 @@ namespace AGVDispatcher.Entity
             {
                 this.agv = agv;
             }
+
+
             public void RunStraigth()
             {
                 AGVComData<StartRunData> data = new AGVComData<StartRunData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.Direction = DirectionCode.Forward;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void RunBackward()
@@ -29,21 +74,21 @@ namespace AGVDispatcher.Entity
                 AGVComData<StartRunData> data = new AGVComData<StartRunData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.Direction = DirectionCode.Backward;
                 //Util.Helpers.SingleAGVDebug(Util.Helpers.DumpComData(data));
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void RunAsLast()
             {
                 AGVComData<StartRunData> data = new AGVComData<StartRunData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.Direction = DirectionCode.SameAsLast;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void StopRun(StopType st)
             {
                 AGVComData<StopRunData> data = new AGVComData<StopRunData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.StopType = st;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void AuthValidate()
@@ -67,7 +112,7 @@ namespace AGVDispatcher.Entity
                 ref var ins1 = ref data.PayLoad.Instructions(1);
                 ins1.OpCode = InsOpCode.Stop;
                 ins1.Param = 0; //Forward
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void DelOPCache(IPoint point)
@@ -76,14 +121,14 @@ namespace AGVDispatcher.Entity
                 data.PayLoad.CacheOP = CacheOpCode.Delete;
                 data.PayLoad.Point = point.PhysicID;
                 Task.Delay(200);
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void ClearOPCache()
             {
                 AGVComData<SetPointInsCacheData> data = new AGVComData<SetPointInsCacheData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.CacheOP = CacheOpCode.Clear;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void AddOpCache(IPoint point, List<(InsOpCode opcode, byte param)> insts)
@@ -98,28 +143,28 @@ namespace AGVDispatcher.Entity
                     ins.Param = insts[i].param;
                 }
                 Task.Delay(200);
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void EmergStop()
             {
                 AGVComData<ButtonSimulateData> data = new AGVComData<ButtonSimulateData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.EmergencyStop = true;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void AGVReady()
             {
                 AGVComData<ButtonSimulateData> data = new AGVComData<ButtonSimulateData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.Ready = true;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void ClearFault()
             {
                 AGVComData<ButtonSimulateData> data = new AGVComData<ButtonSimulateData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.FaultClear = true;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void ClearFaultAndReady()
@@ -140,7 +185,7 @@ namespace AGVDispatcher.Entity
             {
                 AGVComData<ForceStationData> data = new AGVComData<ForceStationData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.StationID = point.PhysicID;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
 
             public void WriteOutputState(int index, bool state)
@@ -156,7 +201,7 @@ namespace AGVDispatcher.Entity
                     case 4: data.PayLoad.ExtIO4 = io; break;
                     case 5: data.PayLoad.Hook = io; break;
                 }
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
 
             }
 
@@ -165,7 +210,7 @@ namespace AGVDispatcher.Entity
                 Contract.Assert(speed >= 0 && speed <= 100);
                 AGVComData<SetSpeedData> data = new AGVComData<SetSpeedData>(agv.AGVID, agv.LatestSerialCode);
                 data.PayLoad.Speed = speed;
-                agv.server.SendData(agv, data);
+                agv.SendDataCheckGeneralRes(data);
             }
         }
 

@@ -36,7 +36,7 @@ namespace AGVDispatcher.BLL.v2
             endpoint = tpt;
 
             list.Add(((InsOpCode, byte))(InsOpCode.Stop, StopType.Normal));
-            list.Add((InsOpCode.SetSpeed, 40));
+            //list.Add((InsOpCode.SetSpeed, 40));
 
             agv.Actions.AddOpCache(tpt, list);
 

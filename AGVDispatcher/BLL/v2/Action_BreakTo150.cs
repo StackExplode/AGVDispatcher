@@ -34,7 +34,7 @@ namespace AGVDispatcher.BLL.v2
            
             agv.Actions.SetAutoStop(map.PickWaitPoint);
 #warning Speed is fixed!
-            agv.Actions.SetSpeed(40);   
+            //agv.Actions.SetSpeed(40);   
             agv.Actions.RunStraigth();
             Helpers.SingleAGVDebug("Start to go to 111!");
             return true;

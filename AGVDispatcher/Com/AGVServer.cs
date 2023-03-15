@@ -16,14 +16,16 @@ namespace AGVDispatcher.Com
     public delegate void OnAGVStateResponseDlg(byte agvid, AGVComData<StateResponseData> data);
     public delegate void OnAGVClientConnectedDlg(AGVTCPClient client);
     public delegate void OnAGVClientDisconnectedDlg(AGVTCPClient client);
+    public delegate void OnAGVGeneralResponseDlg(byte agvid, bool succ, AGVComData<GeneralResponseData> data);
     public class AGVServer
     {
         private TCPDriver server;
         public event OnAGVAuthResponseDlg OnAGVAuthResponse;
-        public event OnAGVValidatResponseDlg OnAGVValidatResponseDlg;
+        public event OnAGVValidatResponseDlg OnAGVValidatResponse;
         public event OnAGVStateResponseDlg OnAGVStateResponse;
         public event OnAGVClientConnectedDlg OnAGVClientConnected;
         public event OnAGVClientDisconnectedDlg OnAGVClientDisconnected;
+        public event OnAGVGeneralResponseDlg OnAGVGeneralResponse;
 
         public AGVServer()
         {           
@@ -95,12 +97,16 @@ namespace AGVDispatcher.Com
             else if(fdata.DataType == ComDataType.GenralResponse)
             {
                 AGVComData<GeneralResponseData> rdata = fdata.UnsafeAs<GeneralResponseData>();
-                if(rdata.PayLoad.RequestCode == ComDataType.Validation)
+                bool succ = (rdata.PayLoad.ErrorCode == ComErrorCode.Success ? true : false);
+                if (rdata.PayLoad.RequestCode == ComDataType.Validation)
                 {
-                    bool succ = (rdata.PayLoad.ErrorCode == ComErrorCode.Success ? true : false);
-                    OnAGVValidatResponseDlg?.Invoke(rdata.AGVID, succ);
+                    OnAGVValidatResponse?.Invoke(rdata.AGVID, succ);
                 }
-                Util.Helpers.SingleAGVDebug("Genetal Response:{0}", rdata.PayLoad.ErrorCode == ComErrorCode.Success);
+                else
+                {
+                    OnAGVGeneralResponse?.Invoke(rdata.AGVID, succ, rdata);
+                }
+                Util.Helpers.SingleAGVDebug("Genetal Response:{0}", rdata.PayLoad.ErrorCode.GetDescription());
             }
             else if(fdata.DataType == ComDataType.StateResponse)
             {

@@ -57,14 +57,14 @@ namespace AGVDispatcher.BLL.v2
             if (turn != TurnType.NoChange)
             {
                 list.Add((InsOpCode.Turn, (byte)((byte)turn - 2)));
-                list.Add((InsOpCode.SetSpeed, 20));
+                //list.Add((InsOpCode.SetSpeed, 20));
                 agv.Actions.AddOpCache(point, list);
                 debug = (OpTurnType)((byte)turn - 2);
             }
             else
             {
                 list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.SameAsLast));
-                list.Add((InsOpCode.SetSpeed, 20));
+                //list.Add((InsOpCode.SetSpeed, 20));
                 agv.Actions.AddOpCache(point, list);
                 debug = (OpTurnType)((byte)turn - 2);
             }

@@ -45,7 +45,7 @@ namespace AGVDispatcher.Com
                 string ip = (this.Client.Client.RemoteEndPoint as IPEndPoint)?.Address.ToString();
                 if (mutex.CurrentCount <= 0)
                     mutex.Release();
-                this.OnClientTimeout.Invoke(this);
+                this.OnClientTimeout?.Invoke(this);
                 Util.Helpers.LogWarning($"AGV Communication Timeout! IP={ip}");
                 
             }

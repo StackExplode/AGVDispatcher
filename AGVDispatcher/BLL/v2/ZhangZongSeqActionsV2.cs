@@ -32,6 +32,7 @@ namespace AGVDispatcher.BLL.v2
             ActionQueue.Enqueue(new Action_RunTo3rdPLC());
             ActionQueue.Enqueue(new Action_ClearCache());
             ActionQueue.Enqueue(new Action_CallPLCWork(5));
+            ActionQueue.Enqueue(new Action_ClearCache());
             ActionQueue.Enqueue(new Action_RunTo200());
             ActionQueue.Enqueue(new Action_ClearCache());
             ActionQueue.Enqueue(new Action_WaitForPut());

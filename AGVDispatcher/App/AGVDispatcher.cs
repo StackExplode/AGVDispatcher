@@ -48,10 +48,14 @@ namespace AGVDispatcher.App
             var ordered = GenerateSortedAGVs();
             for (int i=0;i< allagv.Count;i++)
             {
+                AGV agv = ordered[i].Value;
+                agv.ClearTooMuchErrorHandlers();
+                agv.OnAgvTooMuchError += Agv_OnAgvTooMuchError;
+
                 if (map.LastAvilableProduct < 0)
                 {
                     BreakZonePoint pt = map.GetLastBreakZonePoint();
-                    AGV agv = ordered[i].Value;
+                    
                     if(!pt.Equals(agv.PhysicPoint, true))
                     {
                         miss_count++;
@@ -74,14 +78,19 @@ namespace AGVDispatcher.App
                     miss_count++;
                     map.PickLastestProduct();
                     int prod = map.LastAvilableProduct;
-                    QueuedMission mis = new QueuedMission(NewZhangZongActions(), ordered[i].Value, allplc, map, prod);
-                    TryAddMissionDict(ordered[i].Value.AGVID, mis);
+                    QueuedMission mis = new QueuedMission(NewZhangZongActions(), agv, allplc, map, prod);
+                    TryAddMissionDict(agv.AGVID, mis);
                     mis.OnMissionFinished += MissionFinishHandler;
                     mis.Start();
                 }
             }
             if(miss_count <= 0)
                 this.OnDispacherAllFinished?.Invoke(false);
+        }
+
+        private void Agv_OnAgvTooMuchError(AGV agv)
+        {
+            AbortMission(agv);
         }
 
         public bool CheckAGVReady()
@@ -177,7 +186,6 @@ namespace AGVDispatcher.App
             map.PickLastestProduct();
             if(map.LastAvilableProduct < 0)
             {
-                
                 BreakZonePoint pt = map.GetLastBreakZonePoint();
                 AGV agv = mission.AGVCar;
                 mission.Dispose();
@@ -210,6 +218,7 @@ namespace AGVDispatcher.App
             }
             else
             {
+                //miss_count++;
                 int prod = map.LastAvilableProduct;
                 QueuedMission mis = new QueuedMission(NewZhangZongActions(), mission.AGVCar, allplc, map, prod);
                 TryAddMissionDict(mission.AGVCar.AGVID, mis);

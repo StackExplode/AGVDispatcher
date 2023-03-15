@@ -68,7 +68,7 @@ namespace AGVDispatcher.BLL.v2
             else
             {
                 list.Add(((InsOpCode, byte))(InsOpCode.Run, OpRunParam.SameAsLast));
-                list.Add((InsOpCode.SetSpeed, 20));
+                //list.Add((InsOpCode.SetSpeed, 20));
                 agv.Actions.AddOpCache(pt, list);
             }
 

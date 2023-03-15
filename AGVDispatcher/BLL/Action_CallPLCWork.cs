@@ -30,8 +30,8 @@ namespace AGVDispatcher.BLL
         {
             bool rt = (plcs[PLCNum].CheckInputState(FINISH_IO) == FINISH_LEVEL);
 #warning For Debug only!!
-            if (workstation != 1)
-                rt = true;
+            if (workstation == 5)
+                 rt = true;
             Util.Helpers.SingleAGVDebugIf(rt, "WorkPt{0} finish signal rec!", workstation);
             return rt;
         }

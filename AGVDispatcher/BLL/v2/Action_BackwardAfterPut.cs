@@ -35,7 +35,7 @@ namespace AGVDispatcher.BLL.v2
             endpoint = pt;
 
             list.Add(((InsOpCode, byte))(InsOpCode.Stop, StopType.Normal));
-            list.Add((InsOpCode.SetSpeed, 40));
+            //list.Add((InsOpCode.SetSpeed, 40));
             agv.Actions.AddOpCache(pt, list);
 
             ////Hook delay bug

@@ -103,6 +103,7 @@ namespace AGVDispatcher.Entity
 
         public void ParseQueryResponse(StateResponseData data)
         {
+            SetComStateFlag(0,AGVComState.TimeOut);
             State = data.State;
             PhysicPoint = data.PhysicPoint;
             LogicPoint = data.LogicPoint;
@@ -166,6 +167,7 @@ namespace AGVDispatcher.Entity
 
         private void Client_OnClientTimeout(IComClient client)
         {
+            SetComStateFlag(AGVComState.TimeOut);
             if (PollInfoEnabled && PollInfoWaitResponse)
                 this.timer.Enabled = true;
         }
@@ -194,6 +196,16 @@ namespace AGVDispatcher.Entity
                 this.Order = c.Order;
             }
             client.OnClientTimeout += Client_OnClientTimeout;
+            server.OnAGVGeneralResponse += Server_OnAGVGeneralResponse;
+        }
+
+        private void Server_OnAGVGeneralResponse(byte agvid, bool succ, AGVComData<GeneralResponseData> data)
+        {
+            SetComStateFlag(0, AGVComState.TimeOut);
+            if(succ)
+                SetComStateFlag(0, AGVComState.ComError);
+            else
+                SetComStateFlag(AGVComState.ComError);
         }
     }
 

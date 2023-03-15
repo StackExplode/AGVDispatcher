@@ -36,7 +36,7 @@ namespace AGVDispatcher.App
             //config = GlobalConfig.Config;
             server = new AGVServer();
             server.OnAGVAuthResponse += Server_OnAGVAuthResponse;
-            server.OnAGVValidatResponseDlg += Server_OnAGVValidated;
+            server.OnAGVValidatResponse += Server_OnAGVValidated;
             server.OnAGVStateResponse += Server_OnAGVStateResponse;
 
             _map = new WareHouseMapv2();
